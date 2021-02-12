@@ -16,12 +16,25 @@ namespace Sensato.Translate
 
         private static XmlDocument SerializeToXML(csXML model)
         {
-            XmlDocument newDocument = new XmlDocument();
-            XmlDeclaration declaration = newDocument.CreateXmlDeclaration(model.version, model.encoding, null);
-            XmlElement heading = newDocument.DocumentElement;
-            newDocument.InsertBefore(declaration, heading);
+            XmlDocument newFile = new XmlDocument();  // doc creation
+            XmlDeclaration declaration = newFile.CreateXmlDeclaration(model.version, model.encoding, null);
+            XmlElement heading = newFile.DocumentElement; //xml declaration
+            newFile.InsertBefore(declaration, heading);
 
-            XmlElement references = newDocument.CreateElement(null,null,null);
+            XmlElement document = newFile.CreateElement("document",string.Empty); // doc structure
+            newFile.AppendChild(document);
+
+            XmlElement references = newFile.CreateElement("references", string.Empty); // level 1 first child
+            document.AppendChild(references);
+
+            XmlElement namespaces = newFile.CreateElement("namespace", string.Empty);  // level 1 second child
+            document.InsertAfter(namespaces,references);
+
+            XmlElement usings = newFile.CreateElement("using", string.Empty); // level 2 first child
+            references.AppendChild(usings);
+
+            XmlElement classes = newFile.CreateElement("class", string.Empty); // level 2 second child
+            namespaces.AppendChild(classes);
 
             if (model.document.references.Count>0)
             {
@@ -30,7 +43,12 @@ namespace Sensato.Translate
                     
                 }
             }
-            return new XmlDocument();
+
+            if ()
+            {
+
+            }
+            return newFile;
         }
 
         private static string SerializeToCSharp(XmlDocument document)
