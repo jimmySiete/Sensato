@@ -44,10 +44,7 @@ namespace Sensato.Translate
                 }
             }
 
-            if ()
-            {
-
-            }
+            
             return newFile;
         }
 

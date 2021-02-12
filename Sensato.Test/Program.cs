@@ -1,18 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-
+using Sensato.Translate;
+using Sensato.Translate.Entities;
 
 namespace SENSATO.Test
 {
     class Program
     {
-        
+        static void Main(string[] args)
+        {
+            List<csReferences> refs = new List<csReferences>();
+            refs.Add(new csReferences() { name = "System;" });
+            refs.Add(new csReferences() { name = "System.Collections.generic;" });
+          
+            csXML xmlModel = new csXML();
+            xmlModel.version = "1.0";
+            xmlModel.encoding = "UTF-8";
+            xmlModel.document.references = new List<csReferences>();
+            xmlModel.document.references.AddRange(refs);
+            //xmlModel.document.references.Add(new csReferences() { name = "System.Collections.Generic;" });
+            //xmlModel.document.references.Add(new csReferences() { name = "System.Data" });
+
+            string csObject = XMLToCSharp.TranslateToCSharp(xmlModel);
+        }
 
         //static void Main(string[] args)
         //{
