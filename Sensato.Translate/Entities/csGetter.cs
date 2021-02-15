@@ -11,6 +11,7 @@ namespace Sensato.Translate.Entities
         public csGetter()
         {
             this.csLine = new List<csLine>();
+            csLine = new List<csLine>();
         }
     }
 }

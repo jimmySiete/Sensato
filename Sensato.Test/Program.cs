@@ -10,17 +10,19 @@ namespace SENSATO.Test
         static void Main(string[] args)
         {
             List<csReferences> refs = new List<csReferences>();
-            refs.Add(new csReferences() { name = "System;" });
-            refs.Add(new csReferences() { name = "System.Collections.generic;" });
-          
-            csXML xmlModel = new csXML();
-            xmlModel.version = "1.0";
-            xmlModel.encoding = "UTF-8";
+            refs.Add(new csReferences() { name = "System" });
+            refs.Add(new csReferences() { name = "System Collections generic" });
+            refs.Add(new csReferences() { name = "System Data" });
+
+            csXML xmlModel = new csXML("1.0", "UTF-8");
+  
             xmlModel.document.references = new List<csReferences>();
             xmlModel.document.references.AddRange(refs);
-            //xmlModel.document.references.Add(new csReferences() { name = "System.Collections.Generic;" });
-            //xmlModel.document.references.Add(new csReferences() { name = "System.Data" });
-
+            xmlModel.document.csNamespace = new csNamespace()
+            {
+                name = "Sensato.DataAccess"
+            };
+            //xmlModel.csClass = new csClass() { inheritance = "BaseSample", name = "Sample", modifiers = "public", partial = "true" };
             string csObject = XMLToCSharp.TranslateToCSharp(xmlModel);
         }
 

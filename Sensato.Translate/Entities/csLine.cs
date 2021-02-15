@@ -8,5 +8,10 @@ namespace Sensato.Translate.Entities
     {
         public int line { get; set; }
         public csExecuteMethods executeMethods { get; set; }
+
+        public csLine()
+        {
+            this.executeMethods = new csExecuteMethods();
+        }
     }
 }

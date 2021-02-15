@@ -13,6 +13,8 @@ namespace Sensato.Translate.Entities
         public csExecuteMethods()
         {
             this.csArgument = new List<csArgument>();
+
+            csArgument = new List<csArgument>();
         }
     }
 }

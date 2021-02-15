@@ -37,10 +37,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\Sensato.DataAccess.dll</HintPath>
     </Reference>
-    <Reference Include="Sensato.Translate, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Library\Sensato.Translate.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -57,7 +53,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Sensato.Translate\Sensato.Translate.csproj">
+      <Project>{262103ba-55a8-4183-b603-c5166ef44886}</Project>
+      <Name>Sensato.Translate</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Library\Sensato.DataAccess.dll" />
     <Content Include="Library\Sensato.Translate.dll" />

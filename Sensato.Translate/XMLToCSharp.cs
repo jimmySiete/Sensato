@@ -1,5 +1,7 @@
 ﻿using Sensato.Translate.Entities;
 using System;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Xml;
 
 
@@ -30,9 +32,6 @@ namespace Sensato.Translate
             XmlElement namespaces = newFile.CreateElement("namespace", string.Empty);  // level 1 second child
             document.InsertAfter(namespaces,references);
 
-            XmlElement usings = newFile.CreateElement("using", string.Empty); // level 2 first child
-            references.AppendChild(usings);
-
             XmlElement classes = newFile.CreateElement("class", string.Empty); // level 2 second child
             namespaces.AppendChild(classes);
 
@@ -40,10 +39,19 @@ namespace Sensato.Translate
             {
                 for (var i=0; i < model.document.references.Count; i++)
                 {
-                    
+                    XmlElement usings = newFile.CreateElement("using",string.Empty); // level 2 first child
+                   
+                    //XmlAttribute attribute = usings.SetAttributeNode("name", model.document.references[i].name);
+                    //XmlAttribute attribute = newFile.CreateAttribute("name",model.document.references[i].name);
+                    XmlAttribute attr = newFile.CreateAttribute("name");
+                    attr.Value = model.document.references[i].name;
+                    usings.Attributes.Append(attr);
+                    references.AppendChild(usings);
+                    //usings.SetAttribute("name", model.document.references[i].name);
                 }
-            }
+            } 
 
+            newFile.Save("C:/Users/Carolina Martinez/Desktop/ejemplotrabajao2.xml");
             
             return newFile;
         }
