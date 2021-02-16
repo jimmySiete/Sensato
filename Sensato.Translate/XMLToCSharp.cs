@@ -52,9 +52,10 @@ namespace Sensato.Translate
 
                 if (model.document.csNamespace.Classes.Count >0) // inside of the 'Namespace' tag, we have to validate if one or more clases exists, it it's true there are inserted
                 {
-                    foreach (var item in model.document.csNamespace.Classes)
+                    foreach (var item in model.document.csNamespace.Classes) // for each attribute from 'Classes', a sentence is defines to insert the name and value of the property
                     {
-                        XmlElement classes = newFile.CreateElement("class", string.Empty);
+                        XmlElement classes = newFile.CreateElement("class", string.Empty); // declaration of the child from 'Namespace' tag
+
                         XmlAttribute classAttrInheritance = newFile.CreateAttribute("inheritance");
                         classAttrInheritance.Value = item.inheritance;
                         classes.Attributes.Append(classAttrInheritance);
@@ -73,31 +74,6 @@ namespace Sensato.Translate
 
                         namespaces.AppendChild(classes);
                     }
-                    //for (var i=0; i < model.document.csNamespace.Classes.Count; i++)
-                    //{
-                    //    for (var j=0; j<model.document.csNamespace.Classes.Capacity; j++)
-                    //    {
-                    //        XmlElement classes = newFile.CreateElement("class", string.Empty); // declaration of the child from 'Namespace' tag
-
-                    //        XmlAttribute classAttrInheritance = newFile.CreateAttribute("inheritance"); // for each attribute from 'Classes', a sentence is defines to insert the name and value of the property
-                    //        classAttrInheritance.Value = model.document.csNamespace.Classes[i].inheritance[j].ToString();
-                    //        classes.Attributes.Append(classAttrInheritance);
-
-                    //        XmlAttribute classAttrModifiers = newFile.CreateAttribute("modifiers");
-                    //        classAttrModifiers.Value = model.document.csNamespace.Classes[i].modifiers[j].ToString();
-                    //        classes.Attributes.Append(classAttrModifiers);
-
-                    //        XmlAttribute classAttrName = newFile.CreateAttribute("name");
-                    //        classAttrName.Value = model.document.csNamespace.Classes[i].name[j].ToString();
-                    //        classes.Attributes.Append(classAttrName);
-
-                    //        XmlAttribute classAttrPartial = newFile.CreateAttribute("name");
-                    //        classAttrPartial.Value = model.document.csNamespace.Classes[i].partial[j].ToString();
-                    //        classes.Attributes.Append(classAttrPartial);
-
-                    //        namespaces.AppendChild(classes);
-                    //    }
-                    //}
                 }
             }
 
