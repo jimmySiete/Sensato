@@ -13,9 +13,6 @@ namespace Sensato.Translate.Entities
         {
             this.references = new List<csReferences>();
             this.csNamespace = new csNamespace();
-
-            references = new List<csReferences>();
-            csNamespace = new csNamespace();
         }
     }
 }

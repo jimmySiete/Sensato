@@ -9,20 +9,18 @@ namespace SENSATO.Test
     {
         static void Main(string[] args)
         {
-            List<csReferences> refs = new List<csReferences>();
-            refs.Add(new csReferences() { name = "System" });
-            refs.Add(new csReferences() { name = "System Collections generic" });
-            refs.Add(new csReferences() { name = "System Data" });
-
             csXML xmlModel = new csXML("1.0", "UTF-8");
   
             xmlModel.document.references = new List<csReferences>();
-            xmlModel.document.references.AddRange(refs);
-            xmlModel.document.csNamespace = new csNamespace()
-            {
-                name = "Sensato.DataAccess"
-            };
-            //xmlModel.csClass = new csClass() { inheritance = "BaseSample", name = "Sample", modifiers = "public", partial = "true" };
+            xmlModel.document.references.Add(new csReferences { name = "System;" });
+            xmlModel.document.references.Add(new csReferences { name = "System.Collections.Generic;" });
+            xmlModel.document.references.Add(new csReferences() { name = "System.Data;" });
+            xmlModel.document.csNamespace = new csNamespace() { name = "Sensato.DataAccess;" };
+            xmlModel.document.csNamespace.Classes = new List<csClass>();
+            xmlModel.document.csNamespace.Classes.Add(new csClass { inheritance = "BaseSample", name = "Sample0", modifiers = "public", partial = "true" });
+            xmlModel.document.csNamespace.Classes.Add(new csClass { inheritance = "FirstSample", name = "Sample1", modifiers = "public", partial = "true" });
+            xmlModel.document.csNamespace.Classes.Add(new csClass { inheritance = "AnotherSample", name = "Sample2", modifiers = "public", partial = "true" });
+
             string csObject = XMLToCSharp.TranslateToCSharp(xmlModel);
         }
 
