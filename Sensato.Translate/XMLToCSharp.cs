@@ -12,12 +12,15 @@ namespace Sensato.Translate
     {
         public static string TranslateToCSharp(csXML model)
         {
-            String Ejemplo = FirstTemplate.Ejemplo;
-            Ejemplo = String.Format(Ejemplo, "public", "Ejemplo","var x= 0;");
+            //String Ejemplo = FirstTemplate.Ejemplo;
+            //Ejemplo = String.Format(Ejemplo, "public", "Ejemplo","var x= 0;"); // en el metodo serialze to csSharp
 
-            //XmlDocument xmlDocument = SerializeToXML(model);
-            //string csSharpModel = SerializeToCSharp(xmlDocument);
-            return string.Empty;
+            //string namespaces = FirstTemplate.NamespaceTemplate;
+            //namespaces = String.Format(namespaces, "Sensato.Translate", Ejemplo);
+
+            XmlDocument xmlDocument = SerializeToXML(model);
+            string csSharpModel = SerializeToCSharp(xmlDocument);
+            return string.Empty; // esta se reemplaza por csSharpModel
         }
 
         private static XmlDocument SerializeToXML(csXML model)
@@ -80,14 +83,23 @@ namespace Sensato.Translate
                     }
                 }
             }
-
-            newFile.Save("C:/Users/Carolina Martinez/Desktop/FinalSample.xml");
-            
+            newFile.Save("C:/Users/Carolina Martinez/Desktop/VarDuplicateDocument.xml");
             return newFile;
         }
 
         private static string SerializeToCSharp(XmlDocument document)
         {
+            if (document.DocumentElement.HasChildNodes)
+            {
+                var elements = document.DocumentElement.FirstChild;
+                Console.WriteLine(elements);
+            }
+            string classOrClasses = TemplatesCollection.ClassTemplate;
+            classOrClasses = String.Format(classOrClasses,"TipoDeMetodo","nombreClase","funciones");
+
+            string namespaces = TemplatesCollection.NamespaceTemplate;
+            namespaces = String.Format(namespaces, "nombreDelNamespace", classOrClasses);
+
             return string.Empty;
         }
     }

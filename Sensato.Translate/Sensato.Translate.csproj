@@ -55,21 +55,25 @@
     <Compile Include="Entities\csVar.cs" />
     <Compile Include="Entities\csXML.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\FirstTemplate.Designer.cs">
+    <Compile Include="Resources\TemplatesCollection.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FirstTemplate.resx</DependentUpon>
+      <DependentUpon>TemplatesCollection.resx</DependentUpon>
     </Compile>
     <Compile Include="XMLToCSharp.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Ejemplo.txt" />
+    <EmbeddedResource Include="Resources\TemplatesCollection.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TemplatesCollection.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\FirstTemplate.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>FirstTemplate.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <None Include="Resources\NamespaceTemplate.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ClassTemplate.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

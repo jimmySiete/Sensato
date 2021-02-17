@@ -11,7 +11,7 @@ namespace Sensato.Translate.Entities
         public List<csArgument> arguments { get; set; }
         public string modifier { get; set; }
         public string datatypeReturn { get; set; }
-        public List<csLine> line { get; set; }
+        public List<csLine> line { get; set; } 
         public bool isStatic { get; set; }
         public csLine returnedType { get; set; }
         public bool isReturned { get; set; }

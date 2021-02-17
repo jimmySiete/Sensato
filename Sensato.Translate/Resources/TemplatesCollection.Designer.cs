@@ -19,17 +19,17 @@ namespace Sensato.Translate.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class FirstTemplate {
+    public class TemplatesCollection {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal FirstTemplate() {
+        internal TemplatesCollection() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sensato.Translate.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sensato.Translate.Resources.FirstTemplate", typeof(FirstTemplate).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sensato.Translate.Resources.TemplatesCollection", typeof(TemplatesCollection).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,14 +61,26 @@ namespace Sensato.Translate.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {{{0}}} class
-        ///{
-        ///   {{{1}}}
-        ///}.
+        ///   Looks up a localized string similar to {0} class {1}
+        ///{{
+        ///   {2}
+        ///}}.
         /// </summary>
-        public static string Ejemplo {
+        public static string ClassTemplate {
             get {
-                return ResourceManager.GetString("Ejemplo", resourceCulture);
+                return ResourceManager.GetString("ClassTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to namespace {0}
+        ///{{
+        ///	{1}
+        ///}}.
+        /// </summary>
+        public static string NamespaceTemplate {
+            get {
+                return ResourceManager.GetString("NamespaceTemplate", resourceCulture);
             }
         }
     }
