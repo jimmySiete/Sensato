@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sensato.Translate.Entities
 {
-    public class csConstructor
+    public class csConstructor: csLine
     {
         public csClass classConstructor { get; set; }
         public List<csArgument> csArguments { get; set; }

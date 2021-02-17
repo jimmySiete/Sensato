@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Sensato.Translate.Entities
@@ -10,5 +11,12 @@ namespace Sensato.Translate.Entities
         public string name { get; set; }
         public string modifiers { get; set; }
         public string partial { get; set; }
+        public List<csLine> lines { get; set; }
+
+        public csClass()
+        {
+            this.lines = new List<csLine>();
+        }
+
     }
 }

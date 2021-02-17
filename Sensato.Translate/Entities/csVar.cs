@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Sensato.Translate.Entities
 {
-    public class csVar
+    public class csVar : csLine
     {
         public string name { get; set; }
         public string modifier { get; set; } // si es piblica  privada, el valor puede ir o no
