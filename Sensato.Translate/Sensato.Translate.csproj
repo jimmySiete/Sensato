@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Entities\csArgument.cs" />
     <Compile Include="Entities\csClass.cs" />
+    <Compile Include="Entities\csConstructor.cs" />
     <Compile Include="Entities\csDocument.cs" />
     <Compile Include="Entities\csExecuteMethods.cs" />
     <Compile Include="Entities\csGetter.cs" />
