@@ -1,4 +1,5 @@
 ﻿using Sensato.Translate.Entities;
+using Sensato.Translate.Resources;
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -11,8 +12,11 @@ namespace Sensato.Translate
     {
         public static string TranslateToCSharp(csXML model)
         {
-            XmlDocument xmlDocument = SerializeToXML(model);
-            string csSharpModel = SerializeToCSharp(xmlDocument);
+            String Ejemplo = FirstTemplate.Ejemplo;
+            Ejemplo = String.Format(Ejemplo, "public", "Ejemplo","var x= 0;");
+
+            //XmlDocument xmlDocument = SerializeToXML(model);
+            //string csSharpModel = SerializeToCSharp(xmlDocument);
             return string.Empty;
         }
 

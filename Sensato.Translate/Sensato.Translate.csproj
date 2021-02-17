@@ -61,10 +61,12 @@
     </Compile>
     <Compile Include="XMLToCSharp.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Ejemplo.txt" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\FirstTemplate.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>FirstTemplate.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
