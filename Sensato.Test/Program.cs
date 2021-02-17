@@ -9,6 +9,9 @@ namespace SENSATO.Test
     {
         static void Main(string[] args)
         {
+            List<csVar> variables = new List<csVar>();
+            variables.Add(new csVar() { name = "name", modifier = "public", isStatic = false, line = 0, value = "{ get; set; }", type= "string", lineCode = ""});
+
             csXML xmlModel = new csXML("1.0", "UTF-8");
   
             xmlModel.document.references = new List<csReferences>();
@@ -18,6 +21,8 @@ namespace SENSATO.Test
             xmlModel.document.csNamespace = new csNamespace() { name = "Sensato.Translate.Entities" };
             xmlModel.document.csNamespace.Classes = new List<csClass>();
             xmlModel.document.csNamespace.Classes.Add(new csClass { inheritance = "BaseSample", name = "Sample0", modifiers = "public", partial = "true" });
+            xmlModel.document.csNamespace.lines = new List<csLine>();
+            xmlModel.document.csNamespace.lines.AddRange(variables);
             string csObject = XMLToCSharp.TranslateToCSharp(xmlModel);
         }
 

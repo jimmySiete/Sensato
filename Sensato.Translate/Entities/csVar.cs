@@ -11,7 +11,7 @@ namespace Sensato.Translate.Entities
         public bool isStatic { get; set; } // 
         public object value { get; set; } // puede llevar una instancia o llamada a un metodo
         public string type { get; set; } // tipo de dato, depende de la linea se agrega o no
-        public csClass classes { get; set; } 
+        //public csClass classes { get; set; } 
         public csGetter getter { get; set; } // crear un inicializador 
         public csSetter setter { get; set; } // 
         public List<csExecuteMethods> methods { get; set; }
@@ -20,7 +20,7 @@ namespace Sensato.Translate.Entities
         {
             this.getter = null;
             this.setter = null;
-            this.classes = new csClass();
+            //this.classes = new csClass();
             this.methods = new List<csExecuteMethods>();
         }
     }

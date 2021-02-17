@@ -8,10 +8,11 @@ namespace Sensato.Translate.Entities
     {
         public string name { get; set; }
         public List<csClass> Classes { get; set; }
-
+        public List<csLine> lines { get; set; }
         public csNamespace()
         {
             this.Classes = new List<csClass>();
+            this.lines = new List<csLine>();
         }
     }
 }

@@ -11,12 +11,5 @@ namespace Sensato.Translate.Entities
         public string name { get; set; }
         public string modifiers { get; set; }
         public string partial { get; set; }
-        public List<csLine> lines { get; set; }
-
-        public csClass()
-        {
-            this.lines = new List<csLine>();
-        }
-
     }
 }
