@@ -2,6 +2,7 @@
 using Sensato.Translate.Resources;
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Xml;
 
@@ -57,7 +58,7 @@ namespace Sensato.Translate
                 namespaceAttr.Value = model.document.csNamespace.name;
                 namespaces.Attributes.Append(namespaceAttr);
 
-                if (model.document.csNamespace.Classes.Count >0) // inside of the 'Namespace' tag, we have to validate if one or more clases exists, it it's true there are inserted
+                if (model.document.csNamespace.Classes.Count > 0) // inside of the 'Namespace' tag, we have to validate if one or more clases exists, it it's true there are inserted
                 {
                     foreach (var item in model.document.csNamespace.Classes) // for each attribute from 'Classes', a sentence is defines to insert the name and value of the property
                     {
@@ -81,7 +82,36 @@ namespace Sensato.Translate
 
                         namespaces.AppendChild(classes);
                     }
+
+                    for (var i = 0; i < model.document.csNamespace.Classes.Count(); i++)
+                    {
+                        if (model.document.csNamespace.Classes[i].constructors.Count > 0)
+                        {
+                            foreach (var item in model.document.csNamespace.Classes[i].constructors)
+                            {
+                                /// codigo para añadir etiqueta de tipo csConstructor
+                            }
+
+                        } else
+                        if (model.document.csNamespace.Classes[i].lines.Count > 0)
+                        {
+                            //switch (model.document.csNamespace.Classes[i])
+                            //{
+
+                            //}
+                            foreach (var item in model.document.csNamespace.Classes[i].lines)
+                            {
+                                /// codigo para agregar las variables/// falta construir el switchcase 
+                                for (var j = 0; j < model.document.csNamespace.Classes[i].lines.Count; j++) // prodecure used to create and insert the attributes from each existant variable, constructor or method
+                                {
+
+                                }
+                            }
+                        } 
+                    
+                    }
                 }
+
             }
             newFile.Save("C:/Users/Carolina Martinez/Desktop/VarDuplicateDocument.xml");
             return newFile;

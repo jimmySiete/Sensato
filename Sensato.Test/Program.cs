@@ -9,8 +9,15 @@ namespace SENSATO.Test
     {
         static void Main(string[] args)
         {
-            List<csVar> variables = new List<csVar>();
-            variables.Add(new csVar() { name = "name", modifier = "public", isStatic = false, line = 0, value = "{ get; set; }", type= "string", lineCode = ""});
+            List<csLine> variables = new List<csLine>();
+            variables.Add(new csVar() { name = "name", modifier = "public", isStatic = false, line = 0, value = "{ get; set; }", type= "string", lineCode = "", methods = null, getter = null, setter = null});
+            variables.Add(new csVar() { name = "modifier", modifier = "public", isStatic = false, line = 1, value = "{ get; set; }", type = "string", lineCode = "" });
+            variables.Add(new csVar() { name = "isStatic", modifier = "public", isStatic = false, line = 2, value = "{ get; set; }", type = "bool", lineCode = ""});
+            variables.Add(new csVar() { name = "value", modifier = "public", isStatic = false, line = 3, value = "{ get; set; }", type = "object", lineCode = "" });
+            variables.Add(new csVar() { name = "type", modifier = "public", isStatic = false, line = 4, value = "{ get; set; }", type = "string", lineCode = ""});
+            variables.Add(new csVar() { name = "getter", modifier = "public", isStatic = false, line = 5, value = "{ get; set; }", type = "csGetter", lineCode = "" });
+            variables.Add(new csVar() { name = "setter", modifier = "public", isStatic = false, line = 6, value = "{ get; set; }", type = "csSetter", lineCode = ""});
+            variables.Add(new csVar() { name = "methods", modifier = "public", isStatic = false, line = 7, value = "{ get; set; }", type = "List<csExecuteMethods>", lineCode = "" });
 
             csXML xmlModel = new csXML("1.0", "UTF-8");
   
@@ -20,9 +27,7 @@ namespace SENSATO.Test
             xmlModel.document.references.Add(new csReferences() { name = "System.Text;" });
             xmlModel.document.csNamespace = new csNamespace() { name = "Sensato.Translate.Entities" };
             xmlModel.document.csNamespace.Classes = new List<csClass>();
-            xmlModel.document.csNamespace.Classes.Add(new csClass { inheritance = "BaseSample", name = "Sample0", modifiers = "public", partial = "true" });
-            xmlModel.document.csNamespace.lines = new List<csLine>();
-            xmlModel.document.csNamespace.lines.AddRange(variables);
+            xmlModel.document.csNamespace.Classes.Add(new csClass() { inheritance = "BaseSample", name = "Sample0", modifiers = "public", partial = "true", lines = variables });
             string csObject = XMLToCSharp.TranslateToCSharp(xmlModel);
         }
 
