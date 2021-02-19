@@ -52,7 +52,7 @@ namespace Sensato.DataAccess
             {
                 throw ex;
             }
-            finally 
+            finally
             {
                 command.Connection.Dispose();
                 command.Dispose();
