@@ -36,6 +36,7 @@ namespace Sensato.Translate
 
             XmlElement references = newFile.CreateElement("references", string.Empty);
             XmlElement namespaces = newFile.CreateElement("namespace", string.Empty);
+            XmlElement finalClass = newFile.CreateElement("class", string.Empty);
 
             if (model.document.references.Count>0) // in the first level it's declared the tag 'References', after verifying that this attribute exists
             {   
@@ -62,25 +63,23 @@ namespace Sensato.Translate
                 {
                     foreach (var item in model.document.csNamespace.Classes) // for each attribute from 'Classes', a sentence is defines to insert the name and value of the property
                     {
-                        XmlElement classes = newFile.CreateElement("class", string.Empty); // declaration of the child from 'Namespace' tag
-
                         XmlAttribute classAttrInheritance = newFile.CreateAttribute("inheritance");
                         classAttrInheritance.Value = item.inheritance;
-                        classes.Attributes.Append(classAttrInheritance);
+                        finalClass.Attributes.Append(classAttrInheritance);
 
                         XmlAttribute classAttrModifiers = newFile.CreateAttribute("modifiers");
                         classAttrModifiers.Value = item.modifiers;
-                        classes.Attributes.Append(classAttrModifiers);
+                        finalClass.Attributes.Append(classAttrModifiers);
 
                         XmlAttribute classAttrName = newFile.CreateAttribute("name");
                         classAttrName.Value = item.name;
-                        classes.Attributes.Append(classAttrName);
+                        finalClass.Attributes.Append(classAttrName);
 
                         XmlAttribute classAttrPartial = newFile.CreateAttribute("partial");
                         classAttrPartial.Value = item.partial;
-                        classes.Attributes.Append(classAttrPartial);
+                        finalClass.Attributes.Append(classAttrPartial);
 
-                        namespaces.AppendChild(classes);
+                        namespaces.AppendChild(finalClass);
                     }
 
                     for (var i = 0; i < model.document.csNamespace.Classes.Count(); i++)
@@ -95,17 +94,45 @@ namespace Sensato.Translate
                         } else
                         if (model.document.csNamespace.Classes[i].lines.Count > 0)
                         {
-                            //switch (model.document.csNamespace.Classes[i])
-                            //{
+                            var anotherLineCaster = (csVar)model.document.csNamespace.Classes[i].lines.First();
+                            switch (anotherLineCaster.GetType().Name)
+                            { 
+                                case "csVar":
+                                    foreach (var item in model.document.csNamespace.Classes)
+                                    {
+                                        /// codigo para agregar las variables/// falta construir el switchcase 
+                                        for (var j = 0; j < model.document.csNamespace.Classes[i].lines.Capacity; j++) // prodecure used to create and insert the attributes from each existant variable, constructor or method
+                                        {
+                                            var lineCaster = (csVar)model.document.csNamespace.Classes[i].lines[j];
+                                            XmlElement variables = newFile.CreateElement("var", string.Empty);
 
-                            //}
-                            foreach (var item in model.document.csNamespace.Classes[i].lines)
-                            {
-                                /// codigo para agregar las variables/// falta construir el switchcase 
-                                for (var j = 0; j < model.document.csNamespace.Classes[i].lines.Count; j++) // prodecure used to create and insert the attributes from each existant variable, constructor or method
-                                {
+                                            XmlAttribute attrName = newFile.CreateAttribute("name");
+                                            attrName.Value = lineCaster.name;
+                                            variables.Attributes.Append(attrName);
 
-                                }
+                                            XmlAttribute attrModifier = newFile.CreateAttribute("modifier");
+                                            attrModifier.Value = lineCaster.modifier;
+                                            variables.Attributes.Append(attrModifier);
+
+                                            XmlAttribute attrStatic = newFile.CreateAttribute("isStatic");
+                                            attrStatic.Value = lineCaster.isStatic.ToString();
+                                            variables.Attributes.Append(attrStatic);
+
+                                            XmlAttribute attrValue = newFile.CreateAttribute("value");
+                                            attrValue.Value = lineCaster.value.ToString();
+                                            variables.Attributes.Append(attrValue);
+
+                                            XmlAttribute attrType = newFile.CreateAttribute("type");
+                                            attrType.Value = lineCaster.type;
+                                            variables.Attributes.Append(attrType);
+
+                                            finalClass.AppendChild(variables);
+                                        }
+                                    }
+                                    break;
+
+                                case "csMethods":
+                                    break;
                             }
                         } 
                     
@@ -113,24 +140,34 @@ namespace Sensato.Translate
                 }
 
             }
-            newFile.Save("C:/Users/Carolina Martinez/Desktop/VarDuplicateDocument.xml");
             return newFile;
         }
 
         private static string SerializeToCSharp(XmlDocument document)
         {
-            if (document.DocumentElement.HasChildNodes)
+            if (document.DocumentElement.ChildNodes.Count > 0)
             {
-                var elements = document.DocumentElement.FirstChild;
-                Console.WriteLine(elements);
+                if (document.DocumentElement.FirstChild.Name == "references")
+                {
+                    foreach (var item in document.DocumentElement.FirstChild)
+                    {
+                        string references = TemplatesCollection.ReferenceTemplate;
+                        references = String.Format(references);
+                        Console.WriteLine(references);
+                    }
+
+                }
+                var elements = document.ChildNodes;
+                Console.WriteLine(elements.Item(0).LocalName);
             }
+
             string classOrClasses = TemplatesCollection.ClassTemplate;
             classOrClasses = String.Format(classOrClasses,"TipoDeMetodo","nombreClase","funciones");
 
             string namespaces = TemplatesCollection.NamespaceTemplate;
             namespaces = String.Format(namespaces, "nombreDelNamespace", classOrClasses);
 
-            return string.Empty;
+            return string.Empty;  // se reemplaza con la string chida
         }
     }
 }

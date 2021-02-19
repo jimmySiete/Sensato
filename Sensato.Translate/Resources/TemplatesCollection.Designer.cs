@@ -83,5 +83,14 @@ namespace Sensato.Translate.Resources {
                 return ResourceManager.GetString("NamespaceTemplate", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to using {0}.
+        /// </summary>
+        public static string ReferenceTemplate {
+            get {
+                return ResourceManager.GetString("ReferenceTemplate", resourceCulture);
+            }
+        }
     }
 }
