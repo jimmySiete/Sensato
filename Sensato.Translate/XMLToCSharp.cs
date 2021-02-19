@@ -152,7 +152,7 @@ namespace Sensato.Translate
                     foreach (var item in document.DocumentElement.FirstChild)
                     {
                         string references = TemplatesCollection.ReferenceTemplate;
-                        references = String.Format(references);
+                        references = String.Format(references, item.ToString());
                         Console.WriteLine(references);
                     }
 
