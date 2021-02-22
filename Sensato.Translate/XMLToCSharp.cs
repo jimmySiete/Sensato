@@ -149,13 +149,18 @@ namespace Sensato.Translate
             {
                 if (document.DocumentElement.FirstChild.Name == "references")
                 {
-                    foreach (var item in document.DocumentElement.FirstChild)
+                    for (var i=0; i < document.DocumentElement.FirstChild.ChildNodes.Count; i++)
                     {
                         string references = TemplatesCollection.ReferenceTemplate;
-                        references = String.Format(references, item.ToString());
+                        references = String.Format(references,document.DocumentElement.FirstChild.ChildNodes[i].Attributes.GetNamedItem("name").Value);
                         Console.WriteLine(references);
                     }
-
+                    //foreach (var item in document.DocumentElement.FirstChild)
+                    //{
+                    //    string references = TemplatesCollection.ReferenceTemplate;
+                    //    references = String.Format(references);
+                    //    Console.WriteLine(references);
+                    //}
                 }
                 var elements = document.ChildNodes;
                 Console.WriteLine(elements.Item(0).LocalName);
