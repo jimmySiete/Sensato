@@ -2,8 +2,6 @@
 using Sensato.Translate.Resources;
 using System;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Xml;
 
 
@@ -13,12 +11,6 @@ namespace Sensato.Translate
     {
         public static string TranslateToCSharp(csXML model)
         {
-            //String Ejemplo = FirstTemplate.Ejemplo;
-            //Ejemplo = String.Format(Ejemplo, "public", "Ejemplo","var x= 0;"); // en el metodo serialze to csSharp
-
-            //string namespaces = FirstTemplate.NamespaceTemplate;
-            //namespaces = String.Format(namespaces, "Sensato.Translate", Ejemplo);
-
             XmlDocument xmlDocument = SerializeToXML(model);
             string csSharpModel = SerializeToCSharp(xmlDocument);
             return string.Empty; // esta se reemplaza por csSharpModel
@@ -126,12 +118,17 @@ namespace Sensato.Translate
                                             attrType.Value = lineCaster.type;
                                             variables.Attributes.Append(attrType);
 
+                                            XmlAttribute attrLine = newFile.CreateAttribute("line");
+                                            attrLine.Value = lineCaster.line.ToString();
+                                            variables.Attributes.Append(attrLine);
+
                                             finalClass.AppendChild(variables);
                                         }
                                     }
                                     break;
 
                                 case "csMethods":
+
                                     break;
                             }
                         } 
@@ -145,6 +142,11 @@ namespace Sensato.Translate
 
         private static string SerializeToCSharp(XmlDocument document)
         {
+            string classes = "";
+            string namespaces = "";
+            string variables = "";
+            string listOfVariables = "";
+
             if (document.DocumentElement.ChildNodes.Count > 0)
             {
                 if (document.DocumentElement.FirstChild.Name == "references")
@@ -155,22 +157,41 @@ namespace Sensato.Translate
                         references = String.Format(references,document.DocumentElement.FirstChild.ChildNodes[i].Attributes.GetNamedItem("name").Value);
                         Console.WriteLine(references);
                     }
-                    //foreach (var item in document.DocumentElement.FirstChild)
-                    //{
-                    //    string references = TemplatesCollection.ReferenceTemplate;
-                    //    references = String.Format(references);
-                    //    Console.WriteLine(references);
-                    //}
                 }
-                var elements = document.ChildNodes;
-                Console.WriteLine(elements.Item(0).LocalName);
+
+                if (document.DocumentElement.FirstChild.NextSibling.Name == "namespace")
+                {
+                    namespaces = TemplatesCollection.NamespaceTemplate;
+
+                    if (document.DocumentElement.FirstChild.NextSibling.ChildNodes.Count > 0)
+                    {
+                        
+                        if (document.DocumentElement.FirstChild.NextSibling.FirstChild.ChildNodes.Count > 0)
+                        { 
+                            for(var i=0; i < document.DocumentElement.FirstChild.NextSibling.FirstChild.ChildNodes.Count; i++)
+                            {
+                                XmlNode node = document.DocumentElement.FirstChild.NextSibling.FirstChild.ChildNodes[i];
+                                variables = TemplatesCollection.VariableTemplate;
+                                variables = String.Format(variables, node.Attributes.GetNamedItem("line").Value, node.Attributes.GetNamedItem("modifier").Value, node.Attributes.GetNamedItem("name").Value, node.Attributes.GetNamedItem("type").Value, node.Attributes.GetNamedItem("value").Value + "\n\r");
+                                listOfVariables += variables + "\n\r";
+                            }
+                        }
+                        for (var i = 0; i < document.DocumentElement.FirstChild.NextSibling.ChildNodes.Count; i++)
+                        {
+                            classes = TemplatesCollection.ClassTemplate;
+                            classes = String.Format(classes, document.DocumentElement.FirstChild.NextSibling.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, document.DocumentElement.FirstChild.NextSibling.ChildNodes[i].Attributes.GetNamedItem("name").Value, listOfVariables);
+                        }
+                    }
+                    namespaces = String.Format(namespaces, document.DocumentElement.FirstChild.NextSibling.Attributes.GetNamedItem("name").Value, classes);
+                    Console.WriteLine(namespaces);
+                }
             }
 
-            string classOrClasses = TemplatesCollection.ClassTemplate;
-            classOrClasses = String.Format(classOrClasses,"TipoDeMetodo","nombreClase","funciones");
+            //string classOrClasses = TemplatesCollection.ClassTemplate;
+            //classOrClasses = String.Format(classOrClasses,"TipoDeMetodo","nombreClase","funciones");
 
-            string namespaces = TemplatesCollection.NamespaceTemplate;
-            namespaces = String.Format(namespaces, "nombreDelNamespace", classOrClasses);
+            //string namespaces = TemplatesCollection.NamespaceTemplate;
+            //namespaces = String.Format(namespaces, "nombreDelNamespace", classOrClasses);
 
             return string.Empty;  // se reemplaza con la string chida
         }

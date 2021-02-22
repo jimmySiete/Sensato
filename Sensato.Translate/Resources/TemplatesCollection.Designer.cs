@@ -92,5 +92,14 @@ namespace Sensato.Translate.Resources {
                 return ResourceManager.GetString("ReferenceTemplate", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} {1} {2} {3} /n.
+        /// </summary>
+        public static string VariableTemplate {
+            get {
+                return ResourceManager.GetString("VariableTemplate", resourceCulture);
+            }
+        }
     }
 }
