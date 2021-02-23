@@ -21,7 +21,7 @@ namespace Sensato.Translate
             XmlDocument newFile = new XmlDocument();  // document creation
             XmlDeclaration declaration = newFile.CreateXmlDeclaration(model.version, model.encoding, null);
             XmlElement heading = newFile.DocumentElement; //xml declaration
-            newFile.InsertBefore(declaration, heading);
+            newFile.InsertBefore(declaration, heading);                                                                                                                                                                                          
 
             XmlElement document = newFile.CreateElement("document",string.Empty); // document initial structure, where the parts are declared to 
             newFile.AppendChild(document);
@@ -143,25 +143,27 @@ namespace Sensato.Translate
         private static string SerializeToCSharp(XmlDocument document)
         {
             string classes = "";
-            string namespaces = "";
-            string variables = "";
             string listOfVariables = "";
 
-            if (document.DocumentElement.ChildNodes.Count > 0)
+            // The first thing to do is to check if our XML document isn't null or empty
+            if (document != null && document.HasChildNodes)
             {
-                if (document.DocumentElement.FirstChild.Name == "references")
+                var referenceNode = document.SelectSingleNode("//*[local-name()='references']"); // expression used to select a specific node.
+
+                if (referenceNode.ChildNodes.Count > 0) // At this first part of the translation, if we have one or more references, there are listed.
                 {
-                    for (var i=0; i < document.DocumentElement.FirstChild.ChildNodes.Count; i++)
+                    for (var item = 0; item < referenceNode.ChildNodes.Count; item++)
                     {
                         string references = TemplatesCollection.ReferenceTemplate;
-                        references = String.Format(references,document.DocumentElement.FirstChild.ChildNodes[i].Attributes.GetNamedItem("name").Value);
+                        references = String.Format(references, referenceNode.ChildNodes[item].Attributes.GetNamedItem("name").Value);
                         Console.WriteLine(references);
                     }
                 }
+            }
 
                 if (document.DocumentElement.FirstChild.NextSibling.Name == "namespace")
                 {
-                    namespaces = TemplatesCollection.NamespaceTemplate;
+                    string namespaces = TemplatesCollection.NamespaceTemplate;
 
                     if (document.DocumentElement.FirstChild.NextSibling.ChildNodes.Count > 0)
                     {
@@ -171,8 +173,8 @@ namespace Sensato.Translate
                             for(var i=0; i < document.DocumentElement.FirstChild.NextSibling.FirstChild.ChildNodes.Count; i++)
                             {
                                 XmlNode node = document.DocumentElement.FirstChild.NextSibling.FirstChild.ChildNodes[i];
-                                variables = TemplatesCollection.VariableTemplate;
-                                variables = String.Format(variables, node.Attributes.GetNamedItem("line").Value, node.Attributes.GetNamedItem("modifier").Value, node.Attributes.GetNamedItem("name").Value, node.Attributes.GetNamedItem("type").Value, node.Attributes.GetNamedItem("value").Value + "\n\r");
+                                string variables = TemplatesCollection.VariableTemplate;
+                                variables = String.Format(variables, node.Attributes.GetNamedItem("line").Value, node.Attributes.GetNamedItem("modifier").Value, node.Attributes.GetNamedItem("type").Value, node.Attributes.GetNamedItem("name").Value);
                                 listOfVariables += variables + "\n\r";
                             }
                         }
@@ -185,13 +187,7 @@ namespace Sensato.Translate
                     namespaces = String.Format(namespaces, document.DocumentElement.FirstChild.NextSibling.Attributes.GetNamedItem("name").Value, classes);
                     Console.WriteLine(namespaces);
                 }
-            }
-
-            //string classOrClasses = TemplatesCollection.ClassTemplate;
-            //classOrClasses = String.Format(classOrClasses,"TipoDeMetodo","nombreClase","funciones");
-
-            //string namespaces = TemplatesCollection.NamespaceTemplate;
-            //namespaces = String.Format(namespaces, "nombreDelNamespace", classOrClasses);
+            
 
             return string.Empty;  // se reemplaza con la string chida
         }
