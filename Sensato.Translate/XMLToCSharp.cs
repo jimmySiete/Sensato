@@ -1,6 +1,7 @@
 ﻿using Sensato.Translate.Entities;
 using Sensato.Translate.Resources;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 
@@ -23,20 +24,20 @@ namespace Sensato.Translate
             XmlElement heading = newFile.DocumentElement; //xml declaration
             newFile.InsertBefore(declaration, heading);                                                                                                                                                                                          
 
-            XmlElement document = newFile.CreateElement("document",string.Empty); // document initial structure, where the parts are declared to 
+            XmlElement document = newFile.CreateElement("document",string.Empty); // document initial structure, where the parts are declared to specify the structure of the document.
             newFile.AppendChild(document);
 
             XmlElement references = newFile.CreateElement("references", string.Empty);
             XmlElement namespaces = newFile.CreateElement("namespace", string.Empty);
             XmlElement finalClass = newFile.CreateElement("class", string.Empty);
 
-            if (model.document.references.Count>0) // in the first level it's declared the tag 'References', after verifying that this attribute exists
+            if (model.document.references.Count>0) // in the first level it's declared the tag 'References', after verifying that this attribute exists.
             {   
                 document.AppendChild(references);
 
                 for (var i=0; i < model.document.references.Count; i++)
                 {
-                    XmlElement usings = newFile.CreateElement("using",string.Empty); // declaration of the child from 'References' tag 
+                    XmlElement usings = newFile.CreateElement("using",string.Empty); // declaration of the child from 'References' tag. 
                     XmlAttribute usingAttr = newFile.CreateAttribute("name");
                     usingAttr.Value = model.document.references[i].name;
                     usings.Attributes.Append(usingAttr);
@@ -44,16 +45,16 @@ namespace Sensato.Translate
                 }
             }
 
-            if (model.document.csNamespace.name != null) // at the same level that 'References', 'Namespace' tag is added after it. But first we have to verify if the attribute to namespace exists
+            if (model.document.csNamespace.name != null) // at the same level that 'References', 'Namespace' tag is added after it. But first we have to verify if the attribute to namespace exists.
             {
                 document.InsertAfter(namespaces, references);
-                XmlAttribute namespaceAttr = newFile.CreateAttribute("name"); // then we add the name of the namespace
+                XmlAttribute namespaceAttr = newFile.CreateAttribute("name"); // then we add the name of the namespace.
                 namespaceAttr.Value = model.document.csNamespace.name;
                 namespaces.Attributes.Append(namespaceAttr);
 
-                if (model.document.csNamespace.Classes.Count > 0) // inside of the 'Namespace' tag, we have to validate if one or more clases exists, it it's true there are inserted
+                if (model.document.csNamespace.Classes.Count > 0) // inside of the 'Namespace' tag, we have to validate if one or more clases exists, it it's true there are inserted.
                 {
-                    foreach (var item in model.document.csNamespace.Classes) // for each attribute from 'Classes', a sentence is defines to insert the name and value of the property
+                    foreach (var item in model.document.csNamespace.Classes) // for each attribute from 'Classes', a sentence is defines to insert the name and value of the property.
                     {
                         XmlAttribute classAttrInheritance = newFile.CreateAttribute("inheritance");
                         classAttrInheritance.Value = item.inheritance;
@@ -92,8 +93,7 @@ namespace Sensato.Translate
                                 case "csVar":
                                     foreach (var item in model.document.csNamespace.Classes)
                                     {
-                                        /// codigo para agregar las variables/// falta construir el switchcase 
-                                        for (var j = 0; j < model.document.csNamespace.Classes[i].lines.Capacity; j++) // prodecure used to create and insert the attributes from each existant variable, constructor or method
+                                        for (var j = 0; j < model.document.csNamespace.Classes[i].lines.Capacity; j++) // prodecure used to create and insert the attributes from each existant variable, constructor or method.
                                         {
                                             var lineCaster = (csVar)model.document.csNamespace.Classes[i].lines[j];
                                             XmlElement variables = newFile.CreateElement("var", string.Empty);
@@ -122,6 +122,10 @@ namespace Sensato.Translate
                                             attrLine.Value = lineCaster.line.ToString();
                                             variables.Attributes.Append(attrLine);
 
+                                            XmlAttribute attrGetOrSet = newFile.CreateAttribute("getterOrSetter");
+                                            attrGetOrSet.Value = lineCaster.getterOrSetter.ToString();
+                                            variables.Attributes.Append(attrGetOrSet);
+
                                             finalClass.AppendChild(variables);
                                         }
                                     }
@@ -142,54 +146,94 @@ namespace Sensato.Translate
 
         private static string SerializeToCSharp(XmlDocument document)
         {
+            string CSharpContainerCode = "";
             string classes = "";
             string listOfVariables = "";
+            string references = "";
+            string namespaces = "";
 
-            // The first thing to do is to check if our XML document isn't null or empty
+            // The first thing to do is to check if our XML document isn't null or empty.
             if (document != null && document.HasChildNodes)
             {
                 var referenceNode = document.SelectSingleNode("//*[local-name()='references']"); // expression used to select a specific node.
 
-                if (referenceNode.ChildNodes.Count > 0) // At this first part of the translation, if we have one or more references, there are listed.
+                if (referenceNode.ChildNodes.Count > 0) // At this first part of the translation, if we have one or more references, there are listed in a format.
                 {
                     for (var item = 0; item < referenceNode.ChildNodes.Count; item++)
                     {
-                        string references = TemplatesCollection.ReferenceTemplate;
+                        references = TemplatesCollection.ReferenceTemplate;
                         references = String.Format(references, referenceNode.ChildNodes[item].Attributes.GetNamedItem("name").Value);
                         Console.WriteLine(references);
                     }
                 }
-            }
 
-                if (document.DocumentElement.FirstChild.NextSibling.Name == "namespace")
+                var namespaceNode = document.SelectSingleNode("//*[local-name()='namespace']"); // expression used to select a specific node.
+
+                if (namespaceNode != null)// after that, if there's a namespace, we have to add it and all it's classes, methods, constructors and variables.
                 {
-                    string namespaces = TemplatesCollection.NamespaceTemplate;
-
-                    if (document.DocumentElement.FirstChild.NextSibling.ChildNodes.Count > 0)
+                    namespaces = TemplatesCollection.NamespaceTemplate;
+                    if (namespaceNode.HasChildNodes) // another validation to know if namespace has content.
                     {
-                        
-                        if (document.DocumentElement.FirstChild.NextSibling.FirstChild.ChildNodes.Count > 0)
-                        { 
-                            for(var i=0; i < document.DocumentElement.FirstChild.NextSibling.FirstChild.ChildNodes.Count; i++)
-                            {
-                                XmlNode node = document.DocumentElement.FirstChild.NextSibling.FirstChild.ChildNodes[i];
-                                string variables = TemplatesCollection.VariableTemplate;
-                                variables = String.Format(variables, node.Attributes.GetNamedItem("line").Value, node.Attributes.GetNamedItem("modifier").Value, node.Attributes.GetNamedItem("type").Value, node.Attributes.GetNamedItem("name").Value);
-                                listOfVariables += variables + "\n\r";
-                            }
-                        }
-                        for (var i = 0; i < document.DocumentElement.FirstChild.NextSibling.ChildNodes.Count; i++)
+                        for (var i=0; i < namespaceNode.ChildNodes.Count; i++) // this procedure help us to know how many classes are and if each class has lines of code.
                         {
+                            // about structure, we have the constructors listed in here and after that, the methods & lines of code.
+
+                            if (namespaceNode.ChildNodes[i].HasChildNodes)
+                            {
+                                string typeOfElement = namespaceNode.ChildNodes[i].FirstChild.Name;
+                                switch (typeOfElement) // used to write all the line codes or methods given
+                                {
+                                    case "var":
+                                        for (var j = 0; j < namespaceNode.ChildNodes[i].ChildNodes.Count; j++)
+                                        {
+                                            XmlNode varNode = namespaceNode.ChildNodes[i].ChildNodes[j];
+                                            string variables = TemplatesCollection.VariableTemplate;
+                                            if (varNode.Attributes.GetNamedItem("getterOrSetter").Value.ToString().ToLower() == "true") // this validation is read when the variable is type class
+                                            {
+                                                if (varNode.Attributes.GetNamedItem("isStatic").Value.ToString().ToLower() == "true")
+                                                {
+                                                    variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value + " static", varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, "{ get; set; }");
+                                                    listOfVariables += variables + "\n\r";
+                                                }
+                                                else
+                                                {
+                                                    variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value, varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, "{ get; set; }");
+                                                    listOfVariables += variables + "\n\r";
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (varNode.Attributes.GetNamedItem("isStatic").Value.ToString().ToLower() == "true")
+                                                {
+                                                    variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value + " static", varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, varNode.Attributes.GetNamedItem("value").Value);
+                                                    listOfVariables += variables + "\n\r";
+                                                }
+                                                else
+                                                {
+                                                    variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value, varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, varNode.Attributes.GetNamedItem("value").Value);
+                                                    listOfVariables += variables + "\n\r";
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    case "methods":
+                                        // por cada metodo imprimir las lineas de codigo que vengan
+                                        break;
+                                }
+                            }
                             classes = TemplatesCollection.ClassTemplate;
-                            classes = String.Format(classes, document.DocumentElement.FirstChild.NextSibling.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, document.DocumentElement.FirstChild.NextSibling.ChildNodes[i].Attributes.GetNamedItem("name").Value, listOfVariables);
+                            classes = String.Format(classes, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("name").Value, listOfVariables);
+                        }
+                        for (var k=0; k < namespaceNode.ChildNodes.Count; k++ )
+                        {
+                            namespaces = string.Format(namespaces, namespaceNode.Attributes.GetNamedItem("name").Value, classes);
+                            Console.WriteLine(namespaces);
                         }
                     }
-                    namespaces = String.Format(namespaces, document.DocumentElement.FirstChild.NextSibling.Attributes.GetNamedItem("name").Value, classes);
-                    Console.WriteLine(namespaces);
                 }
-            
-
-            return string.Empty;  // se reemplaza con la string chida
+            }
+            CSharpContainerCode = references + namespaces;
+            return CSharpContainerCode;  // se reemplaza con la string chida, que en este caso es CSharpContainerCode
         }
     }
 }

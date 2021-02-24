@@ -11,13 +11,13 @@ namespace SENSATO.Test
         {
             List<csLine> variables = new List<csLine>();
             variables.Add(new csVar() { name = "name", modifier = "public", isStatic = false, line = 0, value = "", type = "string", lineCode = "", getterOrSetter = true });
-            variables.Add(new csVar() { name = "modifier", modifier = "public", isStatic = false, line = 1, value = "", type = "string", lineCode = "", getterOrSetter = true });
-            variables.Add(new csVar() { name = "isStatic", modifier = "public", isStatic = false, line = 2, value = "", type = "bool", lineCode = "", getterOrSetter = true });
-            variables.Add(new csVar() { name = "value", modifier = "public", isStatic = false, line = 3, value = "", type = "object", lineCode = "", getterOrSetter = true });
-            variables.Add(new csVar() { name = "type", modifier = "public", isStatic = false, line = 4, value = "", type = "string", lineCode = "", getterOrSetter = true });
-            variables.Add(new csVar() { name = "getter", modifier = "public", isStatic = false, line = 5, value = "", type = "csGetter", lineCode = "", getterOrSetter = true });
-            variables.Add(new csVar() { name = "setter", modifier = "public", isStatic = false, line = 6, value = "", type = "csSetter", lineCode = "", getterOrSetter = true });
-            variables.Add(new csVar() { name = "methods", modifier = "public", isStatic = false, line = 7, value = "", type = "List<csExecuteMethods>", lineCode = "", getterOrSetter = true });
+            variables.Add(new csVar() { name = "modifier", modifier = "public", isStatic = true, line = 1, value = "", type = "string", lineCode = "", getterOrSetter = true });
+            variables.Add(new csVar() { name = "isStatic", modifier = "public", isStatic = true, line = 2, value = "", type = "bool", lineCode = "", getterOrSetter = true });
+            variables.Add(new csVar() { name = "value", modifier = "public", isStatic = true, line = 3, value = "", type = "object", lineCode = "", getterOrSetter = true });
+            variables.Add(new csVar() { name = "type", modifier = "public", isStatic = true, line = 4, value = "", type = "string", lineCode = "", getterOrSetter = true });
+            variables.Add(new csVar() { name = "getter", modifier = "public", isStatic = true, line = 5, value = "", type = "csGetter", lineCode = "", getterOrSetter = true });
+            variables.Add(new csVar() { name = "setter", modifier = "public", isStatic = true, line = 6, value = "", type = "csSetter", lineCode = "", getterOrSetter = true });
+            variables.Add(new csVar() { name = "methods", modifier = "public", isStatic = true, line = 7, value = "", type = "List<csExecuteMethods>", lineCode = "", getterOrSetter = true });
 
             csXML xmlModel = new csXML("1.0", "UTF-8");
   
