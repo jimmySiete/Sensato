@@ -61,10 +61,10 @@ namespace Sensato.Translate.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} class {1}
-        ///{{
+        ///   Looks up a localized string similar to    {0} class {1}
+        ///   {{
         ///   {2}
-        ///}}.
+        ///   }}.
         /// </summary>
         public static string ClassTemplate {
             get {
@@ -73,9 +73,22 @@ namespace Sensato.Translate.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to namespace {0}
+        ///   Looks up a localized string similar to {0} {1}({2})
         ///{{
-        ///	{1}
+        ///	this.{3} = new {1}();
+        ///}}.
+        /// </summary>
+        public static string ConstructorTemplate {
+            get {
+                return ResourceManager.GetString("ConstructorTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///namespace {0}
+        ///{{
+        ///{1}
         ///}}.
         /// </summary>
         public static string NamespaceTemplate {
@@ -94,7 +107,7 @@ namespace Sensato.Translate.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} {1} {2} {3} /n.
+        ///   Looks up a localized string similar to 	{0} {1} {2} {3} {4}.
         /// </summary>
         public static string VariableTemplate {
             get {

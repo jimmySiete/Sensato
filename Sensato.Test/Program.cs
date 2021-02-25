@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using Sensato.Translate;
 using Sensato.Translate.Entities;
 
@@ -19,6 +20,9 @@ namespace SENSATO.Test
             variables.Add(new csVar() { name = "setter", modifier = "public", isStatic = true, line = 6, value = "", type = "csSetter", lineCode = "", getterOrSetter = true });
             variables.Add(new csVar() { name = "methods", modifier = "public", isStatic = true, line = 7, value = "", type = "List<csExecuteMethods>", lineCode = "", getterOrSetter = true });
 
+            List<csConstructor> constructorList = new List<csConstructor>();
+            constructorList.Add(new csConstructor() { classConstructor = new csClass() { name = "Sample0" }, csArguments = null, csLines = null });
+
             csXML xmlModel = new csXML("1.0", "UTF-8");
   
             xmlModel.document.references = new List<csReferences>();
@@ -27,7 +31,7 @@ namespace SENSATO.Test
             xmlModel.document.references.Add(new csReferences() { name = "System.Text;" });
             xmlModel.document.csNamespace = new csNamespace() { name = "Sensato.Translate.Entities" };
             xmlModel.document.csNamespace.Classes = new List<csClass>();
-            xmlModel.document.csNamespace.Classes.Add(new csClass() { inheritance = "BaseSample", name = "Sample0", modifiers = "public", partial = "true", lines = variables });
+            xmlModel.document.csNamespace.Classes.Add(new csClass() { inheritance = "BaseSample", name = "Sample0", modifiers = "public", partial = "true", lines = variables, constructors = constructorList });
             string csObject = XMLToCSharp.TranslateToCSharp(xmlModel);
         }
 

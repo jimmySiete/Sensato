@@ -30,6 +30,7 @@ namespace Sensato.Translate
             XmlElement references = newFile.CreateElement("references", string.Empty);
             XmlElement namespaces = newFile.CreateElement("namespace", string.Empty);
             XmlElement finalClass = newFile.CreateElement("class", string.Empty);
+            XmlElement constructors = newFile.CreateElement("constructor", string.Empty);
 
             if (model.document.references.Count>0) // in the first level it's declared the tag 'References', after verifying that this attribute exists.
             {   
@@ -77,14 +78,27 @@ namespace Sensato.Translate
 
                     for (var i = 0; i < model.document.csNamespace.Classes.Count(); i++)
                     {
-                        if (model.document.csNamespace.Classes[i].constructors.Count > 0)
+                        if (model.document.csNamespace.Classes[i].constructors.Count > 0) // we have to declare the list of constructors first, if they are contained in the received model 
                         {
+                            
                             foreach (var item in model.document.csNamespace.Classes[i].constructors)
                             {
-                                /// codigo para añadir etiqueta de tipo csConstructor
-                            }
+                                XmlAttribute constructorClass = newFile.CreateAttribute("class");
+                                constructorClass.Value = model.document.csNamespace.Classes[i].constructors.FirstOrDefault().classConstructor.name; 
+                                constructors.Attributes.Append(constructorClass);
 
-                        } else
+                                XmlAttribute constructorArguments = newFile.CreateAttribute("arguments");
+                                constructorArguments.Value = model.document.csNamespace.Classes[i].constructors.Any()? "parameters" : model.document.csNamespace.Classes[i].constructors.Count.ToString(); // en esta decicion lo que se busca es poner para metros si los hay o un texto si no.
+                                constructors.Attributes.Append(constructorArguments);
+
+                                XmlAttribute constructorLines = newFile.CreateAttribute("lines");
+                                constructorLines.Value = model.document.csNamespace.Classes[i].constructors.Any()? "lines" : model.document.csNamespace.Classes[i].constructors.Count.ToString(); // en esta decisión si existen lines de codigo dentro del constructor, se deben de listar.
+                                constructors.Attributes.Append(constructorLines);
+
+                                finalClass.AppendChild(constructors);
+                            }
+                        }
+
                         if (model.document.csNamespace.Classes[i].lines.Count > 0)
                         {
                             var anotherLineCaster = (csVar)model.document.csNamespace.Classes[i].lines.First();
@@ -136,11 +150,11 @@ namespace Sensato.Translate
                                     break;
                             }
                         } 
-                    
                     }
                 }
 
             }
+            newFile.Save("C:/Users/Carolina Martinez/Desktop/ConstructorSample.xml");
             return newFile;
         }
 
@@ -177,6 +191,8 @@ namespace Sensato.Translate
                         for (var i=0; i < namespaceNode.ChildNodes.Count; i++) // this procedure help us to know how many classes are and if each class has lines of code.
                         {
                             // about structure, we have the constructors listed in here and after that, the methods & lines of code.
+                            string thereAreConstructors = namespaceNode.ChildNodes[i].OuterXml;
+                            Console.WriteLine(thereAreConstructors);
 
                             if (namespaceNode.ChildNodes[i].HasChildNodes)
                             {

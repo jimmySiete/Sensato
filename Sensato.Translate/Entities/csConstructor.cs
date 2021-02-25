@@ -12,5 +12,12 @@ namespace Sensato.Translate.Entities
         public List<csArgument> csArguments { get; set; }
         public List<csLine> csLines { get; set; }
 
+        public csConstructor()
+        {
+            this.classConstructor = new csClass();
+            this.csArguments = new List<csArgument>();
+            this.csLines = new List<csLine>();
+        }
+
     }
 }
