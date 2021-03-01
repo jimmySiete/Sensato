@@ -80,21 +80,46 @@ namespace Sensato.Translate
                     {
                         if (model.document.csNamespace.Classes[i].constructors.Count > 0) // we have to declare the list of constructors first, if they are contained in the received model 
                         {
-                            
-                            foreach (var item in model.document.csNamespace.Classes[i].constructors)
+                            if (model.document.csNamespace.Classes[i].constructors.Count == 1)
                             {
-                                XmlAttribute constructorClass = newFile.CreateAttribute("class");
-                                constructorClass.Value = model.document.csNamespace.Classes[i].constructors.FirstOrDefault().classConstructor.name; 
-                                constructors.Attributes.Append(constructorClass);
+                                // ultima validacion
+                            }
+                            else
+                            {
+                                foreach (var item in model.document.csNamespace.Classes[i].constructors)// etiqueta creada por cada constructor
+                                {
+                                    XmlAttribute constructorClass = newFile.CreateAttribute("class");
+                                    constructorClass.Value = model.document.csNamespace.Classes[i].constructors.FirstOrDefault().classConstructor.name;
+                                    constructors.Attributes.Append(constructorClass);
 
-                                XmlAttribute constructorArguments = newFile.CreateAttribute("arguments");
-                                constructorArguments.Value = model.document.csNamespace.Classes[i].constructors.Any()? "parameters" : model.document.csNamespace.Classes[i].constructors.Count.ToString(); // en esta decicion lo que se busca es poner para metros si los hay o un texto si no.
-                                constructors.Attributes.Append(constructorArguments);
+                                    string constructorArgs = "";
 
-                                XmlAttribute constructorLines = newFile.CreateAttribute("lines");
-                                constructorLines.Value = model.document.csNamespace.Classes[i].constructors.Any()? "lines" : model.document.csNamespace.Classes[i].constructors.Count.ToString(); // en esta decisión si existen lines de codigo dentro del constructor, se deben de listar.
-                                constructors.Attributes.Append(constructorLines);
+                                    XmlAttribute constructorArguments = newFile.CreateAttribute("arguments");
+                                    foreach (var index in model.document.csNamespace.Classes[i].constructors[i].csArguments) // iteramos en una cadena los argumentos existentes
+                                    {
+                                        constructorArgs += index.value + " ";
+                                    }
+                                    string[] subs = constructorArgs.Split(' ');
 
+                                    for (var index = 0; index < model.document.csNamespace.Classes[i].constructors.Count; index++)
+                                    {
+                                        if (model.document.csNamespace.Classes[i].constructors[index].csArguments != null)
+                                            constructorArguments.Value = subs[index] + "," + subs[index + 1]; // los argumentos iterados se agregan a la etiqueta que corresponde 
+                                        else
+                                            constructorArguments.Value = null;
+                                        constructors.Attributes.Append(constructorArguments);
+                                    }
+
+                                    XmlAttribute constructorLines = newFile.CreateAttribute("lines");
+                                    for (var index = 0; index < model.document.csNamespace.Classes[i].constructors.Count; index++) // se utiliza la misma logica que con la lista de argumentos
+                                    {
+                                        if (model.document.csNamespace.Classes[i].constructors[index].csLines != null)
+                                            constructorLines.Value = model.document.csNamespace.Classes[i].constructors[index].csLines.ToString();
+                                        else
+                                            constructorLines.Value = null;
+                                        constructors.Attributes.Append(constructorLines);
+                                    }
+                                }
                                 finalClass.AppendChild(constructors);
                             }
                         }
@@ -165,6 +190,7 @@ namespace Sensato.Translate
             string listOfVariables = "";
             string references = "";
             string namespaces = "";
+            string constructorWithoutParameters = "";
 
             // The first thing to do is to check if our XML document isn't null or empty.
             if (document != null && document.HasChildNodes)
@@ -191,20 +217,45 @@ namespace Sensato.Translate
                         for (var i=0; i < namespaceNode.ChildNodes.Count; i++) // this procedure help us to know how many classes are and if each class has lines of code.
                         {
                             // about structure, we have the constructors listed in here and after that, the methods & lines of code.
-                            string thereAreConstructors = namespaceNode.ChildNodes[i].OuterXml;
-                            Console.WriteLine(thereAreConstructors);
+                            var constructorsList = namespaceNode.SelectNodes("//*[local-name()='constructor']"); // to verify how many constructors we have
+                            if (constructorsList.Count > 0 && constructorsList != null)
+                            {
+                                for (var a = 0; a < constructorsList.Count; a++)
+                                {
+                                    if (constructorsList[a].Attributes.GetNamedItem("arguments").Value == "") // this means the constructor doesnt have parameters
+                                    {
+                                        if(constructorsList[a].Attributes.GetNamedItem("lines").Value.Length > 0) // this represents when there are lines of code inside
+                                        {
+                                            // PENDIENTE lineas de codigo
+                                        }
+                                        else
+                                        {
+                                            constructorWithoutParameters = TemplatesCollection.ConstructorTemplate;
+                                            constructorWithoutParameters = String.Format(constructorWithoutParameters, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("name").Value, "","NOMBRE");
+                                            Console.WriteLine(constructorWithoutParameters);
+                                        }
+                                    } else if (constructorsList[a].Attributes.GetNamedItem("arguments").Value != "" && constructorsList.Count == 0) // this validation is used to 
+                                    {
+
+                                    }
+                                }
+                                
+                            }
 
                             if (namespaceNode.ChildNodes[i].HasChildNodes)
                             {
-                                string typeOfElement = namespaceNode.ChildNodes[i].FirstChild.Name;
+                                string typeOfElement = namespaceNode.ChildNodes[i].FirstChild.NextSibling.Name;
                                 switch (typeOfElement) // used to write all the line codes or methods given
                                 {
                                     case "var":
                                         for (var j = 0; j < namespaceNode.ChildNodes[i].ChildNodes.Count; j++)
                                         {
-                                            XmlNode varNode = namespaceNode.ChildNodes[i].ChildNodes[j];
+                                            XmlNode varNode = namespaceNode.ChildNodes[i].NextSibling;
+                                            Console.WriteLine(varNode.OuterXml);
                                             string variables = TemplatesCollection.VariableTemplate;
-                                            if (varNode.Attributes.GetNamedItem("getterOrSetter").Value.ToString().ToLower() == "true") // this validation is read when the variable is type class
+                                          
+                                            
+                                            if (varNode.Attributes.GetNamedItem("getterOrSetter").Value == "true") // this validation is read when the variable is type class
                                             {
                                                 if (varNode.Attributes.GetNamedItem("isStatic").Value.ToString().ToLower() == "true")
                                                 {

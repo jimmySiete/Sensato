@@ -20,8 +20,12 @@ namespace SENSATO.Test
             variables.Add(new csVar() { name = "setter", modifier = "public", isStatic = true, line = 6, value = "", type = "csSetter", lineCode = "", getterOrSetter = true });
             variables.Add(new csVar() { name = "methods", modifier = "public", isStatic = true, line = 7, value = "", type = "List<csExecuteMethods>", lineCode = "", getterOrSetter = true });
 
+            List<csArgument> argList = new List<csArgument>();
+            argList.Add(new csArgument() { type = "string", value = "48" });
+            argList.Add(new csArgument() { type = "string", value = "Carolina" });
+
             List<csConstructor> constructorList = new List<csConstructor>();
-            constructorList.Add(new csConstructor() { classConstructor = new csClass() { name = "Sample0" }, csArguments = null, csLines = null });
+            constructorList.Add(new csConstructor() { classConstructor = new csClass() { name = "Sample0" }, csArguments = argList, csLines = null });
 
             csXML xmlModel = new csXML("1.0", "UTF-8");
   
