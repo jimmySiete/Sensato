@@ -78,18 +78,23 @@ namespace Sensato.Translate
 
                     for (var i = 0; i < model.document.csNamespace.Classes.Count(); i++)
                     {
-                        if (model.document.csNamespace.Classes[i].constructors.Count > 0) // we have to declare the list of constructors first, if they are contained in the received model 
+                        if (model.document.csNamespace.Classes[i].constructors.Count > 0) // we have to declare the list of constructors first, if they are contained in the received model. 
                         {
-                            foreach (var item in model.document.csNamespace.Classes[i].constructors) // tag created for each constructor inner the classes
+                            foreach (var item in model.document.csNamespace.Classes[i].constructors) // tag created for each constructor inside the classes.
                             {
                                 XmlAttribute constructorClass = newFile.CreateAttribute("class");
                                 constructorClass.Value = model.document.csNamespace.Classes[i].constructors.FirstOrDefault().classConstructor.name;
                                 constructors.Attributes.Append(constructorClass);
 
                                 if (model.document.csNamespace.Classes[i].constructors.Count == 1 && model.document.csNamespace.Classes[i].constructors[i].csArguments.Any())   // Rule about constructors: if we have one constructor with parameters
-                                {                                                                                                                                               // then we have to add an empty constructor and the other with all the data 
+                                {                                                                                                                                               // then we have to add an empty constructor and the other with all the data. 
                                     var args = model.document.csNamespace.Classes[i].constructors[i].csArguments;
                                     XmlElement emptyConstructor = newFile.CreateElement("constructor", string.Empty);
+
+                                    XmlAttribute constructorNameClass = newFile.CreateAttribute("class");
+                                    constructorNameClass.Value = constructorClass.Value;
+                                    emptyConstructor.Attributes.Append(constructorNameClass);
+
                                     XmlAttribute emptyArgs = newFile.CreateAttribute("arguments");
                                     emptyArgs.Value = null;
                                     emptyConstructor.Attributes.Append(emptyArgs);
@@ -101,12 +106,17 @@ namespace Sensato.Translate
                                     finalClass.AppendChild(emptyConstructor);
              
                                     XmlElement nonEmptyConstructor = newFile.CreateElement("constructor", string.Empty);
+
+                                    XmlAttribute nonEmptyConstructorClass = newFile.CreateAttribute("class");
+                                    nonEmptyConstructorClass.Value = constructorClass.Value;
+                                    nonEmptyConstructor.Attributes.Append(nonEmptyConstructorClass);
+
                                     XmlAttribute nonEmptyArgs = newFile.CreateAttribute("arguments");
                                     nonEmptyArgs.Value = ResultantArguments(args);
                                     nonEmptyConstructor.Attributes.Append(nonEmptyArgs);
 
                                     XmlAttribute constructorLines = newFile.CreateAttribute("lines");
-                                    for (var index = 0; index < model.document.csNamespace.Classes[i].constructors.Count; index++) // se utiliza la misma logica que con la lista de argumentos
+                                    for (var index = 0; index < model.document.csNamespace.Classes[i].constructors.Count; index++) // the same logic is used like in the arguments list.
                                     {
                                         if (model.document.csNamespace.Classes[i].constructors[index].csLines != null)
                                             constructorLines.Value = model.document.csNamespace.Classes[i].constructors[index].csLines.ToString();
@@ -115,23 +125,23 @@ namespace Sensato.Translate
                                         nonEmptyConstructor.Attributes.Append(constructorLines);
                                     }
 
-                                    emptyConstructor.AppendChild(nonEmptyConstructor);
+                                    finalClass.AppendChild(nonEmptyConstructor);
                                 }
-                                else
+                                else // when we have more than two constructors, these are printed with its elements
                                 {
                                     XmlAttribute constructorArguments = newFile.CreateAttribute("arguments");
 
                                     for (var index = 0; index < model.document.csNamespace.Classes[i].constructors.Count; index++)
                                     {
                                         if (model.document.csNamespace.Classes[i].constructors[index].csArguments != null)
-                                            constructorArguments.Value = ResultantArguments(model.document.csNamespace.Classes[i].constructors[index].csArguments); // los argumentos iterados se agregan a la etiqueta que corresponde 
+                                            constructorArguments.Value = ResultantArguments(model.document.csNamespace.Classes[i].constructors[index].csArguments); // iterated arguments are added to the corresponding tag.
                                         else
                                             constructorArguments.Value = null;
                                         constructors.Attributes.Append(constructorArguments);
                                     }
 
                                     XmlAttribute constructorLines = newFile.CreateAttribute("lines");
-                                    for (var index = 0; index < model.document.csNamespace.Classes[i].constructors.Count; index++) // se utiliza la misma logica que con la lista de argumentos
+                                    for (var index = 0; index < model.document.csNamespace.Classes[i].constructors.Count; index++) // the same logic is used like in the arguments list.
                                     {
                                         if (model.document.csNamespace.Classes[i].constructors[index].csLines != null)
                                             constructorLines.Value = model.document.csNamespace.Classes[i].constructors[index].csLines.ToString();
@@ -199,18 +209,16 @@ namespace Sensato.Translate
                 }
 
             }
-            newFile.Save("C:/Users/Carolina Martinez/Desktop/ConstructorSample.xml");
+          //newFile.Save("C:/Users/Carolina Martinez/Desktop/ConstructorSample.xml");
             return newFile;
         }
 
         private static string SerializeToCSharp(XmlDocument document)
         {
-            string CSharpContainerCode = "";
             string classes = "";
             string listOfVariables = "";
             string references = "";
             string namespaces = "";
-            string constructorWithoutParameters = "";
 
             // The first thing to do is to check if our XML document isn't null or empty.
             if (document != null && document.HasChildNodes)
@@ -229,7 +237,7 @@ namespace Sensato.Translate
 
                 var namespaceNode = document.SelectSingleNode("//*[local-name()='namespace']"); // expression used to select a specific node.
 
-                if (namespaceNode != null)// after that, if there's a namespace, we have to add it and all it's classes, methods, constructors and variables.
+                if (namespaceNode != null)// after that, if there's a namespace, we have to add it and all it's classes, constructors, methods and variables.
                 {
                     namespaces = TemplatesCollection.NamespaceTemplate;
                     if (namespaceNode.HasChildNodes) // another validation to know if namespace has content.
@@ -250,16 +258,18 @@ namespace Sensato.Translate
                                         }
                                         else
                                         {
-                                            constructorWithoutParameters = TemplatesCollection.ConstructorTemplate;
-                                            constructorWithoutParameters = String.Format(constructorWithoutParameters, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("name").Value, "","NOMBRE");
+                                            string constructorWithoutParameters = TemplatesCollection.ConstructorTemplate;
+                                            constructorWithoutParameters = String.Format(constructorWithoutParameters, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("name").Value,"", "linea de codigo");
                                             Console.WriteLine(constructorWithoutParameters);
                                         }
-                                    } else if (constructorsList[a].Attributes.GetNamedItem("arguments").Value != "" && constructorsList.Count == 0) // this validation is used to 
+                                    } else if (constructorsList[a].Attributes.GetNamedItem("arguments").Value != "" && constructorsList.Count > 1) // this validation is used when the constructor has parameters and empty constructor.
                                     {
-
+                                        string constructorWithParameters = TemplatesCollection.ConstructorTemplate;
+                                        constructorWithParameters = String.Format(constructorWithParameters, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("name").Value, constructorsList[i].Attributes.GetNamedItem("arguments").Value, "lineas de codigo");
+                                        Console.WriteLine(constructorWithParameters);
+                                        Console.WriteLine(constructorsList[i].Attributes.GetNamedItem("arguments").Value);
                                     }
                                 }
-                                
                             }
 
                             if (namespaceNode.ChildNodes[i].HasChildNodes)
@@ -319,7 +329,7 @@ namespace Sensato.Translate
                     }
                 }
             }
-            CSharpContainerCode = references + namespaces;
+            string CSharpContainerCode = references + namespaces;
             return CSharpContainerCode;  // se reemplaza con la string chida, que en este caso es CSharpContainerCode
         }
         public static string ResultantArguments(List<csArgument> args)

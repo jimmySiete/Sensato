@@ -20,6 +20,13 @@ namespace SENSATO.Test
             variables.Add(new csVar() { name = "setter", modifier = "public", isStatic = true, line = 6, value = "", type = "csSetter", lineCode = "", getterOrSetter = true });
             variables.Add(new csVar() { name = "methods", modifier = "public", isStatic = true, line = 7, value = "", type = "List<csExecuteMethods>", lineCode = "", getterOrSetter = true });
 
+            List<csArgument> methodsArgs = new List<csArgument>();
+            methodsArgs.Add(new csArgument() { type = "string", value = "Hola Crayola"});
+            methodsArgs.Add(new csArgument() { type = "int", value = "2021" });
+
+            List<csLine> methods = new List<csLine>();
+            methods.Add(new csMethods() { arguments = methodsArgs, isStatic = false, isReturned =  false });
+
             List<csArgument> argList = new List<csArgument>();
             argList.Add(new csArgument() { type = "string", value = "48" });
             argList.Add(new csArgument() { type = "string", value = "Carolina" });
