@@ -8,9 +8,10 @@ namespace Sensato.Translate.Entities
 {
     public class csMethods : csLine
     { 
+        public string name { get; set; }
         public List<csArgument> arguments { get; set; }
         public string modifier { get; set; }
-        public string datatypeReturn { get; set; }
+        public string dataTypeReturn { get; set; }
         public List<csLine> lines { get; set; } 
         public bool isStatic { get; set; }
         public csLine returnedType { get; set; }

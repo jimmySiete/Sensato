@@ -25,7 +25,8 @@ namespace SENSATO.Test
             methodsArgs.Add(new csArgument() { type = "int", value = "2021" });
 
             List<csLine> methods = new List<csLine>();
-            methods.Add(new csMethods() { arguments = methodsArgs, isStatic = false, isReturned =  false });
+            methods.Add(new csMethods() { name = "Testing", arguments = methodsArgs, isStatic = false, isReturned = false, dataTypeReturn = "void", lines = null });
+            methods.Add(new csMethods() { name = "AnotherTesting", arguments = null, isStatic = true, isReturned = true, dataTypeReturn = "string", lines = null });
 
             List<csArgument> argList = new List<csArgument>();
             argList.Add(new csArgument() { type = "string", value = "48" });
