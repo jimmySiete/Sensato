@@ -10,6 +10,13 @@ namespace SENSATO.Test
     {
         static void Main(string[] args)
         {
+            List<csLine> methodLines = new List<csLine>();
+            methodLines.Add(new csLine() { line = 0, lineCode = "var x = 5;", executeMethods = null});
+
+            List<csArgument> methodsArgs = new List<csArgument>();
+            methodsArgs.Add(new csArgument() { type = "string", value = "Saludo" });
+            methodsArgs.Add(new csArgument() { type = "int", value = "Año" });
+
             List<csLine> variables = new List<csLine>();
             variables.Add(new csVar() { name = "name", modifier = "public", isStatic = false, line = 0, value = "", type = "string", lineCode = "", getterOrSetter = true });
             variables.Add(new csVar() { name = "modifier", modifier = "public", isStatic = true, line = 1, value = "", type = "string", lineCode = "", getterOrSetter = true });
@@ -19,18 +26,12 @@ namespace SENSATO.Test
             variables.Add(new csVar() { name = "getter", modifier = "public", isStatic = true, line = 5, value = "", type = "csGetter", lineCode = "", getterOrSetter = true });
             variables.Add(new csVar() { name = "setter", modifier = "public", isStatic = true, line = 6, value = "", type = "csSetter", lineCode = "", getterOrSetter = true });
             variables.Add(new csVar() { name = "methods", modifier = "public", isStatic = true, line = 7, value = "", type = "List<csExecuteMethods>", lineCode = "", getterOrSetter = true });
-
-            List<csArgument> methodsArgs = new List<csArgument>();
-            methodsArgs.Add(new csArgument() { type = "string", value = "Hola Crayola"});
-            methodsArgs.Add(new csArgument() { type = "int", value = "2021" });
-
-            List<csLine> methods = new List<csLine>();
-            methods.Add(new csMethods() { name = "Testing", arguments = methodsArgs, isStatic = false, isReturned = false, dataTypeReturn = "void", lines = null });
-            methods.Add(new csMethods() { name = "AnotherTesting", arguments = null, isStatic = true, isReturned = true, dataTypeReturn = "string", lines = null });
+            variables.Add(new csMethods() { name = "Testing", arguments = methodsArgs, isStatic = false, isReturned = false, dataTypeReturn = "void", lines = null , line = 8});
+            variables.Add(new csMethods() { name = "AnotherTesting", arguments = null, isStatic = true, isReturned = true, dataTypeReturn = "string", lines = methodLines, line = 9 });
 
             List<csArgument> argList = new List<csArgument>();
-            argList.Add(new csArgument() { type = "string", value = "48" });
-            argList.Add(new csArgument() { type = "string", value = "Carolina" });
+            argList.Add(new csArgument() { type = "string", value = "Apellido" });
+            argList.Add(new csArgument() { type = "string", value = "Nombre" });
 
             List<csConstructor> constructorList = new List<csConstructor>();
             constructorList.Add(new csConstructor() { classConstructor = new csClass() { name = "Sample0" }, csArguments = argList, csLines = null });

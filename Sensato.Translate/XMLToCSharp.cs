@@ -2,6 +2,7 @@
 using Sensato.Translate.Resources;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Xml;
 
@@ -33,8 +34,7 @@ namespace Sensato.Translate
             XmlElement constructors = newFile.CreateElement("constructor", string.Empty);
 
             if (model.document.references.Count>0) // in the first level it's declared the tag 'References', after verifying that this attribute exists.
-            {   
-                document.AppendChild(references);
+            {   document.AppendChild(references);
 
                 for (var i=0; i < model.document.references.Count; i++)
                 {
@@ -127,7 +127,7 @@ namespace Sensato.Translate
 
                                     finalClass.AppendChild(nonEmptyConstructor);
                                 }
-                                else // when we have more than two constructors, these are printed with its elements
+                                else // when we have more than two constructors, these are printed with its elements.
                                 {
                                     XmlAttribute constructorArguments = newFile.CreateAttribute("arguments");
 
@@ -156,60 +156,111 @@ namespace Sensato.Translate
 
                         if (model.document.csNamespace.Classes[i].lines.Count > 0)
                         {
-                            var anotherLineCaster = (csVar)model.document.csNamespace.Classes[i].lines.First();
-                            switch (anotherLineCaster.GetType().Name)
-                            { 
-                                case "csVar":
-                                    foreach (var item in model.document.csNamespace.Classes)
-                                    {
-                                        for (var j = 0; j < model.document.csNamespace.Classes[i].lines.Capacity; j++) // prodecure used to create and insert the attributes from each existant variable, constructor or method.
+                            foreach (var item in model.document.csNamespace.Classes[i].lines) // for each class, we found variables and methods, depending of the value from the current line we are printing a variable or methods.
+                            {
+                                string opts = item.GetType().Name;
+                                switch (opts)
+                                {
+                                    case "csVar":
+                                        foreach (var varItem in model.document.csNamespace.Classes)
                                         {
-                                            var lineCaster = (csVar)model.document.csNamespace.Classes[i].lines[j];
+                                            var lineCasterVar = (csVar)item;
                                             XmlElement variables = newFile.CreateElement("var", string.Empty);
 
                                             XmlAttribute attrName = newFile.CreateAttribute("name");
-                                            attrName.Value = lineCaster.name;
+                                            attrName.Value = lineCasterVar.name;
                                             variables.Attributes.Append(attrName);
 
                                             XmlAttribute attrModifier = newFile.CreateAttribute("modifier");
-                                            attrModifier.Value = lineCaster.modifier;
+                                            attrModifier.Value = lineCasterVar.modifier;
                                             variables.Attributes.Append(attrModifier);
 
                                             XmlAttribute attrStatic = newFile.CreateAttribute("isStatic");
-                                            attrStatic.Value = lineCaster.isStatic.ToString();
+                                            attrStatic.Value = lineCasterVar.isStatic.ToString();
                                             variables.Attributes.Append(attrStatic);
 
                                             XmlAttribute attrValue = newFile.CreateAttribute("value");
-                                            attrValue.Value = lineCaster.value.ToString();
+                                            attrValue.Value = lineCasterVar.value.ToString();
                                             variables.Attributes.Append(attrValue);
 
                                             XmlAttribute attrType = newFile.CreateAttribute("type");
-                                            attrType.Value = lineCaster.type;
+                                            attrType.Value = lineCasterVar.type;
                                             variables.Attributes.Append(attrType);
 
                                             XmlAttribute attrLine = newFile.CreateAttribute("line");
-                                            attrLine.Value = lineCaster.line.ToString();
+                                            attrLine.Value = lineCasterVar.line.ToString();
                                             variables.Attributes.Append(attrLine);
 
                                             XmlAttribute attrGetOrSet = newFile.CreateAttribute("getterOrSetter");
-                                            attrGetOrSet.Value = lineCaster.getterOrSetter.ToString();
+                                            attrGetOrSet.Value = lineCasterVar.getterOrSetter.ToString();
                                             variables.Attributes.Append(attrGetOrSet);
 
                                             finalClass.AppendChild(variables);
                                         }
-                                    }
-                                    break;
+                                        break;
 
-                                case "csMethods":
+                                    case "csMethods":
+                                        foreach (var methodItem in model.document.csNamespace.Classes)
+                                        {
+                                            var lineCasterMethod = (csMethods)item;
+                                            XmlElement methods = newFile.CreateElement("methods",string.Empty);
 
-                                    break;
-                            }
+                                            XmlAttribute methodName = newFile.CreateAttribute("name");
+                                            methodName.Value = lineCasterMethod.name;
+                                            methods.Attributes.Append(methodName);
+
+                                            XmlAttribute methodArgs = newFile.CreateAttribute("arguments");
+                                            if (lineCasterMethod.arguments != null)
+                                                methodArgs.Value = ResultantArguments(lineCasterMethod.arguments);
+                                            else
+                                                methodArgs.Value = null;
+                                            methods.Attributes.Append(methodArgs);
+
+                                            XmlAttribute isStatic = newFile.CreateAttribute("static");
+                                            isStatic.Value = lineCasterMethod.isStatic.ToString();
+                                            methods.Attributes.Append(isStatic);
+
+                                            XmlAttribute isReturn = newFile.CreateAttribute("returned");
+                                            isReturn.Value = lineCasterMethod.isReturned.ToString();
+                                            methods.Attributes.Append(isReturn);
+
+                                            XmlAttribute dataTypeReturn = newFile.CreateAttribute("dataTypeReturn");
+                                            dataTypeReturn.Value = lineCasterMethod.dataTypeReturn;
+                                            methods.Attributes.Append(dataTypeReturn);
+
+                                            XmlAttribute methodLines = newFile.CreateAttribute("lines");
+                                            if (lineCasterMethod.lines != null) // lines of code are contained inside the methods, at the same time we have to insert the lineMethod node.
+                                            { 
+                                                foreach (var lineItem in lineCasterMethod.lines) // inside the method it is the lines of code contained in the model.
+                                                {
+                                                    XmlElement lineMethod = newFile.CreateElement("line", string.Empty);
+                                                    XmlAttribute line = newFile.CreateAttribute("number");
+                                                    line.Value = lineItem.line.ToString();
+                                                    lineMethod.Attributes.Append(line);
+                                                    XmlAttribute lineChain = newFile.CreateAttribute("chain");
+                                                    lineChain.Value = lineItem.lineCode;
+                                                    lineMethod.Attributes.Append(lineChain);
+                                                    // then we have to complete the attribute 'execute methods' bc don't remember how this part works.
+                                                    methods.AppendChild(lineMethod);
+                                                }
+                                                methodLines.Value = lineCasterMethod.lines.ToString();
+                                            } 
+                                            else
+                                            {
+                                                methodLines.Value = null;
+                                            }
+                                            methods.Attributes.Append(methodLines);
+                                            finalClass.AppendChild(methods);
+                                        }
+                                        break;
+                                }
+                            }      
                         } 
                     }
                 }
 
             }
-          //newFile.Save("C:/Users/Carolina Martinez/Desktop/ConstructorSample.xml");
+            //newFile.Save("C:/Users/Carolina Martinez/Desktop/ConstructorSample.xml"); // this line only is enabled when we update the code or to test new specifications.
             return newFile;
         }
 
@@ -219,24 +270,20 @@ namespace Sensato.Translate
             string listOfVariables = "";
             string references = "";
             string namespaces = "";
-
-            // The first thing to do is to check if our XML document isn't null or empty.
-            if (document != null && document.HasChildNodes)
+            
+            if (document != null && document.HasChildNodes) // The first thing to do is to check if our XML document isn't null or empty.
             {
                 var referenceNode = document.SelectSingleNode("//*[local-name()='references']"); // expression used to select a specific node.
 
                 if (referenceNode.ChildNodes.Count > 0) // At this first part of the translation, if we have one or more references, there are listed in a format.
-                {
                     for (var item = 0; item < referenceNode.ChildNodes.Count; item++)
                     {
                         references = TemplatesCollection.ReferenceTemplate;
                         references = String.Format(references, referenceNode.ChildNodes[item].Attributes.GetNamedItem("name").Value);
                         Console.WriteLine(references);
                     }
-                }
-
+                
                 var namespaceNode = document.SelectSingleNode("//*[local-name()='namespace']"); // expression used to select a specific node.
-
                 if (namespaceNode != null)// after that, if there's a namespace, we have to add it and all it's classes, constructors, methods and variables.
                 {
                     namespaces = TemplatesCollection.NamespaceTemplate;
@@ -245,14 +292,14 @@ namespace Sensato.Translate
                         for (var i=0; i < namespaceNode.ChildNodes.Count; i++) // this procedure help us to know how many classes are and if each class has lines of code.
                         {
                             // about structure, we have the constructors listed in here and after that, the methods & lines of code.
-                            var constructorsList = namespaceNode.SelectNodes("//*[local-name()='constructor']"); // to verify how many constructors we have
+                            var constructorsList = namespaceNode.SelectNodes("//*[local-name()='constructor']"); // to verify how many constructors we have.
                             if (constructorsList.Count > 0 && constructorsList != null)
                             {
                                 for (var a = 0; a < constructorsList.Count; a++)
                                 {
-                                    if (constructorsList[a].Attributes.GetNamedItem("arguments").Value == "") // this means the constructor doesnt have parameters
+                                    if (constructorsList[a].Attributes.GetNamedItem("arguments").Value == "") // this means the constructor doesn't have parameters.
                                     {
-                                        if(constructorsList[a].Attributes.GetNamedItem("lines").Value.Length > 0) // this represents when there are lines of code inside
+                                        if(constructorsList[a].Attributes.GetNamedItem("lines").Value.Length > 0) // this represents when there are lines of code inside.
                                         {
                                             // PENDIENTE lineas de codigo
                                         }
@@ -281,7 +328,6 @@ namespace Sensato.Translate
                                         for (var j = 0; j < namespaceNode.ChildNodes[i].ChildNodes.Count; j++)
                                         {
                                             XmlNode varNode = namespaceNode.ChildNodes[i].NextSibling;
-                                            Console.WriteLine(varNode.OuterXml);
                                             string variables = TemplatesCollection.VariableTemplate;
                                           
                                             
@@ -313,15 +359,33 @@ namespace Sensato.Translate
                                             }
                                         }
                                         break;
+
                                     case "methods":
-                                        // por cada metodo imprimir las lineas de codigo que vengan
+                                        for (var k=0; k < namespaceNode.ChildNodes[i].ChildNodes.Count; k++)
+                                        {
+                                            XmlNode methodNode = namespaceNode.ChildNodes[i].NextSibling;
+                                            string methods = TemplatesCollection.MethodTemplate;
+
+                                            if (methodNode.Attributes.GetNamedItem("isStatic").Value == "true") // that means the method is static.
+                                            {
+                                                if (methodNode.Attributes.GetNamedItem("arguments").Value.Length>0) // that means a static method w/arguments.
+                                                {
+                                                    if (methodNode.HasChildNodes) // that means a static method w/arguments and lines of code.
+                                                    {
+                                                        
+                                                    }
+
+                                                }
+                                            }
+
+                                        }
                                         break;
                                 }
                             }
                             classes = TemplatesCollection.ClassTemplate;
                             classes = String.Format(classes, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("name").Value, listOfVariables);
                         }
-                        for (var k=0; k < namespaceNode.ChildNodes.Count; k++ )
+                        for (var k=0; k < namespaceNode.ChildNodes.Count; k++)
                         {
                             namespaces = string.Format(namespaces, namespaceNode.Attributes.GetNamedItem("name").Value, classes);
                             Console.WriteLine(namespaces);
@@ -337,7 +401,7 @@ namespace Sensato.Translate
             var result = "";
             foreach (var item in args)
             {
-                result += item.value + ",";
+                result += item.type + " " + item.value + ",";
             }
             result = result.TrimEnd(',');
             return result;
