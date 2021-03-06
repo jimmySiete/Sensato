@@ -270,7 +270,10 @@ namespace Sensato.Translate
             string listOfVariables = "";
             string references = "";
             string namespaces = "";
-            
+            string constructorWithoutParameters = "";
+            string constructorWithParameters = "";
+
+
             if (document != null && document.HasChildNodes) // The first thing to do is to check if our XML document isn't null or empty.
             {
                 var referenceNode = document.SelectSingleNode("//*[local-name()='references']"); // expression used to select a specific node.
@@ -289,11 +292,11 @@ namespace Sensato.Translate
                     namespaces = TemplatesCollection.NamespaceTemplate;
                     if (namespaceNode.HasChildNodes) // another validation to know if namespace has content.
                     {
-                        for (var i=0; i < namespaceNode.ChildNodes.Count; i++) // this procedure help us to know how many classes are and if each class has lines of code.
+                        for (var i=0; i < namespaceNode.ChildNodes.Count; i++) // this procedure help us to know how many classes are and if each class has lines of code.    POR CADA CLASE VEMOS CUANTOS CONSTRUCTORES Y METODOS HAY ALMACENADOS.
                         {
                             // about structure, we have the constructors listed in here and after that, the methods & lines of code.
                             var constructorsList = namespaceNode.SelectNodes("//*[local-name()='constructor']"); // to verify how many constructors we have.
-                            if (constructorsList.Count > 0 && constructorsList != null)
+                            if (constructorsList.Count > 0 && constructorsList != null) // SI NUESTRA LISTA DE CONSTRUCTORES ES MAYOR A 0 Y NO ES NULLA
                             {
                                 for (var a = 0; a < constructorsList.Count; a++)
                                 {
@@ -301,89 +304,154 @@ namespace Sensato.Translate
                                     {
                                         if(constructorsList[a].Attributes.GetNamedItem("lines").Value.Length > 0) // this represents when there are lines of code inside.
                                         {
-                                            // PENDIENTE lineas de codigo
+                                            // PENDIENTE lineas de codigo.
                                         }
-                                        else
+                                        else // we don't have parameters and lines of code.
                                         {
-                                            string constructorWithoutParameters = TemplatesCollection.ConstructorTemplate;
+                                            constructorWithoutParameters = TemplatesCollection.ConstructorTemplate; 
                                             constructorWithoutParameters = String.Format(constructorWithoutParameters, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("name").Value,"", "linea de codigo");
-                                            Console.WriteLine(constructorWithoutParameters);
                                         }
-                                    } else if (constructorsList[a].Attributes.GetNamedItem("arguments").Value != "" && constructorsList.Count > 1) // this validation is used when the constructor has parameters and empty constructor.
+                                    } else if (constructorsList[a].Attributes.GetNamedItem("arguments").Value.Length > 0 && constructorsList.Count > 1) // this validation is used when the constructor has parameters and empty constructor.
                                     {
-                                        string constructorWithParameters = TemplatesCollection.ConstructorTemplate;
-                                        constructorWithParameters = String.Format(constructorWithParameters, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("name").Value, constructorsList[i].Attributes.GetNamedItem("arguments").Value, "lineas de codigo");
-                                        Console.WriteLine(constructorWithParameters);
-                                        Console.WriteLine(constructorsList[i].Attributes.GetNamedItem("arguments").Value);
+                                        if (constructorsList[a].Attributes.GetNamedItem("lines").Value.Length > 0) // to search for lines of code.
+                                        {
+                                            // PENDIENTE lineas de codigo.
+                                        } 
+                                        else // we don't have lines
+                                        {
+                                            constructorWithParameters = TemplatesCollection.ConstructorTemplate;
+                                            constructorWithParameters = String.Format(constructorWithParameters, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("name").Value, constructorsList[a].Attributes.GetNamedItem("arguments").Value, "lineas de codigo");
+                                        }
                                     }
                                 }
                             }
-
+                            
                             if (namespaceNode.ChildNodes[i].HasChildNodes)
                             {
-                                string typeOfElement = namespaceNode.ChildNodes[i].FirstChild.NextSibling.Name;
-                                switch (typeOfElement) // used to write all the line codes or methods given
+                                for (var list = 0; list < namespaceNode.ChildNodes[i].ChildNodes.Count; list++) // traversing the nodes contained in namespace
                                 {
-                                    case "var":
-                                        for (var j = 0; j < namespaceNode.ChildNodes[i].ChildNodes.Count; j++)
-                                        {
-                                            XmlNode varNode = namespaceNode.ChildNodes[i].NextSibling;
-                                            string variables = TemplatesCollection.VariableTemplate;
+                                    string name = namespaceNode.ChildNodes[i].ChildNodes[list].Name;
+                                    XmlNode varNode = namespaceNode.ChildNodes[i].ChildNodes[list];
+                                    switch (name) // used to write all the line codes or methods given
+                                    {
+                                        case "var":
+                                            for (var j = 0; j < namespaceNode.ChildNodes[i].ChildNodes.Count; j++)
+                                            {
+                                                string variables = TemplatesCollection.VariableTemplate;
+                                                if (varNode.Attributes.GetNamedItem("getterOrSetter").Value == "true") // this validation is read when the variable is type class
+                                                {
+                                                    if (varNode.Attributes.GetNamedItem("isStatic").Value.ToString().ToLower() == "true")
+                                                    {
+                                                        variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value + " static", varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, "{ get; set; }");
+                                                        listOfVariables += variables + "\n\r";
+                                                    }
+                                                    else
+                                                    {
+                                                        variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value, varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, "{ get; set; }");
+                                                        listOfVariables += variables + "\n\r";
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (varNode.Attributes.GetNamedItem("isStatic").Value.ToString().ToLower() == "true")
+                                                    {
+                                                        variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value + " static", varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, varNode.Attributes.GetNamedItem("value").Value);
+                                                        listOfVariables += variables + "\n\r";
+                                                    }
+                                                    else
+                                                    {
+                                                        variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value, varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, varNode.Attributes.GetNamedItem("value").Value);
+                                                        listOfVariables += variables + "\n\r";
+                                                    }
+                                                }
+                                            }
+                                            break;
+
+                                        case "methods":
+                                            for (var k = 0; k < namespaceNode.ChildNodes[i].ChildNodes.Count; k++)
+                                            {
+                                                XmlNode methodNode = namespaceNode.ChildNodes[i].NextSibling;
+                                                string methods = TemplatesCollection.MethodTemplate;
+
+                                                if (methodNode.Attributes.GetNamedItem("isStatic").Value == "true") // that means the method is static.
+                                                {
+                                                    if (methodNode.Attributes.GetNamedItem("arguments").Value.Length > 0) // that means a static method w/arguments.
+                                                    {
+                                                        if (methodNode.HasChildNodes) // that means a static method w/arguments and lines of code.
+                                                        {
+
+                                                        }
+
+                                                    }
+                                                }
+
+                                            }
+                                            break;
+                                    }
+                                }
+
+                                //switch (name) // used to write all the line codes or methods given
+                                //{
+                                //    case "var":
+                                //        for (var j = 0; j < namespaceNode.ChildNodes[i].ChildNodes.Count; j++)
+                                //        {
+                                //            XmlNode varNode = namespaceNode.ChildNodes[i].NextSibling;
+                                //            string variables = TemplatesCollection.VariableTemplate;
                                           
                                             
-                                            if (varNode.Attributes.GetNamedItem("getterOrSetter").Value == "true") // this validation is read when the variable is type class
-                                            {
-                                                if (varNode.Attributes.GetNamedItem("isStatic").Value.ToString().ToLower() == "true")
-                                                {
-                                                    variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value + " static", varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, "{ get; set; }");
-                                                    listOfVariables += variables + "\n\r";
-                                                }
-                                                else
-                                                {
-                                                    variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value, varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, "{ get; set; }");
-                                                    listOfVariables += variables + "\n\r";
-                                                }
-                                            }
-                                            else
-                                            {
-                                                if (varNode.Attributes.GetNamedItem("isStatic").Value.ToString().ToLower() == "true")
-                                                {
-                                                    variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value + " static", varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, varNode.Attributes.GetNamedItem("value").Value);
-                                                    listOfVariables += variables + "\n\r";
-                                                }
-                                                else
-                                                {
-                                                    variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value, varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, varNode.Attributes.GetNamedItem("value").Value);
-                                                    listOfVariables += variables + "\n\r";
-                                                }
-                                            }
-                                        }
-                                        break;
+                                //            if (varNode.Attributes.GetNamedItem("getterOrSetter").Value == "true") // this validation is read when the variable is type class
+                                //            {
+                                //                if (varNode.Attributes.GetNamedItem("isStatic").Value.ToString().ToLower() == "true")
+                                //                {
+                                //                    variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value + " static", varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, "{ get; set; }");
+                                //                    listOfVariables += variables + "\n\r";
+                                //                }
+                                //                else
+                                //                {
+                                //                    variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value, varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, "{ get; set; }");
+                                //                    listOfVariables += variables + "\n\r";
+                                //                }
+                                //            }
+                                //            else
+                                //            {
+                                //                if (varNode.Attributes.GetNamedItem("isStatic").Value.ToString().ToLower() == "true")
+                                //                {
+                                //                    variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value + " static", varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, varNode.Attributes.GetNamedItem("value").Value);
+                                //                    listOfVariables += variables + "\n\r";
+                                //                }
+                                //                else
+                                //                {
+                                //                    variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value, varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, varNode.Attributes.GetNamedItem("value").Value);
+                                //                    listOfVariables += variables + "\n\r";
+                                //                }
+                                //            }
+                                //        }
+                                //        break;
 
-                                    case "methods":
-                                        for (var k=0; k < namespaceNode.ChildNodes[i].ChildNodes.Count; k++)
-                                        {
-                                            XmlNode methodNode = namespaceNode.ChildNodes[i].NextSibling;
-                                            string methods = TemplatesCollection.MethodTemplate;
+                                //    case "methods":
+                                //        for (var k=0; k < namespaceNode.ChildNodes[i].ChildNodes.Count; k++)
+                                //        {
+                                //            XmlNode methodNode = namespaceNode.ChildNodes[i].NextSibling;
+                                //            string methods = TemplatesCollection.MethodTemplate;
 
-                                            if (methodNode.Attributes.GetNamedItem("isStatic").Value == "true") // that means the method is static.
-                                            {
-                                                if (methodNode.Attributes.GetNamedItem("arguments").Value.Length>0) // that means a static method w/arguments.
-                                                {
-                                                    if (methodNode.HasChildNodes) // that means a static method w/arguments and lines of code.
-                                                    {
+                                //            if (methodNode.Attributes.GetNamedItem("isStatic").Value == "true") // that means the method is static.
+                                //            {
+                                //                if (methodNode.Attributes.GetNamedItem("arguments").Value.Length>0) // that means a static method w/arguments.
+                                //                {
+                                //                    if (methodNode.HasChildNodes) // that means a static method w/arguments and lines of code.
+                                //                    {
                                                         
-                                                    }
+                                //                    }
 
-                                                }
-                                            }
+                                //                }
+                                //            }
 
-                                        }
-                                        break;
-                                }
+                                //        }
+                                //        break;
+                                //}
                             }
                             classes = TemplatesCollection.ClassTemplate;
-                            classes = String.Format(classes, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("name").Value, listOfVariables);
+                            classes = String.Format(classes, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("name").Value, constructorWithoutParameters + constructorWithParameters, listOfVariables);
                         }
                         for (var k=0; k < namespaceNode.ChildNodes.Count; k++)
                         {
