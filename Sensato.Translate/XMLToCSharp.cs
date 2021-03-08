@@ -15,7 +15,7 @@ namespace Sensato.Translate
         {
             XmlDocument xmlDocument = SerializeToXML(model);
             string csSharpModel = SerializeToCSharp(xmlDocument);
-            return string.Empty; // esta se reemplaza por csSharpModel
+            return csSharpModel; 
         }
 
         private static XmlDocument SerializeToXML(csXML model)
@@ -501,7 +501,7 @@ namespace Sensato.Translate
                 }
             }
             string CSharpContainerCode = references + namespaces;
-            return CSharpContainerCode;  // se reemplaza con la string chida, que en este caso es CSharpContainerCode
+            return CSharpContainerCode;  // the final code.
         }
         public static string ResultantArguments(List<csArgument> args)
         {

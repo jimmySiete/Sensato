@@ -47,12 +47,16 @@
     <Compile Include="Entities\csExecuteMethods.cs" />
     <Compile Include="Entities\csGetter.cs" />
     <Compile Include="Entities\csLine.cs" />
+    <Compile Include="Entities\csLinq.cs" />
     <Compile Include="Entities\csMethods.cs" />
     <Compile Include="Entities\csNamespace.cs" />
+    <Compile Include="Entities\csOrderBy.cs" />
     <Compile Include="Entities\csReferences.cs" />
+    <Compile Include="Entities\csSelect.cs" />
     <Compile Include="Entities\csSetter.cs" />
     <Compile Include="Entities\csValue.cs" />
     <Compile Include="Entities\csVar.cs" />
+    <Compile Include="Entities\csWhere.cs" />
     <Compile Include="Entities\csXML.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\TemplatesCollection.Designer.cs">

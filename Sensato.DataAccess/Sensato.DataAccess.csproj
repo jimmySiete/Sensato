@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="AccessDataObject.cs" />
     <Compile Include="Connection.cs" />
+    <Compile Include="DataAccessException\DataAccessException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -15,7 +15,7 @@ namespace Sensato.DataAccess
         /// <param name="parameters"></param>
         /// <param name="connStr"></param>
         /// <param name="transaction"></param>
-        /// <returns>We obtain a unique result from the SELECT statement contained in a DataTable. </returns>
+        /// <returns> We obtain a unique result from the SELECT statement contained in a DataTable. </returns>
         public static DataTable GetDataTable(string storedProcedureOrQuery, CommandType type, List<SqlParameter> parameters = null, string connStr = null, SqlTransaction transaction = null)
         {
 
@@ -35,7 +35,7 @@ namespace Sensato.DataAccess
         /// <param name="parameters"></param>
         /// <param name="connStr"></param>
         /// <param name="transaction"></param>
-        /// <returns>We obtain multiple results from the SELECT statement contained in a DataSet.</returns>
+        /// <returns> We obtain multiple results from the SELECT statement contained in a DataSet. </returns>
         public static DataSet GetDataSet(string storedProcedureOrQuery, CommandType type, List<SqlParameter> parameters = null, string connStr = null, SqlTransaction transaction = null)
         {
             var cmd = Connection.GetConnection(storedProcedureOrQuery, type, connStr, transaction);
@@ -54,7 +54,7 @@ namespace Sensato.DataAccess
         /// <param name="parameters"></param>
         /// <param name="connStr"></param>
         /// <param name="transaction"></param>
-        /// <returns>We can obtain results like: True if the statement was executed or False if it failed.</returns>
+        /// <returns> We can obtain results like: True if the statement was executed or False if it failed. </returns>
         public static bool ExecuteNonQuery(string storedProcedureOrQuery, CommandType type, List<SqlParameter> parameters = null, string connStr = null, SqlTransaction transaction = null)
         {
             var cmd = Connection.GetConnection(storedProcedureOrQuery, type, connStr, transaction);
