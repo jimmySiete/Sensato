@@ -336,161 +336,154 @@ namespace Sensato.Translate
                                     switch (name) // used to write all the line codes or methods given
                                     {
                                         case "var":
-                                            for (var j = 0; j < namespaceNode.ChildNodes[i].ChildNodes.Count; j++)
+                                        string variables = TemplatesCollection.VariableTemplate;
+                                        if (varNode.Attributes.GetNamedItem("getterOrSetter").Value == "true") // this validation is read when the variable is type class
+                                        {
+                                            if (varNode.Attributes.GetNamedItem("isStatic").Value.ToString().ToLower() == "true")
                                             {
-                                                string variables = TemplatesCollection.VariableTemplate;
-                                                if (varNode.Attributes.GetNamedItem("getterOrSetter").Value == "true") // this validation is read when the variable is type class
+                                                variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value + " static", varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, "{ get; set; }");
+                                                listOfVariables += variables + "\n\r";
+                                            }
+                                            else
+                                            {
+                                                variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value, varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, "{ get; set; }");
+                                                listOfVariables += variables + "\n\r";
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (varNode.Attributes.GetNamedItem("isStatic").Value.ToString().ToLower() == "true")
+                                            {
+                                                variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value + " static", varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, varNode.Attributes.GetNamedItem("value").Value);
+                                                listOfVariables += variables + "\n\r";
+                                            }
+                                            else
+                                            {
+                                                variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value, varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, varNode.Attributes.GetNamedItem("value").Value);
+                                                listOfVariables += variables + "\n\r";
+                                            }
+                                        }
+                                        break;
+
+                                        case "methods":
+                                        XmlNode methodNode = namespaceNode.ChildNodes[i].ChildNodes[list];
+                                        string methods = TemplatesCollection.MethodTemplate;
+
+                                        if (methodNode.Attributes.GetNamedItem("static").Value == "true") // that means the method is static.
+                                        {
+                                            if (methodNode.Attributes.GetNamedItem("arguments").Value.Length > 0) // that means a static method w/arguments.
+                                            {
+                                                if (methodNode.Attributes.GetNamedItem("returned").Value == "true") // means the method returns a value.
                                                 {
-                                                    if (varNode.Attributes.GetNamedItem("isStatic").Value.ToString().ToLower() == "true")
+                                                    if (methodNode.HasChildNodes) // that means a static method w/arguments and lines of code.
                                                     {
-                                                        variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value + " static", varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, "{ get; set; }");
-                                                        listOfVariables += variables + "\n\r";
+                                                        methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "static", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, methodNode.Attributes.GetNamedItem("arguments").Value, "lineas de codigo", "return");
+                                                        listOfMethods += methods + "\n\r";
                                                     }
-                                                    else
+                                                    else // without lines of code
                                                     {
-                                                        variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value, varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, "{ get; set; }");
-                                                        listOfVariables += variables + "\n\r";
+                                                        methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "static", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, methodNode.Attributes.GetNamedItem("arguments").Value, "", "return");
+                                                        listOfMethods += methods + "\n\r";
+                                                    }
+                                                }
+                                                else 
+                                                if (methodNode.HasChildNodes) // without returning a value, but w/lines of code
+                                                {
+                                                    methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "static", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, methodNode.Attributes.GetNamedItem("arguments").Value, "lineas de codigo", "");
+                                                    listOfMethods += methods + "\n\r";
+                                                }
+                                                else // without returning a value both lines of code
+                                                {
+                                                    methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "static", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, methodNode.Attributes.GetNamedItem("arguments").Value,"","");
+                                                    listOfMethods += methods + "\n\r";
+                                                }
+                                            }
+                                            else // without arguments.
+                                            {
+                                                if (methodNode.Attributes.GetNamedItem("returned").Value == "true") // means the method returns a value.
+                                                {
+                                                    if (methodNode.HasChildNodes) // that means a static method and lines of code.
+                                                    {
+                                                        methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "static", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value,"","lineas de codigo", "return");
+                                                        listOfMethods += methods + "\n\r";
+                                                    }
+                                                    else // without lines of code
+                                                    {
+                                                        methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "static", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, "", "", "return");
+                                                        listOfMethods += methods + "\n\r";
                                                     }
                                                 }
                                                 else
+                                                if (methodNode.HasChildNodes) // without returning a value, but w/lines of code
                                                 {
-                                                    if (varNode.Attributes.GetNamedItem("isStatic").Value.ToString().ToLower() == "true")
-                                                    {
-                                                        variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value + " static", varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, varNode.Attributes.GetNamedItem("value").Value);
-                                                        listOfVariables += variables + "\n\r";
-                                                    }
-                                                    else
-                                                    {
-                                                        variables = String.Format(variables, varNode.Attributes.GetNamedItem("line").Value, varNode.Attributes.GetNamedItem("modifier").Value, varNode.Attributes.GetNamedItem("type").Value, varNode.Attributes.GetNamedItem("name").Value, varNode.Attributes.GetNamedItem("value").Value);
-                                                        listOfVariables += variables + "\n\r";
-                                                    }
+                                                    methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "static", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, "", "lineas de codigo", "");
+                                                    listOfMethods += methods + "\n\r";
+                                                }
+                                                else // without returning a value both lines of code
+                                                {
+                                                    methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "static", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, "", "", "");
+                                                    listOfMethods += methods + "\n\r";
                                                 }
                                             }
-                                            break;
-
-                                        case "methods":
-                                            for (var k = 0; k < namespaceNode.ChildNodes[i].ChildNodes.Count; k++)
+                                        } 
+                                        else // isn't static
+                                        {
+                                            if (methodNode.Attributes.GetNamedItem("arguments").Value.Length > 0) // that means a non static method w/arguments.
                                             {
-                                                XmlNode methodNode = namespaceNode.ChildNodes[i].ChildNodes[list];
-                                                string methods = TemplatesCollection.MethodTemplate;
-
-                                                if (methodNode.Attributes.GetNamedItem("static").Value == "true") // that means the method is static.
+                                                if (methodNode.Attributes.GetNamedItem("returned").Value == "true") // means the method returns a value.
                                                 {
-                                                    if (methodNode.Attributes.GetNamedItem("arguments").Value.Length > 0) // that means a static method w/arguments.
+                                                    if (methodNode.HasChildNodes) // that means a static method w/arguments and lines of code.
                                                     {
-                                                        if (methodNode.Attributes.GetNamedItem("returned").Value == "true") // means the method returns a value.
-                                                        {
-                                                            if (methodNode.HasChildNodes) // that means a static method w/arguments and lines of code.
-                                                            {
-                                                                methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "static", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, methodNode.Attributes.GetNamedItem("arguments"), methodNode.Attributes.GetNamedItem("lines").Value.ToString(), "return");
-                                                                listOfMethods += methods + "\n\r";
-                                                            }
-                                                            else // without lines of code
-                                                            {
-                                                                methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "static", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, methodNode.Attributes.GetNamedItem("arguments"), "", "return");
-                                                                listOfMethods += methods + "\n\r";
-                                                            }
-                                                        }
-                                                        else 
-                                                            if (methodNode.HasChildNodes) // without returning a value, but w/lines of code
-                                                            {
-                                                                methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "static", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, methodNode.Attributes.GetNamedItem("arguments"), methodNode.Attributes.GetNamedItem("lines").Value.ToString(), "");
-                                                                listOfMethods += methods + "\n\r";
-                                                            }
-                                                            else // without returning a value both lines of code
-                                                            {
-                                                                methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "static", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, methodNode.Attributes.GetNamedItem("arguments"),"","");
-                                                                listOfMethods += methods + "\n\r";
-                                                            }
+                                                        methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, methodNode.Attributes.GetNamedItem("arguments").Value, "lineas de codigo", "return");
+                                                        listOfMethods += methods + "\n\r";
                                                     }
-                                                    else // without arguments.
+                                                    else // without lines of code
                                                     {
-                                                        if (methodNode.Attributes.GetNamedItem("returned").Value == "true") // means the method returns a value.
-                                                        {
-                                                            if (methodNode.HasChildNodes) // that means a static method and lines of code.
-                                                            {
-                                                                methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "static", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value,"", methodNode.Attributes.GetNamedItem("lines").Value.ToString(), "return");
-                                                                listOfMethods += methods + "\n\r";
-                                                            }
-                                                            else // without lines of code
-                                                            {
-                                                                methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "static", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, "", "", "return");
-                                                                listOfMethods += methods + "\n\r";
-                                                            }
-                                                        }
-                                                        else
-                                                           if (methodNode.HasChildNodes) // without returning a value, but w/lines of code
-                                                        {
-                                                            methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "static", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, "", methodNode.Attributes.GetNamedItem("lines").Value.ToString(), "");
-                                                            listOfMethods += methods + "\n\r";
-                                                        }
-                                                        else // without returning a value both lines of code
-                                                        {
-                                                            methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "static", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, "", "", "");
-                                                            listOfMethods += methods + "\n\r";
-                                                        }
-                                                    }
-                                                } 
-                                                else // isn't static
-                                                {
-                                                    if (methodNode.Attributes.GetNamedItem("arguments").Value.Length > 0) // that means a non static method w/arguments.
-                                                    {
-                                                        if (methodNode.Attributes.GetNamedItem("returned").Value == "true") // means the method returns a value.
-                                                        {
-                                                            if (methodNode.HasChildNodes) // that means a static method w/arguments and lines of code.
-                                                            {
-                                                                methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, methodNode.Attributes.GetNamedItem("arguments"), methodNode.Attributes.GetNamedItem("lines").Value.ToString(), "return");
-                                                                listOfMethods += methods + "\n\r";
-                                                            }
-                                                            else // without lines of code
-                                                            {
-                                                                methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, methodNode.Attributes.GetNamedItem("arguments"), "", "return");
-                                                                listOfMethods += methods + "\n\r";
-                                                            }
-                                                        }
-                                                        else
-                                                            if (methodNode.HasChildNodes) // without returning a value, but w/lines of code
-                                                        {
-                                                            methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, methodNode.Attributes.GetNamedItem("arguments"), methodNode.Attributes.GetNamedItem("lines").Value.ToString(), "");
-                                                            listOfMethods += methods + "\n\r";
-                                                        }
-                                                        else // without returning a value both lines of code
-                                                        {
-                                                            methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, methodNode.Attributes.GetNamedItem("arguments"), "", "");
-                                                            listOfMethods += methods + "\n\r";
-                                                        }
-                                                    }
-                                                    else // without arguments.
-                                                    {
-                                                        if (methodNode.Attributes.GetNamedItem("returned").Value == "true") // means the method returns a value.
-                                                        {
-                                                            if (methodNode.HasChildNodes) // that means a static method and lines of code.
-                                                            {
-                                                                methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, "", methodNode.Attributes.GetNamedItem("lines").Value.ToString(), "return");
-                                                                listOfMethods += methods + "\n\r";
-                                                            }
-                                                            else // without lines of code
-                                                            {
-                                                                methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, "", "", "return");
-                                                                listOfMethods += methods + "\n\r";
-                                                            }
-                                                        }
-                                                        else
-                                                           if (methodNode.HasChildNodes) // without returning a value, but w/lines of code
-                                                        {
-                                                            methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, "", methodNode.Attributes.GetNamedItem("lines").Value.ToString(), "");
-                                                            listOfMethods += methods + "\n\r";
-                                                        }
-                                                        else // without returning a value both lines of code
-                                                        {
-                                                            methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, "", "", "");
-                                                            listOfMethods += methods + "\n\r";
-                                                        }
+                                                        methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, methodNode.Attributes.GetNamedItem("arguments").Value, "", "return");
+                                                        listOfMethods += methods + "\n\r";
                                                     }
                                                 }
-
+                                                else
+                                                if (methodNode.HasChildNodes) // without returning a value, but w/lines of code
+                                                {
+                                                    methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, methodNode.Attributes.GetNamedItem("arguments").Value,"lineas de codigo", "");
+                                                    listOfMethods += methods + "\n\r";
+                                                }
+                                                else // without returning a value both lines of code
+                                                {
+                                                    methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, methodNode.Attributes.GetNamedItem("arguments").Value, "", "");
+                                                    listOfMethods += methods + "\n\r";
+                                                }
                                             }
-                                            break;
+                                            else // without arguments.
+                                            {
+                                                if (methodNode.Attributes.GetNamedItem("returned").Value == "true") // means the method returns a value.
+                                                {
+                                                    if (methodNode.HasChildNodes) // that means a static method and lines of code.
+                                                    {
+                                                        methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, "", "lineas de codigo", "return");
+                                                        listOfMethods += methods + "\n\r";
+                                                    }
+                                                    else // without lines of code
+                                                    {
+                                                        methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, "", "", "return");
+                                                        listOfMethods += methods + "\n\r";
+                                                    }
+                                                }
+                                                else
+                                                if (methodNode.HasChildNodes) // without returning a value, but w/lines of code
+                                                {
+                                                    methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, "", "lineas de codigo", "");
+                                                    listOfMethods += methods + "\n\r";
+                                                }
+                                                else // without returning a value both lines of code
+                                                {
+                                                    methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, "", "", "");
+                                                    listOfMethods += methods + "\n\r";
+                                                }
+                                            }
+                                        }
+                                        break;
                                     }
                                 }
                             }
