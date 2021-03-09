@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensato.DataAccess", "Sensa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensato.PatternGenCode", "Sensato.TestSec\Sensato.PatternGenCode.csproj", "{E9DCFD13-6049-4740-9853-E26A32B11C5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject", "UnitTestProject1\UnitTestProject.csproj", "{80C14D3E-3336-4868-B13C-2163786980F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensato.UnitTest", "UnitTestProject1\Sensato.UnitTest.csproj", "{80C14D3E-3336-4868-B13C-2163786980F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

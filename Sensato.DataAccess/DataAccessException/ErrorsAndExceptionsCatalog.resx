@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="601_InvalidStoredProcedure" xml:space="preserve">
+    <value>"Error 601: El procedimiento almacenado o query tiene un valor indefinido o es nulo."</value>
+  </data>
+  <data name="602_StoredProdecureNotFound" xml:space="preserve">
+    <value>"Error 602: No se definió un procedimiento almacenado o query."</value>
+  </data>
+  <data name="603_CommandTypeNotFound" xml:space="preserve">
+    <value>"Error 603: No se definió un tipo de comando."</value>
+  </data>
+  <data name="604_InvalidCommandType" xml:space="preserve">
+    <value>"Error 604: El valor del tipo de comando no está definido o es nulo."</value>
+  </data>
+  <data name="605_InvalidParameters" xml:space="preserve">
+    <value>"Error 605: La lista de parámetros no contiene la infomación requerida."</value>
+  </data>
+  <data name="606_ParametersNotFound" xml:space="preserve">
+    <value>"Error 606: La lista de parámetros no está definida o su valor es nulo."</value>
+  </data>
+  <data name="607_ InvalidConnectionString" xml:space="preserve">
+    <value>"Error 607: Los datos proporcionados para hacer la conexión son incorrectos."</value>
+  </data>
+  <data name="608_ConnectionStringNotFound" xml:space="preserve">
+    <value>"Error 608: La cadena de conexión es indefinida o de valor nulo."</value>
+  </data>
+  <data name="609_SQLTransactionNotFound" xml:space="preserve">
+    <value>"Error 609: El valor de la cadena de transacción es indefinido o de valor nulo."</value>
+  </data>
+  <data name="610_InvalidSQLTransaction" xml:space="preserve">
+    <value>"Error 610: Los valores contenidos dentro de la cadena son incorrectos."</value>
+  </data>
+  <data name="611_ConnectionNotEstablished" xml:space="preserve">
+    <value>"Error 611: La conexión no pudo establecerse."</value>
+  </data>
+  <data name="612_ConnectionClosed" xml:space="preserve">
+    <value>"Error 612: La conexión fue cerrada."</value>
+  </data>
+  <data name="613_DataTableNotCreated" xml:space="preserve">
+    <value>"Error 613: La tabla de datos no fue creada."</value>
+  </data>
+  <data name="614_DataSetNotCreated" xml:space="preserve">
+    <value>"Error 614: La colección de datos no fue creada."</value>
+  </data>
+  <data name="615_SenteceNonExecuted" xml:space="preserve">
+    <value>"Error 615: La sentencia no fue ejecutada."</value>
+  </data>
+  <data name="616_InvalidDataTable" xml:space="preserve">
+    <value>"Error 616: No se pudo obtener la tabla de datos."</value>
+  </data>
+  <data name="617_InvalidDataSet" xml:space="preserve">
+    <value>"Error 617: No se pudo obtener la colección de datos."</value>
+  </data>
+  <data name="618_InvalidSentenceExecution" xml:space="preserve">
+    <value>"Error 618: No se pudo obtener el resultado de ejecución de la sentencia."</value>
+  </data>
+  <data name="619_IncompleteCommand" xml:space="preserve">
+    <value>"Error 619: El comando no posee datos necesarios para poder ser ejecutado."</value>
+  </data>
+  <data name="620_InvalidCommand" xml:space="preserve">
+    <value>"El valor del comando a ejecutar es nulo o no está definido."</value>
+  </data>
+</root>
