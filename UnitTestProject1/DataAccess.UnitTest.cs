@@ -1,6 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Sensato.DataAccess;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,8 +17,23 @@ namespace UnitTestProject1
         public void TestMethod01() // para comprobar que un procedimiento almacenado funciona
         {
             // var
-            
+            string query = "";
+            String ConnectionStr = ConfigurationManager.AppSettings["ConnStr"];
+            String Code = ErrorsAndExceptionsCatalog._601_Code;
+            String Message = ErrorsAndExceptionsCatalog._602_StoredProdecureNotFound;
+            DataAccessException resultEX = new DataAccessException();
+            //act
+            try
+            {
+                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.Text, null, ConnectionStr);
+            }
+            catch(DataAccessException ex)
+            {
+                resultEX = ex;
+            }
             // arrange
+            Assert.AreEqual(Code, resultEX.code);
+            Assert.AreEqual(Message, resultEX.messageCode);
         }
 
         [TestMethod]
