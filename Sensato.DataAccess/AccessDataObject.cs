@@ -1,7 +1,9 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace Sensato.DataAccess
 {
@@ -18,7 +20,11 @@ namespace Sensato.DataAccess
         /// <returns> We obtain a unique result from the SELECT statement contained in a DataTable. </returns>
         public static DataTable GetDataTable(string storedProcedureOrQuery, CommandType type, List<SqlParameter> parameters = null, string connStr = null, SqlTransaction transaction = null)
         {
-
+            if (String.IsNullOrEmpty(storedProcedureOrQuery))
+            {
+                throw new DataAccessException(ErrorsAndExceptionsCatalog._601_Code, ErrorsAndExceptionsCatalog._601_InvalidStoredProcedure);
+                //throw new DataAccessException(DataAccessException.ErrorsAndExceptionsCatalog._601_Code, DataAccessException.ErrorsAndExceptionsCatalog._601_InvalidStoredProcedure);
+            }
             SqlCommand cmd = Connection.GetConnection(storedProcedureOrQuery, type, connStr, transaction);
             if (parameters != null)
                 foreach (SqlParameter sqlParam in parameters)

@@ -43,8 +43,8 @@
   <ItemGroup>
     <Compile Include="AccessDataObject.cs" />
     <Compile Include="Connection.cs" />
-    <Compile Include="DataAccessException\DataAccessException.cs" />
-    <Compile Include="DataAccessException\ErrorsAndExceptionsCatalog.Designer.cs">
+    <Compile Include="DataAccessException.cs" />
+    <Compile Include="ErrorsAndExceptionsCatalog.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ErrorsAndExceptionsCatalog.resx</DependentUpon>
@@ -55,8 +55,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DataAccessException\ErrorsAndExceptionsCatalog.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+    <EmbeddedResource Include="ErrorsAndExceptionsCatalog.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ErrorsAndExceptionsCatalog.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

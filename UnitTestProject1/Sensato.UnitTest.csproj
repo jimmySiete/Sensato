@@ -55,6 +55,16 @@
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sensato.DataAccess\Sensato.DataAccess.csproj">
+      <Project>{26090005-625a-49fc-8cdc-2bc30edde4c5}</Project>
+      <Name>Sensato.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sensato.Translate\Sensato.Translate.csproj">
+      <Project>{262103ba-55a8-4183-b603-c5166ef44886}</Project>
+      <Name>Sensato.Translate</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

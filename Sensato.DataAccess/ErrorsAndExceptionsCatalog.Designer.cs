@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sensato.DataAccess.DataAccessException {
+namespace Sensato.DataAccess {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace Sensato.DataAccess.DataAccessException {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ErrorsAndExceptionsCatalog {
+    public class ErrorsAndExceptionsCatalog {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,10 @@ namespace Sensato.DataAccess.DataAccessException {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sensato.DataAccess.DataAccessException.ErrorsAndExceptionsCatalog", typeof(ErrorsAndExceptionsCatalog).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sensato.DataAccess.ErrorsAndExceptionsCatalog", typeof(ErrorsAndExceptionsCatalog).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace Sensato.DataAccess.DataAccessException {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,9 +61,18 @@ namespace Sensato.DataAccess.DataAccessException {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 601.
+        /// </summary>
+        public static string _601_Code {
+            get {
+                return ResourceManager.GetString("601_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Error 601: El procedimiento almacenado o query tiene un valor indefinido o es nulo.&quot;.
         /// </summary>
-        internal static string _601_InvalidStoredProcedure {
+        public static string _601_InvalidStoredProcedure {
             get {
                 return ResourceManager.GetString("601_InvalidStoredProcedure", resourceCulture);
             }
@@ -72,7 +81,7 @@ namespace Sensato.DataAccess.DataAccessException {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 602: No se definió un procedimiento almacenado o query.&quot;.
         /// </summary>
-        internal static string _602_StoredProdecureNotFound {
+        public static string _602_StoredProdecureNotFound {
             get {
                 return ResourceManager.GetString("602_StoredProdecureNotFound", resourceCulture);
             }
@@ -81,7 +90,7 @@ namespace Sensato.DataAccess.DataAccessException {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 603: No se definió un tipo de comando.&quot;.
         /// </summary>
-        internal static string _603_CommandTypeNotFound {
+        public static string _603_CommandTypeNotFound {
             get {
                 return ResourceManager.GetString("603_CommandTypeNotFound", resourceCulture);
             }
@@ -90,7 +99,7 @@ namespace Sensato.DataAccess.DataAccessException {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 604: El valor del tipo de comando no está definido o es nulo.&quot;.
         /// </summary>
-        internal static string _604_InvalidCommandType {
+        public static string _604_InvalidCommandType {
             get {
                 return ResourceManager.GetString("604_InvalidCommandType", resourceCulture);
             }
@@ -99,7 +108,7 @@ namespace Sensato.DataAccess.DataAccessException {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 605: La lista de parámetros no contiene la infomación requerida.&quot;.
         /// </summary>
-        internal static string _605_InvalidParameters {
+        public static string _605_InvalidParameters {
             get {
                 return ResourceManager.GetString("605_InvalidParameters", resourceCulture);
             }
@@ -108,7 +117,7 @@ namespace Sensato.DataAccess.DataAccessException {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 606: La lista de parámetros no está definida o su valor es nulo.&quot;.
         /// </summary>
-        internal static string _606_ParametersNotFound {
+        public static string _606_ParametersNotFound {
             get {
                 return ResourceManager.GetString("606_ParametersNotFound", resourceCulture);
             }
@@ -117,7 +126,7 @@ namespace Sensato.DataAccess.DataAccessException {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 607: Los datos proporcionados para hacer la conexión son incorrectos.&quot;.
         /// </summary>
-        internal static string _607__InvalidConnectionString {
+        public static string _607__InvalidConnectionString {
             get {
                 return ResourceManager.GetString("607_ InvalidConnectionString", resourceCulture);
             }
@@ -126,7 +135,7 @@ namespace Sensato.DataAccess.DataAccessException {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 608: La cadena de conexión es indefinida o de valor nulo.&quot;.
         /// </summary>
-        internal static string _608_ConnectionStringNotFound {
+        public static string _608_ConnectionStringNotFound {
             get {
                 return ResourceManager.GetString("608_ConnectionStringNotFound", resourceCulture);
             }
@@ -135,7 +144,7 @@ namespace Sensato.DataAccess.DataAccessException {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 609: El valor de la cadena de transacción es indefinido o de valor nulo.&quot;.
         /// </summary>
-        internal static string _609_SQLTransactionNotFound {
+        public static string _609_SQLTransactionNotFound {
             get {
                 return ResourceManager.GetString("609_SQLTransactionNotFound", resourceCulture);
             }
@@ -144,7 +153,7 @@ namespace Sensato.DataAccess.DataAccessException {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 610: Los valores contenidos dentro de la cadena son incorrectos.&quot;.
         /// </summary>
-        internal static string _610_InvalidSQLTransaction {
+        public static string _610_InvalidSQLTransaction {
             get {
                 return ResourceManager.GetString("610_InvalidSQLTransaction", resourceCulture);
             }
@@ -153,7 +162,7 @@ namespace Sensato.DataAccess.DataAccessException {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 611: La conexión no pudo establecerse.&quot;.
         /// </summary>
-        internal static string _611_ConnectionNotEstablished {
+        public static string _611_ConnectionNotEstablished {
             get {
                 return ResourceManager.GetString("611_ConnectionNotEstablished", resourceCulture);
             }
@@ -162,7 +171,7 @@ namespace Sensato.DataAccess.DataAccessException {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 612: La conexión fue cerrada.&quot;.
         /// </summary>
-        internal static string _612_ConnectionClosed {
+        public static string _612_ConnectionClosed {
             get {
                 return ResourceManager.GetString("612_ConnectionClosed", resourceCulture);
             }
@@ -171,7 +180,7 @@ namespace Sensato.DataAccess.DataAccessException {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 613: La tabla de datos no fue creada.&quot;.
         /// </summary>
-        internal static string _613_DataTableNotCreated {
+        public static string _613_DataTableNotCreated {
             get {
                 return ResourceManager.GetString("613_DataTableNotCreated", resourceCulture);
             }
@@ -180,7 +189,7 @@ namespace Sensato.DataAccess.DataAccessException {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 614: La colección de datos no fue creada.&quot;.
         /// </summary>
-        internal static string _614_DataSetNotCreated {
+        public static string _614_DataSetNotCreated {
             get {
                 return ResourceManager.GetString("614_DataSetNotCreated", resourceCulture);
             }
@@ -189,7 +198,7 @@ namespace Sensato.DataAccess.DataAccessException {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 615: La sentencia no fue ejecutada.&quot;.
         /// </summary>
-        internal static string _615_SenteceNonExecuted {
+        public static string _615_SenteceNonExecuted {
             get {
                 return ResourceManager.GetString("615_SenteceNonExecuted", resourceCulture);
             }
@@ -198,7 +207,7 @@ namespace Sensato.DataAccess.DataAccessException {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 616: No se pudo obtener la tabla de datos.&quot;.
         /// </summary>
-        internal static string _616_InvalidDataTable {
+        public static string _616_InvalidDataTable {
             get {
                 return ResourceManager.GetString("616_InvalidDataTable", resourceCulture);
             }
@@ -207,7 +216,7 @@ namespace Sensato.DataAccess.DataAccessException {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 617: No se pudo obtener la colección de datos.&quot;.
         /// </summary>
-        internal static string _617_InvalidDataSet {
+        public static string _617_InvalidDataSet {
             get {
                 return ResourceManager.GetString("617_InvalidDataSet", resourceCulture);
             }
@@ -216,7 +225,7 @@ namespace Sensato.DataAccess.DataAccessException {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 618: No se pudo obtener el resultado de ejecución de la sentencia.&quot;.
         /// </summary>
-        internal static string _618_InvalidSentenceExecution {
+        public static string _618_InvalidSentenceExecution {
             get {
                 return ResourceManager.GetString("618_InvalidSentenceExecution", resourceCulture);
             }
@@ -225,7 +234,7 @@ namespace Sensato.DataAccess.DataAccessException {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 619: El comando no posee datos necesarios para poder ser ejecutado.&quot;.
         /// </summary>
-        internal static string _619_IncompleteCommand {
+        public static string _619_IncompleteCommand {
             get {
                 return ResourceManager.GetString("619_IncompleteCommand", resourceCulture);
             }
@@ -234,7 +243,7 @@ namespace Sensato.DataAccess.DataAccessException {
         /// <summary>
         ///   Looks up a localized string similar to &quot;El valor del comando a ejecutar es nulo o no está definido.&quot;.
         /// </summary>
-        internal static string _620_InvalidCommand {
+        public static string _620_InvalidCommand {
             get {
                 return ResourceManager.GetString("620_InvalidCommand", resourceCulture);
             }
