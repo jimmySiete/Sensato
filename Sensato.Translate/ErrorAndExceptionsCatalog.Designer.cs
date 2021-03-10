@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sensato.Translate.TranslateExceptions {
+namespace Sensato.Translate {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace Sensato.Translate.TranslateExceptions {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ErrorAndExceptionsCatalog {
+    public class ErrorAndExceptionsCatalog {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,10 @@ namespace Sensato.Translate.TranslateExceptions {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sensato.Translate.TranslateExceptions.ErrorAndExceptionsCatalog", typeof(ErrorAndExceptionsCatalog).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sensato.Translate.ErrorAndExceptionsCatalog", typeof(ErrorAndExceptionsCatalog).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace Sensato.Translate.TranslateExceptions {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 701: El modelo proporcionado no contiene datos tipo XML.&quot;.
         /// </summary>
-        internal static string _701_InvalidTypeModel {
+        public static string _701_InvalidTypeModel {
             get {
                 return ResourceManager.GetString("701_InvalidTypeModel", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 702: El valor del modelo no está definido o es nulo.&quot;.
         /// </summary>
-        internal static string _702_ModelNotFound {
+        public static string _702_ModelNotFound {
             get {
                 return ResourceManager.GetString("702_ModelNotFound", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 703: La version del modelo es diferente a la requerida.&quot;.
         /// </summary>
-        internal static string _703_InvalidVersionModel {
+        public static string _703_InvalidVersionModel {
             get {
                 return ResourceManager.GetString("703_InvalidVersionModel", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 704: El tipo de codificación proporcionada no es válida.&quot;.
         /// </summary>
-        internal static string _704_InvalidEncoding {
+        public static string _704_InvalidEncoding {
             get {
                 return ResourceManager.GetString("704_InvalidEncoding", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 705: El modelo no contiene el dato solicitado.&quot;.
         /// </summary>
-        internal static string _705_ElementNotFound {
+        public static string _705_ElementNotFound {
             get {
                 return ResourceManager.GetString("705_ElementNotFound", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 706: El nodo no fue creado.&quot;.
         /// </summary>
-        internal static string _706_NotCreatedNode {
+        public static string _706_NotCreatedNode {
             get {
                 return ResourceManager.GetString("706_NotCreatedNode", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 707: El nodo no fue insertado en el nivel especificado.&quot;.
         /// </summary>
-        internal static string _707_AppendNodeFailed {
+        public static string _707_AppendNodeFailed {
             get {
                 return ResourceManager.GetString("707_AppendNodeFailed", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 708: El/los atributos no fueron agregados al nodo.&quot;.
         /// </summary>
-        internal static string _708_AttributesFailed {
+        public static string _708_AttributesFailed {
             get {
                 return ResourceManager.GetString("708_AttributesFailed", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 709: El elemento al que se está apuntando no tiene esa propiedad.&quot;.
         /// </summary>
-        internal static string _709_InvalidProperty {
+        public static string _709_InvalidProperty {
             get {
                 return ResourceManager.GetString("709_InvalidProperty", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 710: El nodo señalado no contiene elementos en su interior.&quot;.
         /// </summary>
-        internal static string _710_ChildNodesNotFound {
+        public static string _710_ChildNodesNotFound {
             get {
                 return ResourceManager.GetString("710_ChildNodesNotFound", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 711: El valor asignado al atributo no coincide con los aceptados.&quot;.
         /// </summary>
-        internal static string _711_InvalidAttributeValue {
+        public static string _711_InvalidAttributeValue {
             get {
                 return ResourceManager.GetString("711_InvalidAttributeValue", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 712: El valor asignado al atributo es nulo o indefinido.&quot;.
         /// </summary>
-        internal static string _712_AttributeValueNotFound {
+        public static string _712_AttributeValueNotFound {
             get {
                 return ResourceManager.GetString("712_AttributeValueNotFound", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 713: No se pudo insertar el texto en la etiqueta.&quot;.
         /// </summary>
-        internal static string _713_NodeTextError {
+        public static string _713_NodeTextError {
             get {
                 return ResourceManager.GetString("713_NodeTextError", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 714: La etiqueta a la que se hace referencia no contiene texto.&quot;.
         /// </summary>
-        internal static string _714_NodeTextNotFound {
+        public static string _714_NodeTextNotFound {
             get {
                 return ResourceManager.GetString("714_NodeTextNotFound", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 715: El nodo es inexistente, o posee otro nombre.&quot;.
         /// </summary>
-        internal static string _715_InvalidSingleNodeSelected {
+        public static string _715_InvalidSingleNodeSelected {
             get {
                 return ResourceManager.GetString("715_InvalidSingleNodeSelected", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 716: Los nodos con el nombre especificado son inexistentes o tiene un nombre distinto.&quot;.
         /// </summary>
-        internal static string _716_InvalidNodesSelected {
+        public static string _716_InvalidNodesSelected {
             get {
                 return ResourceManager.GetString("716_InvalidNodesSelected", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 717: El nodo no contiene la propiedad especificada o tiene otro nombre.&quot;.
         /// </summary>
-        internal static string _717_InvalidNodeProperty {
+        public static string _717_InvalidNodeProperty {
             get {
                 return ResourceManager.GetString("717_InvalidNodeProperty", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 718: Los argumentos dados son incorrectos.&quot;.
         /// </summary>
-        internal static string _718_InvalidTemplateArguments {
+        public static string _718_InvalidTemplateArguments {
             get {
                 return ResourceManager.GetString("718_InvalidTemplateArguments", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 719: Los datos no fueron traducidos a lenguaje XML.&quot;.
         /// </summary>
-        internal static string _719_DocumentFormatNotCreated {
+        public static string _719_DocumentFormatNotCreated {
             get {
                 return ResourceManager.GetString("719_DocumentFormatNotCreated", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace Sensato.Translate.TranslateExceptions {
         /// <summary>
         ///   Looks up a localized string similar to &quot;Error 720: El valor asignado no coincide con el tipo de dato requerido.&quot;.
         /// </summary>
-        internal static string _720_InvalidValueAssignment {
+        public static string _720_InvalidValueAssignment {
             get {
                 return ResourceManager.GetString("720_InvalidValueAssignment", resourceCulture);
             }

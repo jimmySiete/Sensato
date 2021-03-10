@@ -123,17 +123,32 @@
   <data name="601_InvalidStoredProcedure" xml:space="preserve">
     <value>"Error 601: El procedimiento almacenado o query tiene un valor indefinido o es nulo."</value>
   </data>
+  <data name="602_Code" xml:space="preserve">
+    <value>602</value>
+  </data>
   <data name="602_StoredProdecureNotFound" xml:space="preserve">
     <value>"Error 602: No se definió un procedimiento almacenado o query."</value>
+  </data>
+  <data name="603_Code" xml:space="preserve">
+    <value>603</value>
   </data>
   <data name="603_CommandTypeNotFound" xml:space="preserve">
     <value>"Error 603: No se definió un tipo de comando."</value>
   </data>
+  <data name="604_Code" xml:space="preserve">
+    <value>604</value>
+  </data>
   <data name="604_InvalidCommandType" xml:space="preserve">
     <value>"Error 604: El valor del tipo de comando no está definido o es nulo."</value>
   </data>
+  <data name="605_Code" xml:space="preserve">
+    <value>605</value>
+  </data>
   <data name="605_InvalidParameters" xml:space="preserve">
     <value>"Error 605: La lista de parámetros no contiene la infomación requerida."</value>
+  </data>
+  <data name="606_Code" xml:space="preserve">
+    <value>606</value>
   </data>
   <data name="606_ParametersNotFound" xml:space="preserve">
     <value>"Error 606: La lista de parámetros no está definida o su valor es nulo."</value>
@@ -141,43 +156,85 @@
   <data name="607_ InvalidConnectionString" xml:space="preserve">
     <value>"Error 607: Los datos proporcionados para hacer la conexión son incorrectos."</value>
   </data>
+  <data name="607_Code" xml:space="preserve">
+    <value>607</value>
+  </data>
+  <data name="608_Code" xml:space="preserve">
+    <value>608</value>
+  </data>
   <data name="608_ConnectionStringNotFound" xml:space="preserve">
     <value>"Error 608: La cadena de conexión es indefinida o de valor nulo."</value>
+  </data>
+  <data name="609_Code" xml:space="preserve">
+    <value>609</value>
   </data>
   <data name="609_SQLTransactionNotFound" xml:space="preserve">
     <value>"Error 609: El valor de la cadena de transacción es indefinido o de valor nulo."</value>
   </data>
+  <data name="610_Code" xml:space="preserve">
+    <value>610</value>
+  </data>
   <data name="610_InvalidSQLTransaction" xml:space="preserve">
     <value>"Error 610: Los valores contenidos dentro de la cadena son incorrectos."</value>
+  </data>
+  <data name="611_Code" xml:space="preserve">
+    <value>611</value>
   </data>
   <data name="611_ConnectionNotEstablished" xml:space="preserve">
     <value>"Error 611: La conexión no pudo establecerse."</value>
   </data>
+  <data name="612_Code" xml:space="preserve">
+    <value>612</value>
+  </data>
   <data name="612_ConnectionClosed" xml:space="preserve">
     <value>"Error 612: La conexión fue cerrada."</value>
+  </data>
+  <data name="613_Code" xml:space="preserve">
+    <value>612</value>
   </data>
   <data name="613_DataTableNotCreated" xml:space="preserve">
     <value>"Error 613: La tabla de datos no fue creada."</value>
   </data>
+  <data name="614_Code" xml:space="preserve">
+    <value>614</value>
+  </data>
   <data name="614_DataSetNotCreated" xml:space="preserve">
     <value>"Error 614: La colección de datos no fue creada."</value>
+  </data>
+  <data name="615_Code" xml:space="preserve">
+    <value>615</value>
   </data>
   <data name="615_SenteceNonExecuted" xml:space="preserve">
     <value>"Error 615: La sentencia no fue ejecutada."</value>
   </data>
+  <data name="616_Code" xml:space="preserve">
+    <value>616</value>
+  </data>
   <data name="616_InvalidDataTable" xml:space="preserve">
     <value>"Error 616: No se pudo obtener la tabla de datos."</value>
+  </data>
+  <data name="617_Code" xml:space="preserve">
+    <value>617</value>
   </data>
   <data name="617_InvalidDataSet" xml:space="preserve">
     <value>"Error 617: No se pudo obtener la colección de datos."</value>
   </data>
+  <data name="618_Code" xml:space="preserve">
+    <value>618</value>
+  </data>
   <data name="618_InvalidSentenceExecution" xml:space="preserve">
     <value>"Error 618: No se pudo obtener el resultado de ejecución de la sentencia."</value>
+  </data>
+  <data name="619_Code" xml:space="preserve">
+    <value>619</value>
   </data>
   <data name="619_IncompleteCommand" xml:space="preserve">
     <value>"Error 619: El comando no posee datos necesarios para poder ser ejecutado."</value>
   </data>
+  <data name="620_Code" xml:space="preserve">
+    <value>620</value>
+  </data>
   <data name="620_InvalidCommand" xml:space="preserve">
-    <value>"El valor del comando a ejecutar es nulo o no está definido."</value>
+    <value>"Error 620: El valor del comando a ejecutar es nulo o no está definido."</value>
   </data>
 </root>

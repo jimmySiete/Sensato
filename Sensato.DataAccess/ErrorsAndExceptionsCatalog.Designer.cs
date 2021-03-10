@@ -79,11 +79,29 @@ namespace Sensato.DataAccess {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 602.
+        /// </summary>
+        public static string _602_Code {
+            get {
+                return ResourceManager.GetString("602_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Error 602: No se definió un procedimiento almacenado o query.&quot;.
         /// </summary>
         public static string _602_StoredProdecureNotFound {
             get {
                 return ResourceManager.GetString("602_StoredProdecureNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 603.
+        /// </summary>
+        public static string _603_Code {
+            get {
+                return ResourceManager.GetString("603_Code", resourceCulture);
             }
         }
         
@@ -97,6 +115,15 @@ namespace Sensato.DataAccess {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 604.
+        /// </summary>
+        public static string _604_Code {
+            get {
+                return ResourceManager.GetString("604_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Error 604: El valor del tipo de comando no está definido o es nulo.&quot;.
         /// </summary>
         public static string _604_InvalidCommandType {
@@ -106,11 +133,29 @@ namespace Sensato.DataAccess {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 605.
+        /// </summary>
+        public static string _605_Code {
+            get {
+                return ResourceManager.GetString("605_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Error 605: La lista de parámetros no contiene la infomación requerida.&quot;.
         /// </summary>
         public static string _605_InvalidParameters {
             get {
                 return ResourceManager.GetString("605_InvalidParameters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 606.
+        /// </summary>
+        public static string _606_Code {
+            get {
+                return ResourceManager.GetString("606_Code", resourceCulture);
             }
         }
         
@@ -133,11 +178,38 @@ namespace Sensato.DataAccess {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 607.
+        /// </summary>
+        public static string _607_Code {
+            get {
+                return ResourceManager.GetString("607_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 608.
+        /// </summary>
+        public static string _608_Code {
+            get {
+                return ResourceManager.GetString("608_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Error 608: La cadena de conexión es indefinida o de valor nulo.&quot;.
         /// </summary>
         public static string _608_ConnectionStringNotFound {
             get {
                 return ResourceManager.GetString("608_ConnectionStringNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 609.
+        /// </summary>
+        public static string _609_Code {
+            get {
+                return ResourceManager.GetString("609_Code", resourceCulture);
             }
         }
         
@@ -151,11 +223,29 @@ namespace Sensato.DataAccess {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 610.
+        /// </summary>
+        public static string _610_Code {
+            get {
+                return ResourceManager.GetString("610_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Error 610: Los valores contenidos dentro de la cadena son incorrectos.&quot;.
         /// </summary>
         public static string _610_InvalidSQLTransaction {
             get {
                 return ResourceManager.GetString("610_InvalidSQLTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 611.
+        /// </summary>
+        public static string _611_Code {
+            get {
+                return ResourceManager.GetString("611_Code", resourceCulture);
             }
         }
         
@@ -169,11 +259,29 @@ namespace Sensato.DataAccess {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 612.
+        /// </summary>
+        public static string _612_Code {
+            get {
+                return ResourceManager.GetString("612_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Error 612: La conexión fue cerrada.&quot;.
         /// </summary>
         public static string _612_ConnectionClosed {
             get {
                 return ResourceManager.GetString("612_ConnectionClosed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 612.
+        /// </summary>
+        public static string _613_Code {
+            get {
+                return ResourceManager.GetString("613_Code", resourceCulture);
             }
         }
         
@@ -187,11 +295,29 @@ namespace Sensato.DataAccess {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 614.
+        /// </summary>
+        public static string _614_Code {
+            get {
+                return ResourceManager.GetString("614_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Error 614: La colección de datos no fue creada.&quot;.
         /// </summary>
         public static string _614_DataSetNotCreated {
             get {
                 return ResourceManager.GetString("614_DataSetNotCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 615.
+        /// </summary>
+        public static string _615_Code {
+            get {
+                return ResourceManager.GetString("615_Code", resourceCulture);
             }
         }
         
@@ -205,11 +331,29 @@ namespace Sensato.DataAccess {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 616.
+        /// </summary>
+        public static string _616_Code {
+            get {
+                return ResourceManager.GetString("616_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Error 616: No se pudo obtener la tabla de datos.&quot;.
         /// </summary>
         public static string _616_InvalidDataTable {
             get {
                 return ResourceManager.GetString("616_InvalidDataTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 617.
+        /// </summary>
+        public static string _617_Code {
+            get {
+                return ResourceManager.GetString("617_Code", resourceCulture);
             }
         }
         
@@ -223,11 +367,29 @@ namespace Sensato.DataAccess {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 618.
+        /// </summary>
+        public static string _618_Code {
+            get {
+                return ResourceManager.GetString("618_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Error 618: No se pudo obtener el resultado de ejecución de la sentencia.&quot;.
         /// </summary>
         public static string _618_InvalidSentenceExecution {
             get {
                 return ResourceManager.GetString("618_InvalidSentenceExecution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 619.
+        /// </summary>
+        public static string _619_Code {
+            get {
+                return ResourceManager.GetString("619_Code", resourceCulture);
             }
         }
         
@@ -241,7 +403,16 @@ namespace Sensato.DataAccess {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;El valor del comando a ejecutar es nulo o no está definido.&quot;.
+        ///   Looks up a localized string similar to 620.
+        /// </summary>
+        public static string _620_Code {
+            get {
+                return ResourceManager.GetString("620_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;Error 620: El valor del comando a ejecutar es nulo o no está definido.&quot;.
         /// </summary>
         public static string _620_InvalidCommand {
             get {
