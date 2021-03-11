@@ -20,7 +20,7 @@ namespace UnitTestProject1
             string query = "";
             String ConnectionStr = ConfigurationManager.AppSettings["ConnStr"];
             String Code = ErrorsAndExceptionsCatalog._601_Code;
-            String Message = ErrorsAndExceptionsCatalog._601_StoredProdecureNotFound;
+            String Message = ErrorsAndExceptionsCatalog._601_InvalidStoredProcedure;
             DataAccessException resultEX = new DataAccessException();
             //act
             try
