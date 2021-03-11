@@ -1,0 +1,104 @@
+﻿@model PlugginCreation.Models.tb_Employees
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Test</h2>
+
+<div class="ejemplo" id="ejemplo">
+   
+</div>
+<div class=" align-content-center">
+    <label> Fecha de Inicio: </label>
+    <input class="form-control" name="start" id="start" type="date" value="2020-12-01" />
+    <br /><br />
+    <label> Fecha Fin: </label>
+    <input class="form-control" name="end" id="end" type="date" value="2020-12-31" />
+</div>
+
+@section scripts{
+
+    <script type="text/javascript" src="~/Scripts/jquery.improvedGrid.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.upgradedGrid.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var Options = {
+                sDate: document.getElementById("start").value,
+                eDate: document.getElementById("end").value
+            }
+            //parametros necesarios lleno aqui y lo llamo en Model
+
+            $('.ejemplo').UpgradedGrid({
+                datatype: "ajax",
+                Model: Options,
+                columnName: ['IDEmpleado', 'Nombre', 'Puesto', 'JustBootstrap', 'VersionBootstrap'],
+                selectOptions: [3, 6, 9],
+                columnModel:
+                [
+                    {
+                        align: 'center',
+                        DataType: 'radio',
+                        ExtraDataType:
+                        {
+                            multiple: // depende de cuantos elementos del input quiera agregar en la celda de la fila (dos o más)
+                            [
+                                {
+                                    value: '',
+                                    selected_value: "",
+                                    checked: false,
+                                    readonly: false,
+                                },
+                                {
+                                    value: '',
+                                    selected_value: "",
+                                    checked: false,
+                                    readonly: false,
+                                }
+                            ]
+                                //value: '',
+                                //selected_value: "vainilla",
+                                //checked: false,
+                                //readonly: false,
+                            }
+                    },
+                    { align: 'center' },
+                    { align: 'center' },
+                    { align: 'center' },
+                    { align: 'center' }
+                ],
+                containsBootstrap: true,
+                bootstrap: {
+                    version: "4",
+                    table: {
+                        isCondensed: false,
+                        isBordered: true,
+                        isOnHover: true,
+                        isBorderless: false,
+                        isStriped: false,
+                        isResponsive: true,
+                        format: ""
+                    }
+                },
+                //JsonTypeParams:{},
+                AjaxTypeParams:
+                {
+                    URL: "@Url.Action("CatchingModel","Test")",
+                    type: "post"
+                },
+                literacy: true,
+                //FileTypeParams:{}
+                Selectable: false,
+                Multiselectable: false,
+                Details: true,
+                optDetails: {
+                    urlDetails: "@Url.Action("LoadingDetails","Test")"
+                }
+            });
+        });
+    </script>
+
+}
+

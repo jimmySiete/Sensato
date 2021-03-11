@@ -14,7 +14,7 @@ namespace UnitTestProject1
     public class DataAccess
     {
         [TestMethod]
-        public void TestMethod01() // para comprobar que un procedimiento almacenado funciona
+        public void TestMethod01() // para comprobar que un SP o Query no sea nulo o indefinido
         {
             // var
             string query = "";
@@ -37,27 +37,69 @@ namespace UnitTestProject1
         }
 
         [TestMethod]
-        public void TestMethod02()
+        public void TestMethod02() // SP o Query mal estructurado
         {
-            // var 
-            // act
-            // arrange
+            string query = "kdfjsjdfbsdf";
+            String ConnectionStr = ConfigurationManager.AppSettings["ConnStr"];
+            String Code = ErrorsAndExceptionsCatalog._602_Code;
+            String Message = ErrorsAndExceptionsCatalog._602_StoredProdecureNotFound;
+            DataAccessException resultEX = new DataAccessException();
+            
+            try
+            {
+                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.Text, null, ConnectionStr);
+            }
+            catch (DataAccessException ex)
+            {
+                resultEX = ex;
+            }
+            
+            Assert.AreEqual(Code, resultEX.code);
+            Assert.AreEqual(Message, resultEX.messageCode);
         }
 
         [TestMethod]
-        public void TestMethod03()
+        public void TestMethod03() // tipo de comando incorrecto
         {
-            // var 
-            // act
-            // arrange
+            string query = "select count(*) from Albums";
+            String ConnectionStr = ConfigurationManager.AppSettings["ConnStr"];
+            String Code = ErrorsAndExceptionsCatalog._604_Code;
+            String Message = ErrorsAndExceptionsCatalog._604_InvalidCommandType;
+            DataAccessException resultEX = new DataAccessException();
+
+            try
+            {
+                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.TableDirect, null, ConnectionStr);
+            }
+            catch (DataAccessException ex)
+            {
+                resultEX = ex;
+            }
+
+            Assert.AreEqual(Code, resultEX.code);
+            Assert.AreEqual(Message, resultEX.messageCode);
         }
 
         [TestMethod]
-        public void TestMethod04()
+        public void TestMethod04() // valor del tipo de comando nulo o indefinido
         {
-            // var 
-            // act
-            // arrange
+            string query = "select count(*) from Albums";
+            String ConnectionStr = ConfigurationManager.AppSettings["ConnStr"];
+            String Code = ErrorsAndExceptionsCatalog._604_Code;
+            String Message = ErrorsAndExceptionsCatalog._604_InvalidCommandType;
+            DataAccessException resultEX = new DataAccessException();
+
+            try
+            {
+                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.TableDirect, null, ConnectionStr);
+            }
+            catch (DataAccessException ex)
+            {
+                resultEX = ex;
+            }
+
+            Assert.AreEqual(Code, resultEX.code);
+            Assert.AreEqual(Message, resultEX.messageCode);
         }
 
         [TestMethod]
