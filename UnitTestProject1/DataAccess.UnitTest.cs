@@ -1,10 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sensato.DataAccess;
+using Sensato.Translate.Entities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -81,12 +85,12 @@ namespace UnitTestProject1
         }
 
         [TestMethod]
-        public void TestMethod04() // valor del tipo de comando nulo o indefinido
+        public void TestMethod04() // valor del tipo de comando nulo o indefinido // FALTA DE ENCONTRAR UN NULL O UNDEFINED
         {
             string query = "select count(*) from Albums";
             String ConnectionStr = ConfigurationManager.AppSettings["ConnStr"];
-            String Code = ErrorsAndExceptionsCatalog._604_Code;
-            String Message = ErrorsAndExceptionsCatalog._604_InvalidCommandType;
+            String Code = ErrorsAndExceptionsCatalog._603_Code;
+            String Message = ErrorsAndExceptionsCatalog._603_CommandTypeNotFound;
             DataAccessException resultEX = new DataAccessException();
 
             try
@@ -103,19 +107,52 @@ namespace UnitTestProject1
         }
 
         [TestMethod]
-        public void TestMethod05()
+        public void TestMethod05() // lista de parametros con valor nulo o indefinido
         {
-            // var 
-            // act
-            // arrange
+            string query = "select count(*) from Albums";
+            String ConnectionStr = ConfigurationManager.AppSettings["ConnStr"];
+            String Code = ErrorsAndExceptionsCatalog._606_Code;
+            String Message = ErrorsAndExceptionsCatalog._606_ParametersNotFound;
+            DataAccessException resultEX = new DataAccessException();
+
+            try
+            {
+                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.Text, null, ConnectionStr);
+            }
+            catch (DataAccessException ex)
+            {
+                resultEX = ex;
+            }
+
+            Assert.AreEqual(Code, resultEX.code);
+            Assert.AreEqual(Message, resultEX.messageCode);
         }
 
         [TestMethod]
-        public void TestMethod06()
+        public void TestMethod06() // parametros que no son 
         {
-            // var 
-            // act
-            // arrange
+            string query = "select count(*) from Albums";
+            String ConnectionStr = ConfigurationManager.AppSettings["ConnStr"];
+            String Code = ErrorsAndExceptionsCatalog._605_Code;
+            String Message = ErrorsAndExceptionsCatalog._605_InvalidParameters;
+            List<SqlParameter> listparams  = new List<SqlParameter>();
+            listparams.Add(new DbParameter() {  };
+            //listparams.Add( new DbParameter() { ParameterName = "julio"});
+            //listparams.Add(new DbParameter() { ParameterName = "amarillo"});
+
+            DataAccessException resultEX = new DataAccessException();
+
+            try
+            {
+                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.Text, listparams, ConnectionStr);
+            }
+            catch (DataAccessException ex)
+            {
+                resultEX = ex;
+            }
+
+            Assert.AreEqual(Code, resultEX.code);
+            Assert.AreEqual(Message, resultEX.messageCode);
         }
 
         [TestMethod]
