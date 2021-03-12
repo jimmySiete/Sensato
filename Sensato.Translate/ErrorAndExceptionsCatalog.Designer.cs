@@ -61,11 +61,29 @@ namespace Sensato.Translate {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 701.
+        /// </summary>
+        public static string _701_Code {
+            get {
+                return ResourceManager.GetString("701_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Error 701: El modelo proporcionado no contiene datos tipo XML.&quot;.
         /// </summary>
         public static string _701_InvalidTypeModel {
             get {
                 return ResourceManager.GetString("701_InvalidTypeModel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 702.
+        /// </summary>
+        public static string _702_Code {
+            get {
+                return ResourceManager.GetString("702_Code", resourceCulture);
             }
         }
         
@@ -79,11 +97,29 @@ namespace Sensato.Translate {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 703.
+        /// </summary>
+        public static string _703_Code {
+            get {
+                return ResourceManager.GetString("703_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Error 703: La version del modelo es diferente a la requerida.&quot;.
         /// </summary>
         public static string _703_InvalidVersionModel {
             get {
                 return ResourceManager.GetString("703_InvalidVersionModel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 704.
+        /// </summary>
+        public static string _704_Code {
+            get {
+                return ResourceManager.GetString("704_Code", resourceCulture);
             }
         }
         
@@ -97,11 +133,29 @@ namespace Sensato.Translate {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 705.
+        /// </summary>
+        public static string _705_Code {
+            get {
+                return ResourceManager.GetString("705_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Error 705: El modelo no contiene el dato solicitado.&quot;.
         /// </summary>
         public static string _705_ElementNotFound {
             get {
                 return ResourceManager.GetString("705_ElementNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 706.
+        /// </summary>
+        public static string _706_Code {
+            get {
+                return ResourceManager.GetString("706_Code", resourceCulture);
             }
         }
         
@@ -124,11 +178,38 @@ namespace Sensato.Translate {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 707.
+        /// </summary>
+        public static string _707_Code {
+            get {
+                return ResourceManager.GetString("707_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Error 708: El/los atributos no fueron agregados al nodo.&quot;.
         /// </summary>
         public static string _708_AttributesFailed {
             get {
                 return ResourceManager.GetString("708_AttributesFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 708.
+        /// </summary>
+        public static string _708_Code {
+            get {
+                return ResourceManager.GetString("708_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 709.
+        /// </summary>
+        public static string _709_Code {
+            get {
+                return ResourceManager.GetString("709_Code", resourceCulture);
             }
         }
         
@@ -151,6 +232,24 @@ namespace Sensato.Translate {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 710.
+        /// </summary>
+        public static string _710_Code {
+            get {
+                return ResourceManager.GetString("710_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 711.
+        /// </summary>
+        public static string _711_Code {
+            get {
+                return ResourceManager.GetString("711_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Error 711: El valor asignado al atributo no coincide con los aceptados.&quot;.
         /// </summary>
         public static string _711_InvalidAttributeValue {
@@ -169,11 +268,38 @@ namespace Sensato.Translate {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 712.
+        /// </summary>
+        public static string _712_Code {
+            get {
+                return ResourceManager.GetString("712_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 713.
+        /// </summary>
+        public static string _713_Code {
+            get {
+                return ResourceManager.GetString("713_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Error 713: No se pudo insertar el texto en la etiqueta.&quot;.
         /// </summary>
         public static string _713_NodeTextError {
             get {
                 return ResourceManager.GetString("713_NodeTextError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 714.
+        /// </summary>
+        public static string _714_Code {
+            get {
+                return ResourceManager.GetString("714_Code", resourceCulture);
             }
         }
         
@@ -187,11 +313,29 @@ namespace Sensato.Translate {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 715.
+        /// </summary>
+        public static string _715_Code {
+            get {
+                return ResourceManager.GetString("715_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Error 715: El nodo es inexistente, o posee otro nombre.&quot;.
         /// </summary>
         public static string _715_InvalidSingleNodeSelected {
             get {
                 return ResourceManager.GetString("715_InvalidSingleNodeSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 716.
+        /// </summary>
+        public static string _716_Code {
+            get {
+                return ResourceManager.GetString("716_Code", resourceCulture);
             }
         }
         
@@ -205,11 +349,29 @@ namespace Sensato.Translate {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 717.
+        /// </summary>
+        public static string _717_Code {
+            get {
+                return ResourceManager.GetString("717_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Error 717: El nodo no contiene la propiedad especificada o tiene otro nombre.&quot;.
         /// </summary>
         public static string _717_InvalidNodeProperty {
             get {
                 return ResourceManager.GetString("717_InvalidNodeProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 718.
+        /// </summary>
+        public static string _718_Code {
+            get {
+                return ResourceManager.GetString("718_Code", resourceCulture);
             }
         }
         
@@ -223,11 +385,29 @@ namespace Sensato.Translate {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 719.
+        /// </summary>
+        public static string _719_Code {
+            get {
+                return ResourceManager.GetString("719_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;Error 719: Los datos no fueron traducidos a lenguaje XML.&quot;.
         /// </summary>
         public static string _719_DocumentFormatNotCreated {
             get {
                 return ResourceManager.GetString("719_DocumentFormatNotCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 720.
+        /// </summary>
+        public static string _720_Code {
+            get {
+                return ResourceManager.GetString("720_Code", resourceCulture);
             }
         }
         

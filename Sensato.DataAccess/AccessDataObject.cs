@@ -154,7 +154,7 @@ namespace Sensato.DataAccess
                     foreach (SqlParameter sqlParam in parameters)
                         cmd.Parameters.Add(sqlParam);
 
-                return Connection.ExecuteNonQuery(cmd);
+                return Connection.ExecuteNonQuery(cmd); 
             }
             catch 
             {

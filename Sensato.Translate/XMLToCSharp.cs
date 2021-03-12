@@ -13,6 +13,11 @@ namespace Sensato.Translate
     {
         public static string TranslateToCSharp(csXML model)
         {
+            if (model.GetType().Name != "csXML")
+                throw new TranslateException(ErrorAndExceptionsCatalog._701_Code, ErrorAndExceptionsCatalog._701_InvalidTypeModel);
+            else if (model == null)
+                throw new TranslateException(ErrorAndExceptionsCatalog._702_Code, ErrorAndExceptionsCatalog._702_ModelNotFound);
+
             XmlDocument xmlDocument = SerializeToXML(model);
             string csSharpModel = SerializeToCSharp(xmlDocument);
             return csSharpModel; 
@@ -21,6 +26,16 @@ namespace Sensato.Translate
         private static XmlDocument SerializeToXML(csXML model)
         {
             XmlDocument newFile = new XmlDocument();  // document creation
+
+            if (string.IsNullOrEmpty(model.ToString())) //PENDIENTE
+                throw new TranslateException(ErrorAndExceptionsCatalog._705_Code, ErrorAndExceptionsCatalog._705_ElementNotFound);
+
+            if (model.version.Length < 3)
+                throw new TranslateException(ErrorAndExceptionsCatalog._703_Code, ErrorAndExceptionsCatalog._703_InvalidVersionModel);
+
+            if (!model.encoding.StartsWith("U"))
+                throw new TranslateException(ErrorAndExceptionsCatalog._704_Code, ErrorAndExceptionsCatalog._704_InvalidEncoding);
+
             XmlDeclaration declaration = newFile.CreateXmlDeclaration(model.version, model.encoding, null);
             XmlElement heading = newFile.DocumentElement; //xml declaration
             newFile.InsertBefore(declaration, heading);                                                                                                                                                                                          
@@ -33,18 +48,21 @@ namespace Sensato.Translate
             XmlElement finalClass = newFile.CreateElement("class", string.Empty);
             XmlElement constructors = newFile.CreateElement("constructor", string.Empty);
 
-            if (model.document.references.Count>0) // in the first level it's declared the tag 'References', after verifying that this attribute exists.
-            {   document.AppendChild(references);
+            if (model.document.references.Count > 0) // in the first level it's declared the tag 'References', after verifying that this attribute exists.
+            {
+                document.AppendChild(references);
 
-                for (var i=0; i < model.document.references.Count; i++)
+                for (var i = 0; i < model.document.references.Count; i++)
                 {
-                    XmlElement usings = newFile.CreateElement("using",string.Empty); // declaration of the child from 'References' tag. 
+                    XmlElement usings = newFile.CreateElement("using", string.Empty); // declaration of the child from 'References' tag. 
                     XmlAttribute usingAttr = newFile.CreateAttribute("name");
                     usingAttr.Value = model.document.references[i].name;
                     usings.Attributes.Append(usingAttr);
                     references.AppendChild(usings);
                 }
             }
+            else
+                throw new TranslateException(ErrorAndExceptionsCatalog._710_Code, ErrorAndExceptionsCatalog._710_ChildNodesNotFound);
 
             if (model.document.csNamespace.name != null) // at the same level that 'References', 'Namespace' tag is added after it. But first we have to verify if the attribute to namespace exists.
             {
@@ -143,7 +161,7 @@ namespace Sensato.Translate
                                     XmlAttribute constructorLines = newFile.CreateAttribute("lines");
                                     for (var index = 0; index < model.document.csNamespace.Classes[i].constructors.Count; index++) // the same logic is used like in the arguments list.
                                     {
-                                        if (model.document.csNamespace.Classes[i].constructors[index].csLines != null)
+                                        if (model.document.csNamespace.Classes[i].constructors[index].csLines.Count > 0)
                                             constructorLines.Value = model.document.csNamespace.Classes[i].constructors[index].csLines.ToString();
                                         else
                                             constructorLines.Value = null;
@@ -153,6 +171,8 @@ namespace Sensato.Translate
                                 }
                             }
                         }
+                        else
+                            throw new TranslateException(ErrorAndExceptionsCatalog._710_Code, ErrorAndExceptionsCatalog._710_ChildNodesNotFound);
 
                         if (model.document.csNamespace.Classes[i].lines.Count > 0)
                         {
@@ -229,7 +249,7 @@ namespace Sensato.Translate
                                             methods.Attributes.Append(dataTypeReturn);
 
                                             XmlAttribute methodLines = newFile.CreateAttribute("lines");
-                                            if (lineCasterMethod.lines != null) // lines of code are contained inside the methods, at the same time we have to insert the lineMethod node.
+                                            if (lineCasterMethod.lines.Count > 0) // lines of code are contained inside the methods, at the same time we have to insert the lineMethod node.
                                             { 
                                                 foreach (var lineItem in lineCasterMethod.lines) // inside the method it is the lines of code contained in the model.
                                                 {
@@ -255,10 +275,11 @@ namespace Sensato.Translate
                                         break;
                                 }
                             }      
-                        } 
+                        }
+                        else
+                            throw new TranslateException(ErrorAndExceptionsCatalog._710_Code, ErrorAndExceptionsCatalog._710_ChildNodesNotFound);
                     }
                 }
-
             }
             //newFile.Save("C:/Users/Carolina Martinez/Desktop/ConstructorSample.xml"); // this line only is enabled when we update the code or to test new specifications.
             return newFile;
@@ -301,7 +322,7 @@ namespace Sensato.Translate
                             {
                                 for (var a = 0; a < constructorsList.Count; a++)
                                 {
-                                    if (constructorsList[a].Attributes.GetNamedItem("arguments").Value == "") // this means the constructor doesn't have parameters.
+                                    if (string.IsNullOrEmpty(constructorsList[a].Attributes.GetNamedItem("arguments").Value)) // this means the constructor doesn't have parameters.
                                     {
                                         if(constructorsList[a].Attributes.GetNamedItem("lines").Value.Length > 0) // this represents when there are lines of code inside.
                                         {
@@ -312,7 +333,7 @@ namespace Sensato.Translate
                                             constructorWithoutParameters = TemplatesCollection.ConstructorTemplate; 
                                             constructorWithoutParameters = String.Format(constructorWithoutParameters, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("name").Value,"", "linea de codigo");
                                         }
-                                    } else if (constructorsList[a].Attributes.GetNamedItem("arguments").Value.Length > 0 && constructorsList.Count > 1) // this validation is used when the constructor has parameters and empty constructor.
+                                    } else if (!string.IsNullOrEmpty(constructorsList[a].Attributes.GetNamedItem("arguments").Value) && constructorsList.Count > 1) // this validation is used when the constructor has parameters and empty constructor.
                                     {
                                         if (constructorsList[a].Attributes.GetNamedItem("lines").Value.Length > 0) // to search for lines of code.
                                         {
@@ -371,7 +392,7 @@ namespace Sensato.Translate
 
                                         if (methodNode.Attributes.GetNamedItem("static").Value == "true") // that means the method is static.
                                         {
-                                            if (methodNode.Attributes.GetNamedItem("arguments").Value.Length > 0) // that means a static method w/arguments.
+                                            if (!string.IsNullOrEmpty(methodNode.Attributes.GetNamedItem("arguments").Value)) // that means a static method w/arguments.
                                             {
                                                 if (methodNode.Attributes.GetNamedItem("returned").Value == "true") // means the method returns a value.
                                                 {
@@ -392,7 +413,7 @@ namespace Sensato.Translate
                                                     methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "static", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, methodNode.Attributes.GetNamedItem("arguments").Value, "lineas de codigo", "");
                                                     listOfMethods += methods + "\n\r";
                                                 }
-                                                else // without returning a value both lines of code
+                                                else // without returning a value even lines of code
                                                 {
                                                     methods = String.Format(methods, namespaceNode.ChildNodes[i].Attributes.GetNamedItem("modifiers").Value, "static", methodNode.Attributes.GetNamedItem("dataTypeReturn").Value, methodNode.Attributes.GetNamedItem("name").Value, methodNode.Attributes.GetNamedItem("arguments").Value,"","");
                                                     listOfMethods += methods + "\n\r";
