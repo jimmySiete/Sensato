@@ -121,19 +121,19 @@
     <value>601</value>
   </data>
   <data name="601_InvalidStoredProcedure" xml:space="preserve">
-    <value>"Error 601: El procedimiento almacenado o query tiene un valor indefinido o es nulo."</value>
+    <value>"Error 601:  El procedimiento alamacenado o query está mal estructurado."</value>
   </data>
   <data name="602_Code" xml:space="preserve">
     <value>602</value>
   </data>
   <data name="602_StoredProdecureNotFound" xml:space="preserve">
-    <value>"Error 602: No se definió un procedimiento almacenado o query."</value>
+    <value>"Error 602:  El procedimiento almacenado o query tiene un valor indefinido o es nulo."</value>
   </data>
   <data name="603_Code" xml:space="preserve">
     <value>603</value>
   </data>
-  <data name="603_CommandTypeNotFound" xml:space="preserve">
-    <value>"Error 603: No se definió un tipo de comando."</value>
+  <data name="603_InvalidCommandType" xml:space="preserve">
+    <value>"Error 603: El tipo de comando definido no es aceptable."</value>
   </data>
   <data name="604_Code" xml:space="preserve">
     <value>604</value>

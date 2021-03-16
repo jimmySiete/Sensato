@@ -70,7 +70,7 @@ namespace Sensato.DataAccess {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;Error 601: El procedimiento almacenado o query tiene un valor indefinido o es nulo.&quot;.
+        ///   Looks up a localized string similar to &quot;Error 601:  El procedimiento alamacenado o query está mal estructurado.&quot;.
         /// </summary>
         public static string _601_InvalidStoredProcedure {
             get {
@@ -88,7 +88,7 @@ namespace Sensato.DataAccess {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;Error 602: No se definió un procedimiento almacenado o query.&quot;.
+        ///   Looks up a localized string similar to &quot;Error 602:  El procedimiento almacenado o query tiene un valor indefinido o es nulo.&quot;.
         /// </summary>
         public static string _602_StoredProdecureNotFound {
             get {
@@ -106,11 +106,11 @@ namespace Sensato.DataAccess {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;Error 603: No se definió un tipo de comando.&quot;.
+        ///   Looks up a localized string similar to &quot;Error 603: El tipo de comando definido no es aceptable.&quot;.
         /// </summary>
-        public static string _603_CommandTypeNotFound {
+        public static string _603_InvalidCommandType {
             get {
-                return ResourceManager.GetString("603_CommandTypeNotFound", resourceCulture);
+                return ResourceManager.GetString("603_InvalidCommandType", resourceCulture);
             }
         }
         

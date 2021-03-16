@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Runtime.InteropServices;
 
 namespace UnitTestProject1
 {
@@ -15,7 +16,8 @@ namespace UnitTestProject1
         public void TestMethod01() // para comprobar que un SP o Query no sea nulo o indefinido
         {
             // var
-            string query = "";
+            string query = null;
+           
             String ConnectionStr = ConfigurationManager.AppSettings["ConnStr"];
             String Code = ErrorsAndExceptionsCatalog._601_Code;
             String Message = ErrorsAndExceptionsCatalog._601_InvalidStoredProcedure;
@@ -23,7 +25,7 @@ namespace UnitTestProject1
             //act
             try
             {
-                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.Text, null, ConnectionStr);
+                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.Text,null, ConnectionStr);
             }
             catch(DataAccessException ex)
             {
@@ -323,14 +325,14 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod015() // la sentecia no se realizó //PENDIENTE
         {
-            string query = "Select (*) from Albums";
+            string query = "Select 1/0";
             String Code = ErrorsAndExceptionsCatalog._615_Code;
             String Message = ErrorsAndExceptionsCatalog._615_SenteceNonExecuted;
             DataAccessException resultEX = new DataAccessException();
-
+            bool result = false;
             try
             {
-                bool result = DataAccessADO.ExecuteNonQuery(query, CommandType.StoredProcedure,null,null,null);
+                result = DataAccessADO.ExecuteNonQuery(query, CommandType.Text,null,null,null);
             }
             catch (DataAccessException ex)
             {
