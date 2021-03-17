@@ -49,12 +49,6 @@
     <Compile Include="Settings\Configurations.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sensato.DataAccess\Sensato.DataAccess.csproj">
-      <Project>{26090005-625a-49fc-8cdc-2bc30edde4c5}</Project>
-      <Name>Sensato.DataAccess</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Library\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

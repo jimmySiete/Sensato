@@ -30,11 +30,6 @@ namespace Sensato.DataAccess
             if (transaction != null)
                 command.Transaction = transaction;
 
-            if (command.Connection == null)
-                throw new DataAccessException(ErrorsAndExceptionsCatalog._612_Code, ErrorsAndExceptionsCatalog._612_ConnectionClosed);
-            else if (command.Connection.DataSource.Length == 0)
-                throw new DataAccessException(ErrorsAndExceptionsCatalog._611_Code, ErrorsAndExceptionsCatalog._611_ConnectionNotEstablished);
-
             return command;
         }
 
@@ -48,9 +43,9 @@ namespace Sensato.DataAccess
             DataTable dt = new DataTable();
 
             if (command.CommandText.Length == 0 || command.CommandType.GetType().Name == "" || command.Parameters.Count == 0 || command.Transaction == null)
-                throw new DataAccessException(ErrorsAndExceptionsCatalog._619_Code, ErrorsAndExceptionsCatalog._619_IncompleteCommand);
+                throw new DataAccessException(ErrorsAndExceptionsCatalog._612_Code, ErrorsAndExceptionsCatalog._612_InvalidCommand);
             else if (command == null)
-                throw new DataAccessException(ErrorsAndExceptionsCatalog._620_Code, ErrorsAndExceptionsCatalog._620_InvalidCommand);
+                throw new DataAccessException(ErrorsAndExceptionsCatalog._613_Code, ErrorsAndExceptionsCatalog._613_CommandNotFound);
 
             try
             {
@@ -63,7 +58,7 @@ namespace Sensato.DataAccess
             catch (Exception ex)
             {
                 if (dt.Columns.Count == 0)
-                    throw new DataAccessException(ErrorsAndExceptionsCatalog._613_Code, ErrorsAndExceptionsCatalog._613_DataTableNotCreated);
+                    throw new DataAccessException(ErrorsAndExceptionsCatalog._609_Code,ErrorsAndExceptionsCatalog._609_InvalidDataTable);
                 else
                     throw ex;
             }
@@ -85,9 +80,9 @@ namespace Sensato.DataAccess
             DataSet ds = new DataSet();
 
             if (command.CommandText.Length == 0 || command.CommandType.GetType().Name == "" || command.Parameters.Count == 0 || command.Transaction == null)
-                throw new DataAccessException(ErrorsAndExceptionsCatalog._619_Code, ErrorsAndExceptionsCatalog._619_IncompleteCommand);
+                throw new DataAccessException(ErrorsAndExceptionsCatalog._612_Code, ErrorsAndExceptionsCatalog._612_InvalidCommand);
             else if (command == null)
-                throw new DataAccessException(ErrorsAndExceptionsCatalog._620_Code, ErrorsAndExceptionsCatalog._620_InvalidCommand);
+                throw new DataAccessException(ErrorsAndExceptionsCatalog._613_Code, ErrorsAndExceptionsCatalog._613_CommandNotFound);
 
             try
             {
@@ -100,7 +95,7 @@ namespace Sensato.DataAccess
             catch (Exception ex)
             {
                 if (ds.Tables.Count == 0)
-                    throw new DataAccessException(ErrorsAndExceptionsCatalog._614_Code, ErrorsAndExceptionsCatalog._614_DataSetNotCreated);
+                    throw new DataAccessException(ErrorsAndExceptionsCatalog._610_Code, ErrorsAndExceptionsCatalog._610_InvalidDataSet);
                 else
                     throw ex;
             }
@@ -120,9 +115,9 @@ namespace Sensato.DataAccess
         public static bool ExecuteNonQuery(SqlCommand command)
         {
             if (command.CommandText.Length == 0 || command.CommandType.GetType().Name == "" || command.Parameters.Count == 0 || command.Transaction == null)
-                throw new DataAccessException(ErrorsAndExceptionsCatalog._619_Code, ErrorsAndExceptionsCatalog._619_IncompleteCommand);
+                throw new DataAccessException(ErrorsAndExceptionsCatalog._612_Code, ErrorsAndExceptionsCatalog._612_InvalidCommand);
             else if (command == null)
-                throw new DataAccessException(ErrorsAndExceptionsCatalog._620_Code, ErrorsAndExceptionsCatalog._620_InvalidCommand);
+                throw new DataAccessException(ErrorsAndExceptionsCatalog._613_Code, ErrorsAndExceptionsCatalog._613_CommandNotFound);
 
             try
             {
@@ -133,7 +128,7 @@ namespace Sensato.DataAccess
             catch (Exception ex)
             {
                 if (command.BeginExecuteNonQuery().IsCompleted == false)
-                    throw new DataAccessException(ErrorsAndExceptionsCatalog._615_Code, ErrorsAndExceptionsCatalog._615_SenteceNonExecuted);
+                    throw new DataAccessException(ErrorsAndExceptionsCatalog._611_Code, ErrorsAndExceptionsCatalog._611_InvalidSentenceExecution);
                 throw ex;
             }
             finally
@@ -155,7 +150,7 @@ namespace Sensato.DataAccess
             }
             catch
             {
-                throw new DataAccessException(ErrorsAndExceptionsCatalog._607_Code, ErrorsAndExceptionsCatalog._607__InvalidConnectionString);
+                throw new DataAccessException(ErrorsAndExceptionsCatalog._606_Code, ErrorsAndExceptionsCatalog._606__InvalidConnectionString);
             }
         }
     }
