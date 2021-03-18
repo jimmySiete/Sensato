@@ -27,6 +27,9 @@ namespace Sensato.DataAccess
             command = new SqlCommand(text, connection);
             command.CommandType = type;
 
+            if (command.Connection.ConnectionString.Length == 0)
+                throw new DataAccessException(ErrorsAndExceptionsCatalog._616_Code, ErrorsAndExceptionsCatalog._616_ConnectionFailed);
+
             if (transaction != null)
                 command.Transaction = transaction;
 

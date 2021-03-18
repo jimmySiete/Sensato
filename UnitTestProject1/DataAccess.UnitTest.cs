@@ -21,18 +21,13 @@ namespace UnitTestProject1
             List<SqlParameter> listparams = new List<SqlParameter>();
             listparams.Add(new SqlParameter() { ParameterName = "Caro" });
 
-            //SqlConnection connection = new SqlConnection();
-            //connection.ConnectionString = ConfigurationManager.AppSettings["ConnStr"];
-            //connection.Open();
-            //SqlTransaction transaction = connection.BeginTransaction("SampleTransaction");
-
             String Code = ErrorsAndExceptionsCatalog._601_Code;
             String Message = ErrorsAndExceptionsCatalog._601_InvalidStoredProcedure;
             DataAccessException resultEX = new DataAccessException();
             //act
             try
             {
-                DataTable dt = DataAccessADO.GetDataTable("CountRecordAlbums", CommandType.StoredProcedure, listparams, ConnectionStr, null);
+                DataTable dt = DataAccessADO.GetDataTable("CountAlbums", CommandType.StoredProcedure, listparams, ConnectionStr, null);
             }
             catch(DataAccessException ex)
             {
@@ -46,14 +41,11 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod02() // SP de valor nulo
         {
+            string query = null;
             String ConnectionStr = ConfigurationManager.AppSettings["ConnStr"];
 
             List<SqlParameter> listparams = new List<SqlParameter>();
             listparams.Add(new SqlParameter() { ParameterName = "Caro" });
-
-            SqlConnection connection = new SqlConnection();
-            connection.Open();
-            SqlTransaction transaction = connection.BeginTransaction("SampleTransaction");
 
             String Code = ErrorsAndExceptionsCatalog._602_Code;
             String Message = ErrorsAndExceptionsCatalog._602_StoredProdecureNotFound;
@@ -61,7 +53,7 @@ namespace UnitTestProject1
             
             try
             {
-                DataTable dt = DataAccessADO.GetDataTable(null, CommandType.StoredProcedure, listparams, ConnectionStr,transaction);
+                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.StoredProcedure, listparams, ConnectionStr,null);
             }
             catch (DataAccessException ex)
             {
@@ -81,17 +73,13 @@ namespace UnitTestProject1
             List<SqlParameter> listparams = new List<SqlParameter>();
             listparams.Add(new SqlParameter() { ParameterName = "Caro" });
 
-            SqlConnection connection = new SqlConnection();
-            connection.Open();
-            SqlTransaction transaction = connection.BeginTransaction("SampleTransaction");
-
             String Code = ErrorsAndExceptionsCatalog._603_Code;
             String Message = ErrorsAndExceptionsCatalog._603_InvalidQuery;
             DataAccessException resultEX = new DataAccessException();
 
             try
             {
-                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.Text, listparams, ConnectionStr, transaction);
+                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.Text, listparams, ConnectionStr, null);
             }
             catch (DataAccessException ex)
             {
@@ -110,17 +98,13 @@ namespace UnitTestProject1
 
             String ConnectionStr = ConfigurationManager.AppSettings["ConnStr"];
 
-            SqlConnection connection = new SqlConnection();
-            connection.Open();
-            SqlTransaction transaction = connection.BeginTransaction("SampleTransaction");
-
             String Code = ErrorsAndExceptionsCatalog._604_Code;
             String Message = ErrorsAndExceptionsCatalog._604_QueryNotFound;
             DataAccessException resultEX = new DataAccessException();
 
             try
             {
-                DataTable dt = DataAccessADO.GetDataTable(null, CommandType.Text, listparams, ConnectionStr, transaction);
+                DataTable dt = DataAccessADO.GetDataTable(null, CommandType.Text, listparams, ConnectionStr, null);
             }
             catch (DataAccessException ex)
             {

@@ -22,27 +22,7 @@ namespace Sensato.DataAccess
         {
             try
             {
-                DataAccessADO.ParamsAreValid(storedProcedureOrQuery,type,parameters,connStr,transaction);
-                //if (string.IsNullOrEmpty(storedProcedureOrQuery) && type.GetType().Name == "StoredProcedure")
-                //    throw new DataAccessException(ErrorsAndExceptionsCatalog._601_Code, ErrorsAndExceptionsCatalog._601_InvalidStoredProcedure);
-                //else if (!storedProcedureOrQuery.StartsWith("D") && type.GetType().Name == "StoredProcedure")// que no contenga una sentencia
-                //    throw new DataAccessException(ErrorsAndExceptionsCatalog._602_Code, ErrorsAndExceptionsCatalog._602_StoredProdecureNotFound);
-                //if (string.IsNullOrEmpty(storedProcedureOrQuery) && type.GetType().Name == "Query")
-                //    throw new DataAccessException(ErrorsAndExceptionsCatalog._603_Code, ErrorsAndExceptionsCatalog._603_InvalidQuery);
-                //else if (!storedProcedureOrQuery.StartsWith("S") && type.GetType().Name == "Query")
-                //    throw new DataAccessException(ErrorsAndExceptionsCatalog._604_Code, ErrorsAndExceptionsCatalog._604_QueryNotFound);
-                //if (string.IsNullOrEmpty(type.ToString()))
-                //    throw new DataAccessException(ErrorsAndExceptionsCatalog._605_Code, ErrorsAndExceptionsCatalog._605_InvalidCommandType);
-                //else if (type.GetType().Name != "Text" || type.GetType().Name != "StoredProcedure")
-                //    throw new DataAccessException(ErrorsAndExceptionsCatalog._614_Code, ErrorsAndExceptionsCatalog._614_CommandTypeNotFound);
-                //if (parameters.All(null))
-                //    throw new DataAccessException(ErrorsAndExceptionsCatalog._615_Code, ErrorsAndExceptionsCatalog._615_ParametersNotFound);
-                //if (string.IsNullOrEmpty(connStr))
-                //    throw new DataAccessException(ErrorsAndExceptionsCatalog._607_Code, ErrorsAndExceptionsCatalog._607_ConnectionStringNotFound);
-                //else if (!connStr.StartsWith("d")) // deberia ser que empiece con otra que no sea 'd'
-                //    throw new DataAccessException(ErrorsAndExceptionsCatalog._606_Code, ErrorsAndExceptionsCatalog._606__InvalidConnectionString);
-                //if (string.IsNullOrEmpty(transaction.ToString()))
-                //    throw new DataAccessException(ErrorsAndExceptionsCatalog._608_Code, ErrorsAndExceptionsCatalog._608_SQLTransactionNotFound);
+                //DataAccessADO.ParamsAreValid(storedProcedureOrQuery,type,parameters,connStr,transaction);
                 
                 SqlCommand cmd = Connection.GetConnection(storedProcedureOrQuery, type, connStr, transaction);
                 if (parameters != null)
@@ -53,30 +33,8 @@ namespace Sensato.DataAccess
             }
             catch(Exception ex)
             {
-                //throw new DataAccessException("CodigoNuevo", "Error no controlado por data access", ex);
-
-                if (string.IsNullOrEmpty(storedProcedureOrQuery) && type.ToString() == "StoredProcedure")
-                    throw new DataAccessException(ErrorsAndExceptionsCatalog._601_Code, ErrorsAndExceptionsCatalog._601_InvalidStoredProcedure);
-                else if (!storedProcedureOrQuery.StartsWith("D") && type.ToString() == "StoredProcedure")// que no contenga una sentencia
-                    throw new DataAccessException(ErrorsAndExceptionsCatalog._602_Code, ErrorsAndExceptionsCatalog._602_StoredProdecureNotFound);
-                if (string.IsNullOrEmpty(storedProcedureOrQuery) && type.ToString() == "Text")
-                    throw new DataAccessException(ErrorsAndExceptionsCatalog._603_Code, ErrorsAndExceptionsCatalog._603_InvalidQuery);
-                else if (!storedProcedureOrQuery.StartsWith("S") && type.ToString() == "Text")
-                    throw new DataAccessException(ErrorsAndExceptionsCatalog._604_Code, ErrorsAndExceptionsCatalog._604_QueryNotFound);
-                if (string.IsNullOrEmpty(type.ToString()))
-                    throw new DataAccessException(ErrorsAndExceptionsCatalog._614_Code, ErrorsAndExceptionsCatalog._614_CommandTypeNotFound);
-                else if (type.ToString().ToLower() != "text" || type.ToString().ToLower() != "storedprocedure")
-                    throw new DataAccessException(ErrorsAndExceptionsCatalog._605_Code, ErrorsAndExceptionsCatalog._605_InvalidCommandType);
-                if (parameters.All(null))
-                    throw new DataAccessException(ErrorsAndExceptionsCatalog._615_Code, ErrorsAndExceptionsCatalog._615_ParametersNotFound);
-                if (string.IsNullOrEmpty(connStr))
-                    throw new DataAccessException(ErrorsAndExceptionsCatalog._607_Code, ErrorsAndExceptionsCatalog._607_ConnectionStringNotFound);
-                else if (!connStr.StartsWith("d")) // deberia ser que empiece con otra que no sea 'd'
-                    throw new DataAccessException(ErrorsAndExceptionsCatalog._606_Code, ErrorsAndExceptionsCatalog._606__InvalidConnectionString);
-                if (string.IsNullOrEmpty(transaction.ToString()))
-                    throw new DataAccessException(ErrorsAndExceptionsCatalog._608_Code, ErrorsAndExceptionsCatalog._608_SQLTransactionNotFound);
-                else
-                    throw new DataAccessException(ErrorsAndExceptionsCatalog._609_Code, ErrorsAndExceptionsCatalog._609_InvalidDataTable);
+             DataAccessADO.ParamsAreValid(storedProcedureOrQuery, type, parameters, connStr, transaction);
+                throw new DataAccessException(ErrorsAndExceptionsCatalog._617_Code, ErrorsAndExceptionsCatalog._617_ErrorNotHandled, ex);
             }
         }
 
@@ -183,10 +141,26 @@ namespace Sensato.DataAccess
         /// <param name="parameters"></param>
         /// <param name="connStr"></param>
         /// <param name="transaction"></param>
-        private static void ParamsAreValid(string storedProcedureOrQuery, CommandType type, List<SqlParameter> parameters = null, string connStr = null, SqlTransaction transaction = null)
+        private static void ParamsAreValid(string storedProcedureOrQuery, CommandType type, List<SqlParameter> parameters, string connStr, SqlTransaction transaction)
         {
             if (string.IsNullOrEmpty(storedProcedureOrQuery) && type.ToString() == "StoredProcedure")
+               throw new DataAccessException(ErrorsAndExceptionsCatalog._602_Code, ErrorsAndExceptionsCatalog._602_StoredProdecureNotFound);
+            else if (!storedProcedureOrQuery.StartsWith("U") && type.ToString() == "StoredProcedure")// que no contenga una sentencia
                 throw new DataAccessException(ErrorsAndExceptionsCatalog._601_Code, ErrorsAndExceptionsCatalog._601_InvalidStoredProcedure);
+            if (string.IsNullOrEmpty(storedProcedureOrQuery) && type.ToString() == "Text")
+                throw new DataAccessException(ErrorsAndExceptionsCatalog._604_Code, ErrorsAndExceptionsCatalog._604_QueryNotFound);
+            else if (!storedProcedureOrQuery.StartsWith("S") && type.ToString() == "Text")
+                throw new DataAccessException(ErrorsAndExceptionsCatalog._603_Code, ErrorsAndExceptionsCatalog._603_InvalidQuery);
+            if (string.IsNullOrEmpty(type.ToString()))
+                throw new DataAccessException(ErrorsAndExceptionsCatalog._605_Code, ErrorsAndExceptionsCatalog._605_InvalidCommandType);
+            else if (type.ToString() != "Text" || type.ToString() != "StoredProcedure")
+                throw new DataAccessException(ErrorsAndExceptionsCatalog._614_Code, ErrorsAndExceptionsCatalog._614_CommandTypeNotFound);
+            if (parameters.All(null))
+                throw new DataAccessException(ErrorsAndExceptionsCatalog._615_Code, ErrorsAndExceptionsCatalog._615_ParametersNotFound);
+            if (string.IsNullOrEmpty(connStr))
+                throw new DataAccessException(ErrorsAndExceptionsCatalog._607_Code, ErrorsAndExceptionsCatalog._607_ConnectionStringNotFound);
+            else if (!connStr.StartsWith("d")) // deberia ser que empiece con otra que no sea 'd'
+                throw new DataAccessException(ErrorsAndExceptionsCatalog._606_Code, ErrorsAndExceptionsCatalog._606__InvalidConnectionString);
         }
     }
 }

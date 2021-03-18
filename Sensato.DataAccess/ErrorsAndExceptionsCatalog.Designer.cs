@@ -329,5 +329,41 @@ namespace Sensato.DataAccess {
                 return ResourceManager.GetString("615_ParametersNotFound", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 616.
+        /// </summary>
+        public static string _616_Code {
+            get {
+                return ResourceManager.GetString("616_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error 616: No se pudo establecer la conexión a la base de datos..
+        /// </summary>
+        public static string _616_ConnectionFailed {
+            get {
+                return ResourceManager.GetString("616_ConnectionFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 617.
+        /// </summary>
+        public static string _617_Code {
+            get {
+                return ResourceManager.GetString("617_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error 617: Error no controlado..
+        /// </summary>
+        public static string _617_ErrorNotHandled {
+            get {
+                return ResourceManager.GetString("617_ErrorNotHandled", resourceCulture);
+            }
+        }
     }
 }

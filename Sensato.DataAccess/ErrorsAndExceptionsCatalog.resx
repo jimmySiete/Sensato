@@ -207,4 +207,16 @@
   <data name="615_ParametersNotFound" xml:space="preserve">
     <value>Error 615: La lista de parámetros no está definida o su valor es nulo.</value>
   </data>
+  <data name="616_Code" xml:space="preserve">
+    <value>616</value>
+  </data>
+  <data name="616_ConnectionFailed" xml:space="preserve">
+    <value>Error 616: No se pudo establecer la conexión a la base de datos.</value>
+  </data>
+  <data name="617_Code" xml:space="preserve">
+    <value>617</value>
+  </data>
+  <data name="617_ErrorNotHandled" xml:space="preserve">
+    <value>Error 617: Error no controlado.</value>
+  </data>
 </root>
