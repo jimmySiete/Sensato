@@ -431,7 +431,7 @@ namespace UnitTestProject1
 
             try
             {
-                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.Text, parameters:null, ConnectionStr, transaction);
+                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.Text, null, ConnectionStr, transaction);
             }
             catch (DataAccessException ex)
             {
