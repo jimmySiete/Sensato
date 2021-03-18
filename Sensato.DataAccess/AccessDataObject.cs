@@ -22,6 +22,7 @@ namespace Sensato.DataAccess
         {
             try
             {
+                DataAccessADO.ParamsAreValid(storedProcedureOrQuery,type,parameters,connStr,transaction);
                 //if (string.IsNullOrEmpty(storedProcedureOrQuery) && type.GetType().Name == "StoredProcedure")
                 //    throw new DataAccessException(ErrorsAndExceptionsCatalog._601_Code, ErrorsAndExceptionsCatalog._601_InvalidStoredProcedure);
                 //else if (!storedProcedureOrQuery.StartsWith("D") && type.GetType().Name == "StoredProcedure")// que no contenga una sentencia
@@ -50,8 +51,10 @@ namespace Sensato.DataAccess
 
                 return Connection.GetDataTable(cmd);
             }
-            catch 
+            catch(Exception ex)
             {
+                //throw new DataAccessException("CodigoNuevo", "Error no controlado por data access", ex);
+
                 if (string.IsNullOrEmpty(storedProcedureOrQuery) && type.ToString() == "StoredProcedure")
                     throw new DataAccessException(ErrorsAndExceptionsCatalog._601_Code, ErrorsAndExceptionsCatalog._601_InvalidStoredProcedure);
                 else if (!storedProcedureOrQuery.StartsWith("D") && type.ToString() == "StoredProcedure")// que no contenga una sentencia
@@ -169,6 +172,21 @@ namespace Sensato.DataAccess
             {
                 throw new DataAccessException(ErrorsAndExceptionsCatalog._611_Code, ErrorsAndExceptionsCatalog._611_InvalidSentenceExecution);
             }
+        }
+
+        
+        /// <summary>
+        /// Method used by validation of params
+        /// </summary>
+        /// <param name="storedProcedureOrQuery"></param>
+        /// <param name="type"></param>
+        /// <param name="parameters"></param>
+        /// <param name="connStr"></param>
+        /// <param name="transaction"></param>
+        private static void ParamsAreValid(string storedProcedureOrQuery, CommandType type, List<SqlParameter> parameters = null, string connStr = null, SqlTransaction transaction = null)
+        {
+            if (string.IsNullOrEmpty(storedProcedureOrQuery) && type.ToString() == "StoredProcedure")
+                throw new DataAccessException(ErrorsAndExceptionsCatalog._601_Code, ErrorsAndExceptionsCatalog._601_InvalidStoredProcedure);
         }
     }
 }

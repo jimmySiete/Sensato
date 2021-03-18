@@ -10,6 +10,7 @@ namespace Sensato.DataAccess
     {
         public string code { get; set; }
         public string messageCode { get; set; }
+        public Exception exception { get; set; }
 
         public DataAccessException()
         {
@@ -20,6 +21,15 @@ namespace Sensato.DataAccess
         {
             this.code = code;
             this.messageCode = messageCode;
+            this.exception = new Exception();
         }
+
+        public DataAccessException(String code, string messageCode, Exception ex)
+        {
+            this.code = code;
+            this.messageCode = messageCode;
+            this.exception = ex;
+        }
+
     }
 }
