@@ -96,6 +96,7 @@ namespace UnitTestProject1
             List<SqlParameter> listparams = new List<SqlParameter>();
             listparams.Add(new SqlParameter() { ParameterName = "Caro" });
 
+            string query = "";
             String ConnectionStr = ConfigurationManager.AppSettings["ConnStr"];
 
             String Code = ErrorsAndExceptionsCatalog._604_Code;
@@ -104,7 +105,7 @@ namespace UnitTestProject1
 
             try
             {
-                DataTable dt = DataAccessADO.GetDataTable(null, CommandType.Text, listparams, ConnectionStr, null);
+                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.Text, listparams, ConnectionStr, null);
             }
             catch (DataAccessException ex)
             {
@@ -124,17 +125,13 @@ namespace UnitTestProject1
             List<SqlParameter> listparams = new List<SqlParameter>();
             listparams.Add(new SqlParameter() { ParameterName = "Caro" });
 
-            SqlConnection connection = new SqlConnection();
-            connection.Open();
-            SqlTransaction transaction = connection.BeginTransaction("SampleTransaction");
-
             String Code = ErrorsAndExceptionsCatalog._605_Code;
             String Message = ErrorsAndExceptionsCatalog._605_InvalidCommandType;
             DataAccessException resultEX = new DataAccessException();
 
             try
             {
-                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.TableDirect, listparams, ConnectionStr, transaction);
+                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.TableDirect, listparams, ConnectionStr, null);
             }
             catch (DataAccessException ex)
             {
@@ -149,23 +146,18 @@ namespace UnitTestProject1
         public void TestMethod06() // cadena de conexion mal estructurada
         {
             string query = "Select count(*) from Albums";
-            String ConnectionStr = "user/Carolina";
+            String ConnectionStr = "user/Caro";
 
             String Code = ErrorsAndExceptionsCatalog._606_Code;
             String Message = ErrorsAndExceptionsCatalog._606__InvalidConnectionString;
+            DataAccessException resultEX = new DataAccessException();
 
             List<SqlParameter> listparams = new List<SqlParameter>();
             listparams.Add(new SqlParameter() { ParameterName = "Caro" });
 
-            SqlConnection connection = new SqlConnection();
-            connection.Open();
-            SqlTransaction transaction = connection.BeginTransaction("SampleTransaction");
-
-            DataAccessException resultEX = new DataAccessException();
-
             try
             {
-                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.Text, listparams, ConnectionStr, transaction);
+                DataTable dt = DataAccessADO.GetDataTable(query,CommandType.Text, listparams, ConnectionStr, null);
             }
             catch (DataAccessException ex)
             {
@@ -184,17 +176,13 @@ namespace UnitTestProject1
             List<SqlParameter> listparams = new List<SqlParameter>();
             listparams.Add(new SqlParameter() { ParameterName = "Caro" });
 
-            SqlConnection connection = new SqlConnection();
-            connection.Open();
-            SqlTransaction transaction = connection.BeginTransaction("SampleTransaction");
-
             String Code = ErrorsAndExceptionsCatalog._607_Code;
             String Message = ErrorsAndExceptionsCatalog._607_ConnectionStringNotFound;
             DataAccessException resultEX = new DataAccessException();
 
             try
             {
-                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.Text, listparams, null, transaction);
+                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.Text, listparams, null, null);
             }
             catch (DataAccessException ex)
             {
@@ -209,9 +197,11 @@ namespace UnitTestProject1
         public void TestMethod08() // transaccion valor nulo
         {
             string query = "Select count(*) from Albums";
+            String ConnectionStr = "data source=./;initial catalog=MvcMusicStore;integrated security=True;MultipleActiveResultSets=True;";
+
             List<SqlParameter> listparams = new List<SqlParameter>();
             listparams.Add(new SqlParameter() { ParameterName = "Caro" });
-            String ConnectionStr = "data source=./;initial catalog=MvcMusicStore;integrated security=True;MultipleActiveResultSets=True;";
+            
             String Code = ErrorsAndExceptionsCatalog._608_Code;
             String Message = ErrorsAndExceptionsCatalog._608_SQLTransactionNotFound;
             DataAccessException resultEX = new DataAccessException();
@@ -225,19 +215,18 @@ namespace UnitTestProject1
                 resultEX = ex;
             }
 
-            Assert.AreEqual(Code, resultEX.code);
-            Assert.AreEqual(Message, resultEX.messageCode);
+            Assert.AreNotEqual(Code, resultEX.code);
+            Assert.AreNotEqual(Message, resultEX.messageCode);
         }
 
         [TestMethod]
         public void TestMethod09() // no se obtuvo el dataTable
         {
             string query = "Select count(*) from Albums";
+            String ConnectionStr = "data source=./;initial catalog=MvcMusicStore;integrated security=True;MultipleActiveResultSets=True;";
 
             List<SqlParameter> listparams = new List<SqlParameter>();
             listparams.Add(new SqlParameter() { ParameterName = "Caro" });
-
-            String ConnectionStr = "data source=./;initial catalog=MvcMusicStore;integrated security=True;MultipleActiveResultSets=True;";
 
             String Code = ErrorsAndExceptionsCatalog._609_Code;
             String Message = ErrorsAndExceptionsCatalog._609_InvalidDataTable;
@@ -311,17 +300,16 @@ namespace UnitTestProject1
         }
 
         [TestMethod]
-        public void TestMethod012() // comando incompleto
+        public void TestMethod012() // conexion no establecida
         {
             string query = "Select count(*) from Albums";
+            String ConnectionStr = "sdfnksdf";
 
             List<SqlParameter> listparams = new List<SqlParameter>();
             listparams.Add(new SqlParameter() { ParameterName = "Caro" });
 
-            String ConnectionStr = ConfigurationManager.AppSettings["ConnStr"];
-
             String Code = ErrorsAndExceptionsCatalog._612_Code;
-            String Message = ErrorsAndExceptionsCatalog._612_InvalidCommand;
+            String Message = ErrorsAndExceptionsCatalog._612_ConnectionFailed;
             DataAccessException resultEX = new DataAccessException();
 
             try
@@ -338,7 +326,7 @@ namespace UnitTestProject1
         }
 
         [TestMethod]
-        public void TestMethod013() // comando de valor nulo
+        public void TestMethod013() // error no controlado
         {
             string query = "Select count(*) from Albums";
 
@@ -346,10 +334,10 @@ namespace UnitTestProject1
             listparams.Add(new SqlParameter() { ParameterName = "Caro" });
 
 
-            String ConnectionStr = ConfigurationManager.AppSettings["ConnStr"];
+            String ConnectionStr = "data source =./; initial catalog = MvcMusicStore; integrated security = True; MultipleActiveResultSets = True;";
 
             String Code = ErrorsAndExceptionsCatalog._613_Code;
-            String Message = ErrorsAndExceptionsCatalog._613_CommandNotFound;
+            String Message = ErrorsAndExceptionsCatalog._613_ErrorNotHandled;
             DataAccessException resultEX = new DataAccessException();
 
             try
@@ -365,57 +353,22 @@ namespace UnitTestProject1
             Assert.AreEqual(Message, resultEX.messageCode);
         }
 
+
         [TestMethod]
-        public void TestMethod014() // tipo de comando nulo
+        public void TestMethod014() // parametros nulos
         {
             string query = "Select count(*) from Albums";
+            String ConnectionStr = ConfigurationManager.AppSettings["ConnStr"];
 
             List<SqlParameter> listparams = new List<SqlParameter>();
-            listparams.Add(new SqlParameter() { ParameterName = "Caro" });
-
-            String ConnectionStr = ConfigurationManager.AppSettings["ConnStr"];
-
-            SqlConnection connection = new SqlConnection();
-            connection.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandType = new CommandType();
-            SqlTransaction transaction = connection.BeginTransaction("SampleTransaction");
 
             String Code = ErrorsAndExceptionsCatalog._614_Code;
-            String Message = ErrorsAndExceptionsCatalog._614_CommandTypeNotFound;
+            String Message = ErrorsAndExceptionsCatalog._614_ParametersNotFound;
             DataAccessException resultEX = new DataAccessException();
 
             try
             {
-                DataTable dt = DataAccessADO.GetDataTable(query,cmd.CommandType, listparams, ConnectionStr, transaction);
-            }
-            catch (DataAccessException ex)
-            {
-                resultEX = ex;
-            }
-
-            Assert.AreEqual(Code, resultEX.code);
-            Assert.AreEqual(Message, resultEX.messageCode);
-        }
-
-        [TestMethod]
-        public void TestMethod015() // parametros nulos
-        {
-            string query = "Select count(*) from Albums";
-             
-            String ConnectionStr = ConfigurationManager.AppSettings["ConnStr"];
-
-            SqlConnection connection = new SqlConnection();
-            connection.Open();
-            SqlTransaction transaction = connection.BeginTransaction("SampleTransaction");
-
-            String Code = ErrorsAndExceptionsCatalog._615_Code;
-            String Message = ErrorsAndExceptionsCatalog._615_ParametersNotFound;
-            DataAccessException resultEX = new DataAccessException();
-
-            try
-            {
-                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.Text, null, ConnectionStr, transaction);
+                DataTable dt = DataAccessADO.GetDataTable(query, CommandType.Text, listparams, ConnectionStr, null);
             }
             catch (DataAccessException ex)
             {

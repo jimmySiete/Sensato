@@ -186,37 +186,19 @@
   <data name="612_Code" xml:space="preserve">
     <value>612</value>
   </data>
-  <data name="612_InvalidCommand" xml:space="preserve">
-    <value>Error 612: No se tienen los parámetros necesarios para completar el comando.</value>
+  <data name="612_ConnectionFailed" xml:space="preserve">
+    <value>Error 612: No se pudo establecer la conexión a la base de datos.</value>
   </data>
   <data name="613_Code" xml:space="preserve">
     <value>613</value>
   </data>
-  <data name="613_CommandNotFound" xml:space="preserve">
-    <value>Error 613: El valor del comando es nulo o indefinido.</value>
+  <data name="613_ErrorNotHandled" xml:space="preserve">
+    <value>Error 613: Error no controlado.</value>
   </data>
   <data name="614_Code" xml:space="preserve">
     <value>614</value>
   </data>
-  <data name="614_CommandTypeNotFound" xml:space="preserve">
-    <value>Error 614: El valor del tipo de comando no está definido o es nulo.</value>
-  </data>
-  <data name="615_Code" xml:space="preserve">
-    <value>615</value>
-  </data>
-  <data name="615_ParametersNotFound" xml:space="preserve">
-    <value>Error 615: La lista de parámetros no está definida o su valor es nulo.</value>
-  </data>
-  <data name="616_Code" xml:space="preserve">
-    <value>616</value>
-  </data>
-  <data name="616_ConnectionFailed" xml:space="preserve">
-    <value>Error 616: No se pudo establecer la conexión a la base de datos.</value>
-  </data>
-  <data name="617_Code" xml:space="preserve">
-    <value>617</value>
-  </data>
-  <data name="617_ErrorNotHandled" xml:space="preserve">
-    <value>Error 617: Error no controlado.</value>
+  <data name="614_ParametersNotFound" xml:space="preserve">
+    <value>Error 614: La lista de parámetros no está definida o su valor es nulo.</value>
   </data>
 </root>

@@ -268,11 +268,11 @@ namespace Sensato.DataAccess {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error 612: No se tienen los parámetros necesarios para completar el comando..
+        ///   Looks up a localized string similar to Error 612: No se pudo establecer la conexión a la base de datos..
         /// </summary>
-        public static string _612_InvalidCommand {
+        public static string _612_ConnectionFailed {
             get {
-                return ResourceManager.GetString("612_InvalidCommand", resourceCulture);
+                return ResourceManager.GetString("612_ConnectionFailed", resourceCulture);
             }
         }
         
@@ -286,11 +286,11 @@ namespace Sensato.DataAccess {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error 613: El valor del comando es nulo o indefinido..
+        ///   Looks up a localized string similar to Error 613: Error no controlado..
         /// </summary>
-        public static string _613_CommandNotFound {
+        public static string _613_ErrorNotHandled {
             get {
-                return ResourceManager.GetString("613_CommandNotFound", resourceCulture);
+                return ResourceManager.GetString("613_ErrorNotHandled", resourceCulture);
             }
         }
         
@@ -304,65 +304,11 @@ namespace Sensato.DataAccess {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error 614: El valor del tipo de comando no está definido o es nulo..
+        ///   Looks up a localized string similar to Error 614: La lista de parámetros no está definida o su valor es nulo..
         /// </summary>
-        public static string _614_CommandTypeNotFound {
+        public static string _614_ParametersNotFound {
             get {
-                return ResourceManager.GetString("614_CommandTypeNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 615.
-        /// </summary>
-        public static string _615_Code {
-            get {
-                return ResourceManager.GetString("615_Code", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error 615: La lista de parámetros no está definida o su valor es nulo..
-        /// </summary>
-        public static string _615_ParametersNotFound {
-            get {
-                return ResourceManager.GetString("615_ParametersNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 616.
-        /// </summary>
-        public static string _616_Code {
-            get {
-                return ResourceManager.GetString("616_Code", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error 616: No se pudo establecer la conexión a la base de datos..
-        /// </summary>
-        public static string _616_ConnectionFailed {
-            get {
-                return ResourceManager.GetString("616_ConnectionFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 617.
-        /// </summary>
-        public static string _617_Code {
-            get {
-                return ResourceManager.GetString("617_Code", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error 617: Error no controlado..
-        /// </summary>
-        public static string _617_ErrorNotHandled {
-            get {
-                return ResourceManager.GetString("617_ErrorNotHandled", resourceCulture);
+                return ResourceManager.GetString("614_ParametersNotFound", resourceCulture);
             }
         }
     }
