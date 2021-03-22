@@ -13,10 +13,8 @@ namespace Sensato.Translate
     {
         public static string TranslateToCSharp(csXML model)
         {
-            if (model.GetType().Name != "csXML")
-                throw new TranslateException(ErrorAndExceptionsCatalog._701_Code, ErrorAndExceptionsCatalog._701_InvalidTypeModel);
-            else if (model == null)
-                throw new TranslateException(ErrorAndExceptionsCatalog._702_Code, ErrorAndExceptionsCatalog._702_ModelNotFound);
+            if (model == null)
+                throw new TranslateException(ErrorAndExceptionsCatalog._701_Code, ErrorAndExceptionsCatalog._701_ModelNotFound);
 
             XmlDocument xmlDocument = SerializeToXML(model);
             string csSharpModel = SerializeToCSharp(xmlDocument);
@@ -28,15 +26,6 @@ namespace Sensato.Translate
             XmlDocument newFile = new XmlDocument();  // document creation
             try
             {
-                if (string.IsNullOrEmpty(model.ToString())) //PENDIENTE
-                    throw new TranslateException(ErrorAndExceptionsCatalog._705_Code, ErrorAndExceptionsCatalog._705_ElementNotFound);
-
-                if (model.version.Length < 3)
-                    throw new TranslateException(ErrorAndExceptionsCatalog._703_Code, ErrorAndExceptionsCatalog._703_InvalidVersionModel);
-
-                if (!model.encoding.StartsWith("U"))
-                    throw new TranslateException(ErrorAndExceptionsCatalog._704_Code, ErrorAndExceptionsCatalog._704_InvalidEncoding);
-
                 XmlDeclaration declaration = newFile.CreateXmlDeclaration(model.version, model.encoding, null);
                 XmlElement heading = newFile.DocumentElement; //xml declaration
                 newFile.InsertBefore(declaration, heading);
@@ -62,8 +51,6 @@ namespace Sensato.Translate
                         references.AppendChild(usings);
                     }
                 }
-                else
-                    throw new TranslateException(ErrorAndExceptionsCatalog._710_Code, ErrorAndExceptionsCatalog._710_ChildNodesNotFound);
 
                 if (model.document.csNamespace.name != null) // at the same level that 'References', 'Namespace' tag is added after it. But first we have to verify if the attribute to namespace exists.
                 {
@@ -172,8 +159,6 @@ namespace Sensato.Translate
                                     }
                                 }
                             }
-                            else
-                                throw new TranslateException(ErrorAndExceptionsCatalog._710_Code, ErrorAndExceptionsCatalog._710_ChildNodesNotFound);
 
                             if (model.document.csNamespace.Classes[i].lines.Count > 0)
                             {
@@ -277,20 +262,24 @@ namespace Sensato.Translate
                                     }
                                 }
                             }
-                            else
-                                throw new TranslateException(ErrorAndExceptionsCatalog._710_Code, ErrorAndExceptionsCatalog._710_ChildNodesNotFound);
                         }
                     }
                 }
                 //newFile.Save("C:/Users/Carolina Martinez/Desktop/ConstructorSample.xml"); // this line is only enabled when we update the code or to test new specifications.
                 return newFile;
             }
-            catch
+            catch (Exception ex)
             {
-                if (model.document.references.Count == 0 || model.document.csNamespace.name.Length == 0)
-                    throw new TranslateException(ErrorAndExceptionsCatalog._705_Code, ErrorAndExceptionsCatalog._705_ElementNotFound);
-                if (model.document.csNamespace.Classes.Any())
-                    throw new TranslateException(ErrorAndExceptionsCatalog._706_Code,ErrorAndExceptionsCatalog._706_NotCreatedNode);
+                if (model.version.Length < 3)
+                    throw new TranslateException(ErrorAndExceptionsCatalog._702_Code, ErrorAndExceptionsCatalog._702_InvalidVersionModel);
+                if (!model.encoding.StartsWith("U"))
+                    throw new TranslateException(ErrorAndExceptionsCatalog._703_Code, ErrorAndExceptionsCatalog._703_InvalidEncoding);
+                if (model.document.references.Count == 0 || string.IsNullOrEmpty(model.document.csNamespace.ToString()))
+                    throw new TranslateException(ErrorAndExceptionsCatalog._704_Code, ErrorAndExceptionsCatalog._704_NotEnoughInformation);
+                if(model.document.csNamespace.Classes.Count == 0 || model.document.references.Count == 0 || model.document.csNamespace.Classes.First().constructors.Count == 0 || model.document.csNamespace.Classes.First().lines.Count == 0)
+                    throw new TranslateException(ErrorAndExceptionsCatalog._706_Code, ErrorAndExceptionsCatalog._706_ChildNodesNotFound);
+                if (ex != null)
+                    throw new TranslateException(ErrorAndExceptionsCatalog._705_Code, ErrorAndExceptionsCatalog._705_NotCreatedNode);
                 return newFile;
             }
         }
@@ -536,7 +525,7 @@ namespace Sensato.Translate
             }
             catch
             {
-                throw new TranslateException(ErrorAndExceptionsCatalog._719_Code, ErrorAndExceptionsCatalog._719_DocumentFormatNotCreated);
+                throw new TranslateException(ErrorAndExceptionsCatalog._712_Code, ErrorAndExceptionsCatalog._712_DocumentFormatNotCreated);
             }
         }
 

@@ -120,121 +120,91 @@
   <data name="701_Code" xml:space="preserve">
     <value>701</value>
   </data>
-  <data name="701_InvalidTypeModel" xml:space="preserve">
-    <value>"Error 701: El modelo proporcionado no contiene datos tipo XML."</value>
+  <data name="701_ModelNotFound" xml:space="preserve">
+    <value>Error 701: El valor del modelo no está definido o es nulo.</value>
   </data>
   <data name="702_Code" xml:space="preserve">
     <value>702</value>
   </data>
-  <data name="702_ModelNotFound" xml:space="preserve">
-    <value>"Error 702: El valor del modelo no está definido o es nulo."</value>
+  <data name="702_InvalidVersionModel" xml:space="preserve">
+    <value>Error 702: La version del modelo es diferente a la requerida.</value>
   </data>
   <data name="703_Code" xml:space="preserve">
     <value>703</value>
   </data>
-  <data name="703_InvalidVersionModel" xml:space="preserve">
-    <value>"Error 703: La version del modelo es diferente a la requerida."</value>
+  <data name="703_InvalidEncoding" xml:space="preserve">
+    <value>Error 703: El tipo de codificación proporcionada no es válida.</value>
   </data>
   <data name="704_Code" xml:space="preserve">
     <value>704</value>
   </data>
-  <data name="704_InvalidEncoding" xml:space="preserve">
-    <value>"Error 704: El tipo de codificación proporcionada no es válida."</value>
+  <data name="704_NotEnoughInformation" xml:space="preserve">
+    <value>Error 704: Modelo sin información necesaria para ser traducido.</value>
   </data>
   <data name="705_Code" xml:space="preserve">
     <value>705</value>
   </data>
-  <data name="705_ElementNotFound" xml:space="preserve">
-    <value>"Error 705: El modelo no contiene el dato solicitado."</value>
+  <data name="705_NotCreatedNode" xml:space="preserve">
+    <value>Error 705: El nodo no fue creado.</value>
+  </data>
+  <data name="706_ChildNodesNotFound" xml:space="preserve">
+    <value>Error 706: El nodo señalado no contiene elementos en su interior.</value>
   </data>
   <data name="706_Code" xml:space="preserve">
     <value>706</value>
   </data>
-  <data name="706_NotCreatedNode" xml:space="preserve">
-    <value>"Error 706: El nodo no fue creado."</value>
-  </data>
-  <data name="707_AppendNodeFailed" xml:space="preserve">
-    <value>"Error 707: El nodo no fue insertado en el nivel especificado."</value>
+  <data name="707_AttributeValueNotFound" xml:space="preserve">
+    <value>Error 707: El valor asignado al atributo es nulo o indefinido.</value>
   </data>
   <data name="707_Code" xml:space="preserve">
     <value>707</value>
   </data>
-  <data name="708_AttributesFailed" xml:space="preserve">
-    <value>"Error 708: El/los atributos no fueron agregados al nodo."</value>
-  </data>
   <data name="708_Code" xml:space="preserve">
     <value>708</value>
+  </data>
+  <data name="708_InvalidSingleNodeSelected" xml:space="preserve">
+    <value>Error 708: El nodo es inexistente, o posee otro nombre.</value>
   </data>
   <data name="709_Code" xml:space="preserve">
     <value>709</value>
   </data>
-  <data name="709_InvalidProperty" xml:space="preserve">
-    <value>"Error 709: El elemento al que se está apuntando no tiene esa propiedad."</value>
-  </data>
-  <data name="710_ChildNodesNotFound" xml:space="preserve">
-    <value>"Error 710: El nodo señalado no contiene elementos en su interior."</value>
+  <data name="709_InvalidNodesSelected" xml:space="preserve">
+    <value>Error 709: Los nodos con el nombre especificado son inexistentes o tiene un nombre distinto.</value>
   </data>
   <data name="710_Code" xml:space="preserve">
     <value>710</value>
   </data>
+  <data name="710_InvalidNodeProperty" xml:space="preserve">
+    <value>Error 710: El nodo no contiene la propiedad especificada o tiene otro nombre.</value>
+  </data>
   <data name="711_Code" xml:space="preserve">
     <value>711</value>
   </data>
-  <data name="711_InvalidAttributeValue" xml:space="preserve">
-    <value>"Error 711: El valor asignado al atributo no coincide con los aceptados."</value>
-  </data>
-  <data name="712_AttributeValueNotFound" xml:space="preserve">
-    <value>"Error 712: El valor asignado al atributo es nulo o indefinido."</value>
+  <data name="711_NameMethodNotFound" xml:space="preserve">
+    <value>Error 711: Es requerido que todos los métodos sean requeridos con un nombre.</value>
   </data>
   <data name="712_Code" xml:space="preserve">
     <value>712</value>
   </data>
+  <data name="712_DocumentFormatNotCreated" xml:space="preserve">
+    <value>Error 712: Los datos no fueron traducidos a lenguaje XML.</value>
+  </data>
   <data name="713_Code" xml:space="preserve">
     <value>713</value>
   </data>
-  <data name="713_NodeTextError" xml:space="preserve">
-    <value>"Error 713: No se pudo insertar el texto en la etiqueta."</value>
+  <data name="713_NameClassNotFound" xml:space="preserve">
+    <value>Error 713: El constructor no contiene un nombre de clase.</value>
   </data>
   <data name="714_Code" xml:space="preserve">
     <value>714</value>
   </data>
-  <data name="714_NodeTextNotFound" xml:space="preserve">
-    <value>"Error 714: La etiqueta a la que se hace referencia no contiene texto."</value>
+  <data name="714_StrangeCharacterInClassName" xml:space="preserve">
+    <value>Error 714: El nombre de la clase no debe contener caracteres especiales.</value>
+  </data>
+  <data name="715_ ValueIsNotReturnedInMethod" xml:space="preserve">
+    <value>Error 715: El método especificado no retorna un valor.</value>
   </data>
   <data name="715_Code" xml:space="preserve">
     <value>715</value>
-  </data>
-  <data name="715_InvalidSingleNodeSelected" xml:space="preserve">
-    <value>"Error 715: El nodo es inexistente, o posee otro nombre."</value>
-  </data>
-  <data name="716_Code" xml:space="preserve">
-    <value>716</value>
-  </data>
-  <data name="716_InvalidNodesSelected" xml:space="preserve">
-    <value>"Error 716: Los nodos con el nombre especificado son inexistentes o tiene un nombre distinto."</value>
-  </data>
-  <data name="717_Code" xml:space="preserve">
-    <value>717</value>
-  </data>
-  <data name="717_InvalidNodeProperty" xml:space="preserve">
-    <value>"Error 717: El nodo no contiene la propiedad especificada o tiene otro nombre."</value>
-  </data>
-  <data name="718_Code" xml:space="preserve">
-    <value>718</value>
-  </data>
-  <data name="718_InvalidTemplateArguments" xml:space="preserve">
-    <value>"Error 718: Los argumentos dados son incorrectos."</value>
-  </data>
-  <data name="719_Code" xml:space="preserve">
-    <value>719</value>
-  </data>
-  <data name="719_DocumentFormatNotCreated" xml:space="preserve">
-    <value>"Error 719: Los datos no fueron traducidos a lenguaje XML."</value>
-  </data>
-  <data name="720_Code" xml:space="preserve">
-    <value>720</value>
-  </data>
-  <data name="720_InvalidValueAssignment" xml:space="preserve">
-    <value>"Error 720: El valor asignado no coincide con el tipo de dato requerido."</value>
   </data>
 </root>
