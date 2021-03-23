@@ -17,7 +17,7 @@ namespace Sensato.Translate
                 throw new TranslateException(ErrorAndExceptionsCatalog._701_Code, ErrorAndExceptionsCatalog._701_ModelNotFound);
 
             XmlDocument xmlDocument = SerializeToXML(model);
-            string csSharpModel = SerializeToCSharp(xmlDocument);
+                string csSharpModel = SerializeToCSharp(xmlDocument);
             return csSharpModel; 
         }
 
@@ -26,6 +26,7 @@ namespace Sensato.Translate
             XmlDocument newFile = new XmlDocument();  // document creation
             try
             {
+                XMLStructureValidations(model);
                 XmlDeclaration declaration = newFile.CreateXmlDeclaration(model.version, model.encoding, null);
                 XmlElement heading = newFile.DocumentElement; //xml declaration
                 newFile.InsertBefore(declaration, heading);
@@ -270,14 +271,7 @@ namespace Sensato.Translate
             }
             catch (Exception ex)
             {
-                if (model.version.Length < 3)
-                    throw new TranslateException(ErrorAndExceptionsCatalog._702_Code, ErrorAndExceptionsCatalog._702_InvalidVersionModel);
-                if (!model.encoding.StartsWith("U"))
-                    throw new TranslateException(ErrorAndExceptionsCatalog._703_Code, ErrorAndExceptionsCatalog._703_InvalidEncoding);
-                if (model.document.references.Count == 0 || string.IsNullOrEmpty(model.document.csNamespace.ToString()))
-                    throw new TranslateException(ErrorAndExceptionsCatalog._704_Code, ErrorAndExceptionsCatalog._704_NotEnoughInformation);
-                if(model.document.csNamespace.Classes.Count == 0 || model.document.references.Count == 0 || model.document.csNamespace.Classes.First().constructors.Count == 0 || model.document.csNamespace.Classes.First().lines.Count == 0)
-                    throw new TranslateException(ErrorAndExceptionsCatalog._706_Code, ErrorAndExceptionsCatalog._706_ChildNodesNotFound);
+                XMLStructureValidations(model);
                 if (ex != null)
                     throw new TranslateException(ErrorAndExceptionsCatalog._705_Code, ErrorAndExceptionsCatalog._705_NotCreatedNode);
                 return newFile;
@@ -296,6 +290,7 @@ namespace Sensato.Translate
 
             try
             {
+                FromXMLToCSharpValidations(document);
                 if (document != null && document.HasChildNodes) // The first thing to do is to check if our XML document isn't null or empty.
                 {
                     var referenceNode = document.SelectSingleNode("//*[local-name()='references']"); // expression used to select a specific node.
@@ -523,9 +518,13 @@ namespace Sensato.Translate
                 string CSharpContainerCode = references + namespaces;
                 return CSharpContainerCode;  // the final code.
             }
-            catch
+            catch(Exception ex)
             {
-                throw new TranslateException(ErrorAndExceptionsCatalog._712_Code, ErrorAndExceptionsCatalog._712_DocumentFormatNotCreated);
+                FromXMLToCSharpValidations(document);
+                if (ex != null)
+                    throw new TranslateException(ErrorAndExceptionsCatalog._712_Code, ErrorAndExceptionsCatalog._712_DocumentFormatNotCreated);
+                else
+                    throw new Exception("No se pudo atrapar el error" + ex);
             }
         }
 
@@ -538,6 +537,36 @@ namespace Sensato.Translate
             }
             result = result.TrimEnd(',');
             return result;
+        }
+
+        public static void XMLStructureValidations(csXML model)
+        {
+            if (!model.version.StartsWith("1"))
+                throw new TranslateException(ErrorAndExceptionsCatalog._702_Code, ErrorAndExceptionsCatalog._702_InvalidVersionModel);
+            if (!model.encoding.StartsWith("U"))
+                throw new TranslateException(ErrorAndExceptionsCatalog._703_Code, ErrorAndExceptionsCatalog._703_InvalidEncoding);
+            if (string.IsNullOrEmpty(model.document.csNamespace.name))
+                throw new TranslateException(ErrorAndExceptionsCatalog._704_Code, ErrorAndExceptionsCatalog._704_NotEnoughInformation);
+            if (model.document.csNamespace.Classes.Count == 0 || model.document.references.Count == 0 || model.document.csNamespace.Classes.First().constructors.Count == 0 || model.document.csNamespace.Classes.First().lines.Count == 0)
+                throw new TranslateException(ErrorAndExceptionsCatalog._706_Code, ErrorAndExceptionsCatalog._706_ChildNodesNotFound);
+        }
+
+        public static void FromXMLToCSharpValidations(XmlDocument document)
+        {
+            var mthodLine =  document.SelectSingleNode("//*[local-name()='methods']");
+            var constrLine = document.SelectSingleNode("//*[local-name()='constructor']");
+            var classLine = document.SelectSingleNode("//*[local-name()='class']");
+
+            if (string.IsNullOrEmpty(mthodLine.Attributes.GetNamedItem("name").Value))
+                throw new TranslateException(ErrorAndExceptionsCatalog._711_Code, ErrorAndExceptionsCatalog._711_NameMethodNotFound);
+            if (string.IsNullOrEmpty(constrLine.Attributes.GetNamedItem("class").Value))
+                throw new TranslateException(ErrorAndExceptionsCatalog._713_Code, ErrorAndExceptionsCatalog._713_NameClassNotFound);
+            else if (!classLine.Attributes.GetNamedItem("class").Value.Contains("!@#$%^&*()_+-=,.;"))
+                throw new TranslateException(ErrorAndExceptionsCatalog._714_Code, ErrorAndExceptionsCatalog._714_StrangeCharacterInClassName);
+            if (string.IsNullOrEmpty(classLine.Attributes.GetNamedItem("name").Value))
+                throw new TranslateException(ErrorAndExceptionsCatalog._709_Code, ErrorAndExceptionsCatalog._709_MainClassNameNotFound);
+            else if (!classLine.Attributes.GetNamedItem("name").Value.Contains("!@#$%^&*()_+-=,.;"))
+                throw new TranslateException(ErrorAndExceptionsCatalog._710_Code, ErrorAndExceptionsCatalog._710_MainClassInvalidName);
         }
     }
 }

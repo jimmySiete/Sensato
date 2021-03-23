@@ -214,11 +214,11 @@ namespace Sensato.Translate {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error 709: Los nodos con el nombre especificado son inexistentes o tiene un nombre distinto..
+        ///   Looks up a localized string similar to Error 709: El nombre de la clase principlal tiene un valor nulo o no definido..
         /// </summary>
-        public static string _709_InvalidNodesSelected {
+        public static string _709_MainClassNameNotFound {
             get {
-                return ResourceManager.GetString("709_InvalidNodesSelected", resourceCulture);
+                return ResourceManager.GetString("709_MainClassNameNotFound", resourceCulture);
             }
         }
         
@@ -232,11 +232,11 @@ namespace Sensato.Translate {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error 710: El nodo no contiene la propiedad especificada o tiene otro nombre..
+        ///   Looks up a localized string similar to Error 710: El nombre de la clase principal no puede contener caracteres especiales..
         /// </summary>
-        public static string _710_InvalidNodeProperty {
+        public static string _710_MainClassInvalidName {
             get {
-                return ResourceManager.GetString("710_InvalidNodeProperty", resourceCulture);
+                return ResourceManager.GetString("710_MainClassInvalidName", resourceCulture);
             }
         }
         

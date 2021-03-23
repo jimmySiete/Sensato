@@ -38,6 +38,7 @@ namespace UnitTestProject1
         {
             csXML model = new csXML();
             model.version = "2.0";
+            model.encoding = "UTF-8";
             String Code = ErrorAndExceptionsCatalog._702_Code;
             String Message = ErrorAndExceptionsCatalog._702_InvalidVersionModel;
             TranslateException resultEX = new TranslateException();
@@ -82,7 +83,8 @@ namespace UnitTestProject1
         public void TestMethod04() // informacion incompleta
         {
             csXML model = new csXML("1.0", "UTF-8");
-            model.document.references = null;
+            model.document.references = new List<csReferences>();
+            model.document.csNamespace.name = "";
             String Code = ErrorAndExceptionsCatalog._704_Code;
             String Message = ErrorAndExceptionsCatalog._704_NotEnoughInformation;
             TranslateException resultEX = new TranslateException();
@@ -102,13 +104,18 @@ namespace UnitTestProject1
 
         [TestMethod]
         public void TestMethod05() // no se creó el nodo
-        {
+        {   
+            List<csLine> variables = new List<csLine>();
+            variables.Add(null);
+
+            List<csConstructor> constructorList = new List<csConstructor>();
+            constructorList.Add(null);
+
             csXML model = new csXML("1.0", "UTF-8");
             model.document.references = new List<csReferences>();
-            model.document.references.Add(new csReferences { name = "System;" });
-            model.document.references.Add(new csReferences { name = "System.Collections.Generic;" });
-            model.document.references.Add(new csReferences() { name = "System.Text;" });
-            model.document.csNamespace.Classes = null;
+            model.document.references.Add(null);
+            model.document.csNamespace.Classes = new List<csClass>();
+            model.document.csNamespace.Classes.Add(new csClass() { name = "clase1", partial = "false", inheritance = "false", lines = variables, constructors = constructorList, modifiers = null });
             String Code = ErrorAndExceptionsCatalog._705_Code;
             String Message = ErrorAndExceptionsCatalog._705_NotCreatedNode;
             TranslateException resultEX = new TranslateException();
@@ -129,10 +136,19 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod06() // no se encontraron nodos en referencias
         {
+            List<csArgument> argList = new List<csArgument>();
+            argList.Add(new csArgument() { type = "string", value = "Apellido" });
+
+            List<csLine> variables = new List<csLine>();
+            variables.Add(new csVar() { name = "name", modifier = "public", isStatic = false, line = 0, value = "", type = "string", lineCode = "", getterOrSetter = true });
+
+            List<csConstructor> constructorList = new List<csConstructor>();
+            constructorList.Add(new csConstructor() { classConstructor = new csClass() { name = "Sample0" }, csArguments = argList, csLines = null });
+
             csXML model = new csXML("1.0", "UTF-8");
             model.document.references = new List<csReferences>();
             model.document.csNamespace.Classes = new List<csClass>();
-            model.document.csNamespace.Classes.Add(new csClass() {  name = "clase1", partial = "false", inheritance = "false", lines = null, constructors = null, modifiers = null });
+            model.document.csNamespace.Classes.Add(new csClass() {  name = "clase1", partial = "false", inheritance = "false", lines = variables, constructors = constructorList, modifiers = null });
             String Code = ErrorAndExceptionsCatalog._706_Code;
             String Message = ErrorAndExceptionsCatalog._706_ChildNodesNotFound;
             TranslateException resultEX = new TranslateException();
@@ -156,8 +172,6 @@ namespace UnitTestProject1
             csXML model = new csXML("1.0", "UTF-8");
             model.document.references = new List<csReferences>();
             model.document.references.Add(new csReferences { name = "System;" });
-            model.document.references.Add(new csReferences { name = "System.Collections.Generic;" });
-            model.document.references.Add(new csReferences() { name = "System.Text;" });
 
             model.document.csNamespace.Classes = new List<csClass>();
             
@@ -191,8 +205,6 @@ namespace UnitTestProject1
             csXML model = new csXML("1.0", "UTF-8");
             model.document.references = new List<csReferences>();
             model.document.references.Add(new csReferences { name = "System;" });
-            model.document.references.Add(new csReferences { name = "System.Collections.Generic;" });
-            model.document.references.Add(new csReferences() { name = "System.Text;" });
 
             model.document.csNamespace.Classes = new List<csClass>();
             model.document.csNamespace.Classes.Add(new csClass() { inheritance = "BaseSample", name = "Sample0", modifiers = "public", partial = "true", lines = variables, constructors = constructorList });
@@ -218,7 +230,6 @@ namespace UnitTestProject1
         {
             List<csArgument> argList = new List<csArgument>();
             argList.Add(new csArgument() { type = "string", value = "Apellido" });
-            argList.Add(new csArgument() { type = "string", value = "Nombre" });
 
             List<csLine> variables = new List<csLine>();
 
@@ -247,93 +258,234 @@ namespace UnitTestProject1
             Assert.AreEqual(Message, resultEX.messageCode);
         }
 
-        //[TestMethod]
-        //public void TestMethod07()
-        //{
+        [TestMethod]
+        public void TestMethod07() // valor del atributo nulo
+        {
+            List<csArgument> argList = new List<csArgument>();
+            argList.Add(new csArgument() { type = "string", value = "Apellido" });
 
-        //}
+            List<csLine> variables = new List<csLine>();
+            variables.Add(new csVar() { name = "name", modifier = "public", isStatic = false, line = 0, value = "", type = "string", lineCode = "", getterOrSetter = true });
 
-        //[TestMethod]
-        //public void TestMethod08()
-        //{
+            List<csConstructor> constructorList = new List<csConstructor>();
+            constructorList.Add(new csConstructor() { classConstructor = new csClass() { name = "Sample0" }, csArguments = argList, csLines = null });
 
-        //}
+            csXML model = new csXML("1.0", "UTF-8");
+            model.document.references = new List<csReferences>();
+            model.document.references.Add(new csReferences { name = "System;" });
+            model.document.csNamespace.Classes = new List<csClass>();
+            model.document.csNamespace.Classes.Add(new csClass() { inheritance = "BaseSample", name = "Sample0", modifiers = "public", partial = "true", lines = variables, constructors = constructorList });
+            String Code = ErrorAndExceptionsCatalog._706_Code;
+            String Message = ErrorAndExceptionsCatalog._706_ChildNodesNotFound;
+            TranslateException resultEX = new TranslateException();
 
-        //[TestMethod]
-        //public void TestMethod09() // nodo sin nodos hijos
-        //{
-        //    csXML model = new csXML("1.0", "UTF-8");
-        //    model.document.references = new List<csReferences>();
-        //    model.document.references.Add(new csReferences { name = "System;" });
-        //    model.document.references.Add(new csReferences { name = "System.Collections.Generic;" });
-        //    model.document.references.Add(new csReferences() { name = "System.Text;" });
-        //    model.document.csNamespace.Classes = null;
-        //    model.document.csNamespace = new csNamespace() { name = "Sensato.Translate.Entities" };
-        //    model.document.csNamespace.Classes = new List<csClass>();
-        //    model.document.csNamespace.Classes.Add(new csClass() { inheritance = "BaseSample", name = "Sample0", modifiers = "public", partial = "true", lines = null, constructors = null });
-        //    String Code = ErrorAndExceptionsCatalog._706_Code;
-        //    String Message = ErrorAndExceptionsCatalog._706_ChildNodesNotFound;
-        //    TranslateException resultEX = new TranslateException();
+            try
+            {
+                string csObject = XMLToCSharp.TranslateToCSharp(model);
+            }
+            catch (TranslateException ex)
+            {
+                resultEX = ex;
+            }
 
-        //    try
-        //    {
-        //        string csObject = XMLToCSharp.TranslateToCSharp(model);
-        //    }
-        //    catch (TranslateException ex)
-        //    {
-        //        resultEX = ex;
-        //    }
+            Assert.AreEqual(Code, resultEX.code);
+            Assert.AreEqual(Message, resultEX.messageCode);
+        }
 
-        //    Assert.AreEqual(Code, resultEX.code);
-        //    Assert.AreEqual(Message, resultEX.messageCode);
-        //}
+        [TestMethod]
+        public void TestMethod08() // un solo nodo, mal seleccionado
+        {
 
-        //[TestMethod]
-        //public void TestMethod010()
-        //{
-        //    //var
-        //    //act
-        //    //arrange
-        //}
+        }
 
-        //[TestMethod]
-        //public void TestMethod011()
-        //{
-        //    //var
-        //    //act
-        //    //arrange
-        //}
+        [TestMethod]
+        public void TestMethod09() // nombre de la clase principal nulo
+        {
+      
+        }
 
-        //[TestMethod]
-        //public void TestMethod012()
-        //{
-        //    //var
-        //    //act
-        //    //arrange
-        //}
+        [TestMethod]
+        public void TestMethod010() // nombre de la clase principal con raracteres especiales
+        {
+            List<csLine> methodLines = new List<csLine>();
+            methodLines.Add(new csLine() { line = 0, lineCode = "var x = 5;", executeMethods = null });
 
-        //[TestMethod]
-        //public void TestMethod013()
-        //{
-        //    //var
-        //    //act
-        //    //arrange
-        //}
+            List<csArgument> methodsArgs = new List<csArgument>();
+            methodsArgs.Add(new csArgument() { type = "string", value = "Saludo" });
 
-        //[TestMethod]
-        //public void TestMethod014()
-        //{
-        //    //var
-        //    //act
-        //    //arrange
-        //}
+            List<csArgument> argList = new List<csArgument>();
+            argList.Add(new csArgument() { type = "string", value = "Apellido" });
 
-        //[TestMethod]
-        //public void TestMethod015()
-        //{
-        //    //var
-        //    //act
-        //    //arrange
-        //}
+            List<csLine> variables = new List<csLine>();
+            variables.Add(new csVar() { name = "name", modifier = "public", isStatic = false, line = 0, value = "", type = "string", lineCode = "", getterOrSetter = true });
+            variables.Add(new csMethods() { name = "metodo", arguments = methodsArgs, isStatic = true, isReturned = true, dataTypeReturn = "string", lines = methodLines, line = 9 });
+
+            List<csConstructor> constructorList = new List<csConstructor>();
+            constructorList.Add(new csConstructor() { classConstructor = new csClass() { name = "Sample0" }, csArguments = argList, csLines = null });
+
+            csXML model = new csXML("1.0", "UTF-8");
+            model.document.csNamespace.name = "UltimateTests";
+            model.document.references = new List<csReferences>();
+            model.document.references.Add(new csReferences { name = "System;" });
+            model.document.csNamespace.Classes = new List<csClass>();
+            model.document.csNamespace.Classes.Add(new csClass() { inheritance = "BaseSample", name = "!Carly", modifiers = "public", partial = "true", lines = variables, constructors = constructorList });
+
+            String Code = ErrorAndExceptionsCatalog._710_Code;
+            String Message = ErrorAndExceptionsCatalog._710_MainClassInvalidName;
+            TranslateException resultEX = new TranslateException();
+
+            try
+            {
+                string csObject = XMLToCSharp.TranslateToCSharp(model);
+            }
+            catch (TranslateException ex)
+            {
+                resultEX = ex;
+            }
+
+            Assert.AreEqual(Code, resultEX.code);
+            Assert.AreEqual(Message, resultEX.messageCode);
+        }
+
+        [TestMethod]
+        public void TestMethod011() // metodo sin nombre
+        {
+            List<csLine> methodLines = new List<csLine>();
+            methodLines.Add(new csLine() { line = 0, lineCode = "var x = 5;", executeMethods = null });
+
+            List<csArgument> methodsArgs = new List<csArgument>();
+            methodsArgs.Add(new csArgument() { type = "string", value = "Saludo" });
+
+            List<csArgument> argList = new List<csArgument>();
+            argList.Add(new csArgument() { type = "string", value = "Apellido" });
+
+            List<csLine> variables = new List<csLine>();
+            variables.Add(new csVar() { name = "name", modifier = "public", isStatic = false, line = 0, value = "", type = "string", lineCode = "", getterOrSetter = true });
+            variables.Add(new csMethods() { arguments = methodsArgs, isStatic = true, isReturned = true, dataTypeReturn = "string", lines = methodLines, line = 9 });
+
+            List<csConstructor> constructorList = new List<csConstructor>();
+            constructorList.Add(new csConstructor() { classConstructor = new csClass() { name = "Sample0" }, csArguments = argList, csLines = null });
+
+            csXML model = new csXML("1.0", "UTF-8");
+            model.document.csNamespace.name = "UltimateTests";
+            model.document.references = new List<csReferences>();
+            model.document.references.Add(new csReferences { name = "System;" });
+            model.document.csNamespace.Classes = new List<csClass>();
+            model.document.csNamespace.Classes.Add(new csClass() { inheritance = "BaseSample", name = "Sample0", modifiers = "public", partial = "true", lines = variables, constructors = constructorList });
+
+            String Code = ErrorAndExceptionsCatalog._711_Code;
+            String Message = ErrorAndExceptionsCatalog._711_NameMethodNotFound;
+            TranslateException resultEX = new TranslateException();
+
+            try
+            {
+                string csObject = XMLToCSharp.TranslateToCSharp(model);
+            }
+            catch (TranslateException ex)
+            {
+                resultEX = ex;
+            }
+
+            Assert.AreEqual(Code, resultEX.code);
+            Assert.AreEqual(Message, resultEX.messageCode);
+        }
+
+        [TestMethod]
+        public void TestMethod012() // traducción fallida
+        {
+            List<csLine> methodLines = new List<csLine>();
+            methodLines.Add(new csLine() { line = 0, lineCode = "var x = 5;", executeMethods = null });
+
+            List<csArgument> methodsArgs = new List<csArgument>();
+            methodsArgs.Add(new csArgument() { type = "string", value = "Saludo" });
+
+            List<csArgument> argList = new List<csArgument>();
+            argList.Add(new csArgument() { type = "string", value = "Apellido" });
+
+            List<csLine> variables = new List<csLine>();
+            variables.Add(new csVar() { name = "name", modifier = "public", isStatic = false, line = 0, value = "", type = "string", lineCode = "", getterOrSetter = true });
+            variables.Add(new csMethods() {name = "method", arguments = null, isStatic = true, isReturned = true, dataTypeReturn = "string", lines = methodLines, line = 9 });
+
+            List<csConstructor> constructorList = new List<csConstructor>();
+            constructorList.Add(new csConstructor() { classConstructor = new csClass() { name = "Sample0" }, csArguments = argList, csLines = null });
+
+            csXML model = new csXML("1.0", "UTF-8");
+            model.document.csNamespace.name = "UltimateTests";
+            model.document.references = new List<csReferences>();
+            model.document.references.Add(new csReferences { name = "System;" });
+            model.document.csNamespace.Classes = new List<csClass>();
+            model.document.csNamespace.Classes.Add(new csClass() { inheritance = "BaseSample", name = "Sample0", modifiers = "public", partial = "true", lines = variables, constructors = constructorList });
+
+            String Code = ErrorAndExceptionsCatalog._712_Code;
+            String Message = ErrorAndExceptionsCatalog._712_DocumentFormatNotCreated;
+            TranslateException resultEX = new TranslateException();
+
+            try
+            {
+                string csObject = XMLToCSharp.TranslateToCSharp(model);
+            }
+            catch (TranslateException ex)
+            {
+                resultEX = ex;
+            }
+
+            Assert.AreEqual(Code, resultEX.code);
+            Assert.AreEqual(Message, resultEX.messageCode);
+        }
+
+        [TestMethod]
+        public void TestMethod013() // constructor sin nombre de clase
+        {
+            List<csLine> methodLines = new List<csLine>();
+            methodLines.Add(new csLine() { line = 0, lineCode = "var x = 5;", executeMethods = null });
+
+            List<csArgument> methodsArgs = new List<csArgument>();
+            methodsArgs.Add(new csArgument() { type = "string", value = "Saludo" });
+
+            List<csArgument> argList = new List<csArgument>();
+            argList.Add(new csArgument() { type = "string", value = "Apellido" });
+
+            List<csLine> variables = new List<csLine>();
+            variables.Add(new csVar() { name = "name", modifier = "public", isStatic = false, line = 0, value = "", type = "string", lineCode = "", getterOrSetter = true });
+            variables.Add(new csMethods() { name = "method", arguments = null, isStatic = true, isReturned = true, dataTypeReturn = "string", lines = methodLines, line = 9 });
+
+            List<csConstructor> constructorList = new List<csConstructor>();
+            constructorList.Add(new csConstructor() { classConstructor = new csClass() { name = "" }, csArguments = argList, csLines = null });
+
+            csXML model = new csXML("1.0", "UTF-8");
+            model.document.csNamespace.name = "UltimateTests";
+            model.document.references = new List<csReferences>();
+            model.document.references.Add(new csReferences { name = "System;" });
+            model.document.csNamespace.Classes = new List<csClass>();
+            model.document.csNamespace.Classes.Add(new csClass() { inheritance = "BaseSample", name = "Sample0", modifiers = "public", partial = "true", lines = variables, constructors = constructorList });
+
+            String Code = ErrorAndExceptionsCatalog._713_Code;
+            String Message = ErrorAndExceptionsCatalog._713_NameClassNotFound;
+            TranslateException resultEX = new TranslateException();
+
+            try
+            {
+                string csObject = XMLToCSharp.TranslateToCSharp(model);
+            }
+            catch (TranslateException ex)
+            {
+                resultEX = ex;
+            }
+
+            Assert.AreEqual(Code, resultEX.code);
+            Assert.AreEqual(Message, resultEX.messageCode);
+        }
+
+        [TestMethod]
+        public void TestMethod014() // caracteres especiales dentro del nombre de la clase
+        {
+          
+        }
+
+        [TestMethod]
+        public void TestMethod015() // el metodo no retorna un valor
+        {
+        
+        }
     }
 }
