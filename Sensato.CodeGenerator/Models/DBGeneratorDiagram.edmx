@@ -1,0 +1,459 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB_GeneratorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Tb_Contexts">
+          <Key>
+            <PropertyRef Name="ID_Context" />
+          </Key>
+          <Property Name="ID_Context" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Project" Type="int" Nullable="false" />
+          <Property Name="ContextName" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tb_Objects">
+          <Key>
+            <PropertyRef Name="ID_Object" />
+          </Key>
+          <Property Name="ID_Object" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Context" Type="int" Nullable="false" />
+          <Property Name="ObjectName" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tb_Parameters">
+          <Key>
+            <PropertyRef Name="ID_Parameter" />
+          </Key>
+          <Property Name="ID_Parameter" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Object" Type="int" Nullable="false" />
+          <Property Name="ParameterName" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="DataType" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Length" Type="int" />
+          <Property Name="Presition" Type="int" />
+          <Property Name="Nullable" Type="bit" Nullable="false" />
+          <Property Name="IsOut" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tb_Projects">
+          <Key>
+            <PropertyRef Name="ID_Project" />
+          </Key>
+          <Property Name="ID_Project" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="FileDirectory" Type="varchar(max)" Nullable="false" />
+          <Property Name="Server" Type="varchar(max)" Nullable="false" />
+          <Property Name="ProjectUser" Type="varchar(max)" Nullable="false" />
+          <Property Name="ProjectDatabase" Type="varchar(max)" Nullable="false" />
+          <Property Name="Password" Type="varchar(max)" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tb_ResultSetColumns">
+          <Key>
+            <PropertyRef Name="ID_ResultSetColumns" />
+          </Key>
+          <Property Name="ID_ResultSetColumns" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_ResultSet" Type="int" Nullable="false" />
+          <Property Name="ParameterName" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="DataType" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Length" Type="int" />
+          <Property Name="Presition" Type="int" />
+          <Property Name="Nullable" Type="bit" Nullable="false" />
+          <Property Name="IsOut" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tb_ResultSets">
+          <Key>
+            <PropertyRef Name="ID_ResultSet" />
+          </Key>
+          <Property Name="ID_ResultSet" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Object" Type="int" Nullable="false" />
+          <Property Name="ResultSetName" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Tb_Contex__ID_Pr__300424B4">
+          <End Role="Tb_Projects" Type="Self.Tb_Projects" Multiplicity="1" />
+          <End Role="Tb_Contexts" Type="Self.Tb_Contexts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tb_Projects">
+              <PropertyRef Name="ID_Project" />
+            </Principal>
+            <Dependent Role="Tb_Contexts">
+              <PropertyRef Name="ID_Project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tb_Object__ID_Co__30F848ED">
+          <End Role="Tb_Contexts" Type="Self.Tb_Contexts" Multiplicity="1" />
+          <End Role="Tb_Objects" Type="Self.Tb_Objects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tb_Contexts">
+              <PropertyRef Name="ID_Context" />
+            </Principal>
+            <Dependent Role="Tb_Objects">
+              <PropertyRef Name="ID_Context" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tb_Parame__ID_Ob__31EC6D26">
+          <End Role="Tb_Objects" Type="Self.Tb_Objects" Multiplicity="1" />
+          <End Role="Tb_Parameters" Type="Self.Tb_Parameters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tb_Objects">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="Tb_Parameters">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tb_Result__ID_Ob__32E0915F">
+          <End Role="Tb_Objects" Type="Self.Tb_Objects" Multiplicity="1" />
+          <End Role="Tb_ResultSets" Type="Self.Tb_ResultSets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tb_Objects">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="Tb_ResultSets">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tb_Result__ID_Re__33D4B598">
+          <End Role="Tb_ResultSets" Type="Self.Tb_ResultSets" Multiplicity="1" />
+          <End Role="Tb_ResultSetColumns" Type="Self.Tb_ResultSetColumns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tb_ResultSets">
+              <PropertyRef Name="ID_ResultSet" />
+            </Principal>
+            <Dependent Role="Tb_ResultSetColumns">
+              <PropertyRef Name="ID_ResultSet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_GeneratorModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tb_Contexts" EntityType="Self.Tb_Contexts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tb_Objects" EntityType="Self.Tb_Objects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tb_Parameters" EntityType="Self.Tb_Parameters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tb_Projects" EntityType="Self.Tb_Projects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tb_ResultSetColumns" EntityType="Self.Tb_ResultSetColumns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tb_ResultSets" EntityType="Self.Tb_ResultSets" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Tb_Contex__ID_Pr__300424B4" Association="Self.FK__Tb_Contex__ID_Pr__300424B4">
+            <End Role="Tb_Projects" EntitySet="Tb_Projects" />
+            <End Role="Tb_Contexts" EntitySet="Tb_Contexts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tb_Object__ID_Co__30F848ED" Association="Self.FK__Tb_Object__ID_Co__30F848ED">
+            <End Role="Tb_Contexts" EntitySet="Tb_Contexts" />
+            <End Role="Tb_Objects" EntitySet="Tb_Objects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tb_Parame__ID_Ob__31EC6D26" Association="Self.FK__Tb_Parame__ID_Ob__31EC6D26">
+            <End Role="Tb_Objects" EntitySet="Tb_Objects" />
+            <End Role="Tb_Parameters" EntitySet="Tb_Parameters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tb_Result__ID_Ob__32E0915F" Association="Self.FK__Tb_Result__ID_Ob__32E0915F">
+            <End Role="Tb_Objects" EntitySet="Tb_Objects" />
+            <End Role="Tb_ResultSets" EntitySet="Tb_ResultSets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tb_Result__ID_Re__33D4B598" Association="Self.FK__Tb_Result__ID_Re__33D4B598">
+            <End Role="Tb_ResultSets" EntitySet="Tb_ResultSets" />
+            <End Role="Tb_ResultSetColumns" EntitySet="Tb_ResultSetColumns" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_GeneratorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Tb_Contexts">
+          <Key>
+            <PropertyRef Name="ID_Context" />
+          </Key>
+          <Property Name="ID_Context" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Project" Type="Int32" Nullable="false" />
+          <Property Name="ContextName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Tb_Projects" Relationship="Self.FK__Tb_Contex__ID_Pr__300424B4" FromRole="Tb_Contexts" ToRole="Tb_Projects" />
+          <NavigationProperty Name="Tb_Objects" Relationship="Self.FK__Tb_Object__ID_Co__30F848ED" FromRole="Tb_Contexts" ToRole="Tb_Objects" />
+        </EntityType>
+        <EntityType Name="Tb_Objects">
+          <Key>
+            <PropertyRef Name="ID_Object" />
+          </Key>
+          <Property Name="ID_Object" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Context" Type="Int32" Nullable="false" />
+          <Property Name="ObjectName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Tb_Contexts" Relationship="Self.FK__Tb_Object__ID_Co__30F848ED" FromRole="Tb_Objects" ToRole="Tb_Contexts" />
+          <NavigationProperty Name="Tb_Parameters" Relationship="Self.FK__Tb_Parame__ID_Ob__31EC6D26" FromRole="Tb_Objects" ToRole="Tb_Parameters" />
+          <NavigationProperty Name="Tb_ResultSets" Relationship="Self.FK__Tb_Result__ID_Ob__32E0915F" FromRole="Tb_Objects" ToRole="Tb_ResultSets" />
+        </EntityType>
+        <EntityType Name="Tb_Parameters">
+          <Key>
+            <PropertyRef Name="ID_Parameter" />
+          </Key>
+          <Property Name="ID_Parameter" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Object" Type="Int32" Nullable="false" />
+          <Property Name="ParameterName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DataType" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Length" Type="Int32" />
+          <Property Name="Presition" Type="Int32" />
+          <Property Name="Nullable" Type="Boolean" Nullable="false" />
+          <Property Name="IsOut" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tb_Objects" Relationship="Self.FK__Tb_Parame__ID_Ob__31EC6D26" FromRole="Tb_Parameters" ToRole="Tb_Objects" />
+        </EntityType>
+        <EntityType Name="Tb_Projects">
+          <Key>
+            <PropertyRef Name="ID_Project" />
+          </Key>
+          <Property Name="ID_Project" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FileDirectory" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Server" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProjectUser" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProjectDatabase" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Tb_Contexts" Relationship="Self.FK__Tb_Contex__ID_Pr__300424B4" FromRole="Tb_Projects" ToRole="Tb_Contexts" />
+        </EntityType>
+        <EntityType Name="Tb_ResultSetColumns">
+          <Key>
+            <PropertyRef Name="ID_ResultSetColumns" />
+          </Key>
+          <Property Name="ID_ResultSetColumns" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_ResultSet" Type="Int32" Nullable="false" />
+          <Property Name="ParameterName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DataType" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Length" Type="Int32" />
+          <Property Name="Presition" Type="Int32" />
+          <Property Name="Nullable" Type="Boolean" Nullable="false" />
+          <Property Name="IsOut" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tb_ResultSets" Relationship="Self.FK__Tb_Result__ID_Re__33D4B598" FromRole="Tb_ResultSetColumns" ToRole="Tb_ResultSets" />
+        </EntityType>
+        <EntityType Name="Tb_ResultSets">
+          <Key>
+            <PropertyRef Name="ID_ResultSet" />
+          </Key>
+          <Property Name="ID_ResultSet" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Object" Type="Int32" Nullable="false" />
+          <Property Name="ResultSetName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Tb_Objects" Relationship="Self.FK__Tb_Result__ID_Ob__32E0915F" FromRole="Tb_ResultSets" ToRole="Tb_Objects" />
+          <NavigationProperty Name="Tb_ResultSetColumns" Relationship="Self.FK__Tb_Result__ID_Re__33D4B598" FromRole="Tb_ResultSets" ToRole="Tb_ResultSetColumns" />
+        </EntityType>
+        <Association Name="FK__Tb_Contex__ID_Pr__300424B4">
+          <End Role="Tb_Projects" Type="Self.Tb_Projects" Multiplicity="1" />
+          <End Role="Tb_Contexts" Type="Self.Tb_Contexts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tb_Projects">
+              <PropertyRef Name="ID_Project" />
+            </Principal>
+            <Dependent Role="Tb_Contexts">
+              <PropertyRef Name="ID_Project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tb_Object__ID_Co__30F848ED">
+          <End Role="Tb_Contexts" Type="Self.Tb_Contexts" Multiplicity="1" />
+          <End Role="Tb_Objects" Type="Self.Tb_Objects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tb_Contexts">
+              <PropertyRef Name="ID_Context" />
+            </Principal>
+            <Dependent Role="Tb_Objects">
+              <PropertyRef Name="ID_Context" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tb_Parame__ID_Ob__31EC6D26">
+          <End Role="Tb_Objects" Type="Self.Tb_Objects" Multiplicity="1" />
+          <End Role="Tb_Parameters" Type="Self.Tb_Parameters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tb_Objects">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="Tb_Parameters">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tb_Result__ID_Ob__32E0915F">
+          <End Role="Tb_Objects" Type="Self.Tb_Objects" Multiplicity="1" />
+          <End Role="Tb_ResultSets" Type="Self.Tb_ResultSets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tb_Objects">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="Tb_ResultSets">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tb_Result__ID_Re__33D4B598">
+          <End Role="Tb_ResultSets" Type="Self.Tb_ResultSets" Multiplicity="1" />
+          <End Role="Tb_ResultSetColumns" Type="Self.Tb_ResultSetColumns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tb_ResultSets">
+              <PropertyRef Name="ID_ResultSet" />
+            </Principal>
+            <Dependent Role="Tb_ResultSetColumns">
+              <PropertyRef Name="ID_ResultSet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_GeneratorEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Tb_Contexts" EntityType="Self.Tb_Contexts" />
+          <EntitySet Name="Tb_Objects" EntityType="Self.Tb_Objects" />
+          <EntitySet Name="Tb_Parameters" EntityType="Self.Tb_Parameters" />
+          <EntitySet Name="Tb_Projects" EntityType="Self.Tb_Projects" />
+          <EntitySet Name="Tb_ResultSetColumns" EntityType="Self.Tb_ResultSetColumns" />
+          <EntitySet Name="Tb_ResultSets" EntityType="Self.Tb_ResultSets" />
+          <AssociationSet Name="FK__Tb_Contex__ID_Pr__300424B4" Association="Self.FK__Tb_Contex__ID_Pr__300424B4">
+            <End Role="Tb_Projects" EntitySet="Tb_Projects" />
+            <End Role="Tb_Contexts" EntitySet="Tb_Contexts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tb_Object__ID_Co__30F848ED" Association="Self.FK__Tb_Object__ID_Co__30F848ED">
+            <End Role="Tb_Contexts" EntitySet="Tb_Contexts" />
+            <End Role="Tb_Objects" EntitySet="Tb_Objects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tb_Parame__ID_Ob__31EC6D26" Association="Self.FK__Tb_Parame__ID_Ob__31EC6D26">
+            <End Role="Tb_Objects" EntitySet="Tb_Objects" />
+            <End Role="Tb_Parameters" EntitySet="Tb_Parameters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tb_Result__ID_Ob__32E0915F" Association="Self.FK__Tb_Result__ID_Ob__32E0915F">
+            <End Role="Tb_Objects" EntitySet="Tb_Objects" />
+            <End Role="Tb_ResultSets" EntitySet="Tb_ResultSets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tb_Result__ID_Re__33D4B598" Association="Self.FK__Tb_Result__ID_Re__33D4B598">
+            <End Role="Tb_ResultSets" EntitySet="Tb_ResultSets" />
+            <End Role="Tb_ResultSetColumns" EntitySet="Tb_ResultSetColumns" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_GeneratorModelStoreContainer" CdmEntityContainer="DB_GeneratorEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DB_GeneratorModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tb_Contexts">
+            <EntityTypeMapping TypeName="DB_GeneratorModel.Tb_Contexts">
+              <MappingFragment StoreEntitySet="Tb_Contexts">
+                <ScalarProperty Name="ID_Context" ColumnName="ID_Context" />
+                <ScalarProperty Name="ID_Project" ColumnName="ID_Project" />
+                <ScalarProperty Name="ContextName" ColumnName="ContextName" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tb_Objects">
+            <EntityTypeMapping TypeName="DB_GeneratorModel.Tb_Objects">
+              <MappingFragment StoreEntitySet="Tb_Objects">
+                <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
+                <ScalarProperty Name="ID_Context" ColumnName="ID_Context" />
+                <ScalarProperty Name="ObjectName" ColumnName="ObjectName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tb_Parameters">
+            <EntityTypeMapping TypeName="DB_GeneratorModel.Tb_Parameters">
+              <MappingFragment StoreEntitySet="Tb_Parameters">
+                <ScalarProperty Name="ID_Parameter" ColumnName="ID_Parameter" />
+                <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
+                <ScalarProperty Name="ParameterName" ColumnName="ParameterName" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="Presition" ColumnName="Presition" />
+                <ScalarProperty Name="Nullable" ColumnName="Nullable" />
+                <ScalarProperty Name="IsOut" ColumnName="IsOut" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tb_Projects">
+            <EntityTypeMapping TypeName="DB_GeneratorModel.Tb_Projects">
+              <MappingFragment StoreEntitySet="Tb_Projects">
+                <ScalarProperty Name="ID_Project" ColumnName="ID_Project" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="FileDirectory" ColumnName="FileDirectory" />
+                <ScalarProperty Name="Server" ColumnName="Server" />
+                <ScalarProperty Name="ProjectUser" ColumnName="ProjectUser" />
+                <ScalarProperty Name="ProjectDatabase" ColumnName="ProjectDatabase" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tb_ResultSetColumns">
+            <EntityTypeMapping TypeName="DB_GeneratorModel.Tb_ResultSetColumns">
+              <MappingFragment StoreEntitySet="Tb_ResultSetColumns">
+                <ScalarProperty Name="ID_ResultSetColumns" ColumnName="ID_ResultSetColumns" />
+                <ScalarProperty Name="ID_ResultSet" ColumnName="ID_ResultSet" />
+                <ScalarProperty Name="ParameterName" ColumnName="ParameterName" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="Presition" ColumnName="Presition" />
+                <ScalarProperty Name="Nullable" ColumnName="Nullable" />
+                <ScalarProperty Name="IsOut" ColumnName="IsOut" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tb_ResultSets">
+            <EntityTypeMapping TypeName="DB_GeneratorModel.Tb_ResultSets">
+              <MappingFragment StoreEntitySet="Tb_ResultSets">
+                <ScalarProperty Name="ID_ResultSet" ColumnName="ID_ResultSet" />
+                <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
+                <ScalarProperty Name="ResultSetName" ColumnName="ResultSetName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

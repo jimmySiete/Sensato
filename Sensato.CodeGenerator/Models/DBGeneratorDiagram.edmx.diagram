@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="33b34f9e55054e68bbcf82f23610d4ed" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_GeneratorModel.sysdiagrams" Width="1.5" PointX="1" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_GeneratorModel.Tb_Contexts" Width="1.5" PointX="4.875" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_GeneratorModel.Tb_Objects" Width="1.5" PointX="7.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_GeneratorModel.Tb_Parameters" Width="1.5" PointX="9.875" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_GeneratorModel.Tb_Projects" Width="1.5" PointX="2.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_GeneratorModel.Tb_ResultSetColumns" Width="1.5" PointX="9.875" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_GeneratorModel.Tb_ResultSets" Width="1.5" PointX="12.875" PointY="2.5" IsExpanded="true" />
+        <AssociationConnector Association="DB_GeneratorModel.FK__Tb_Contex__ID_Pr__300424B4" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_GeneratorModel.FK__Tb_Object__ID_Co__30F848ED" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_GeneratorModel.FK__Tb_Parame__ID_Ob__31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_GeneratorModel.FK__Tb_Result__ID_Ob__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_GeneratorModel.FK__Tb_Result__ID_Re__33D4B598" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

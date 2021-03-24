@@ -1,25 +1,69 @@
-﻿
+﻿@model IEnumerable<Sensato.CodeGenerator.Models.Tb_Projects>
+
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Listado de Proyectos</h2>
+<h2>Index</h2>
 
-<table>
-    <thead>
-        <tr>
-            <th>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileDirectory)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Server)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectUser)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectDatabase)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </th>
+        <th></th>
+    </tr>
 
-            </th>
-            <th>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProjectName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileDirectory)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Server)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProjectUser)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProjectDatabase)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Password)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreationDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID_Project }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID_Project }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID_Project })
+        </td>
+    </tr>
+}
 
-            </th>
-            <th>
-
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-
-    </tbody>
 </table>

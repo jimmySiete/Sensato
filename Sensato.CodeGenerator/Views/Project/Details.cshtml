@@ -1,0 +1,74 @@
+﻿@model Sensato.CodeGenerator.Models.Tb_Projects
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tb_Projects</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProjectName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FileDirectory)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FileDirectory)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Server)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Server)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectUser)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProjectUser)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectDatabase)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProjectDatabase)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_Project }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
