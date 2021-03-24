@@ -153,17 +153,17 @@
   <data name="706_Code" xml:space="preserve">
     <value>706</value>
   </data>
-  <data name="707_AttributeValueNotFound" xml:space="preserve">
-    <value>Error 707: El valor asignado al atributo es nulo o indefinido.</value>
-  </data>
   <data name="707_Code" xml:space="preserve">
     <value>707</value>
+  </data>
+  <data name="707_ModelVersionNotFound" xml:space="preserve">
+    <value>Error 707: El modelo contiene un valor para la versión de tipo nulo.</value>
   </data>
   <data name="708_Code" xml:space="preserve">
     <value>708</value>
   </data>
-  <data name="708_InvalidSingleNodeSelected" xml:space="preserve">
-    <value>Error 708: El nodo es inexistente, o posee otro nombre.</value>
+  <data name="708_StrangeCharacterInMethodName" xml:space="preserve">
+    <value>Error 708: El nombre del método no debe contener caracteres especiales.</value>
   </data>
   <data name="709_Code" xml:space="preserve">
     <value>709</value>

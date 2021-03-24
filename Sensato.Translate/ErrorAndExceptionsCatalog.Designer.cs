@@ -169,20 +169,20 @@ namespace Sensato.Translate {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error 707: El valor asignado al atributo es nulo o indefinido..
-        /// </summary>
-        public static string _707_AttributeValueNotFound {
-            get {
-                return ResourceManager.GetString("707_AttributeValueNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 707.
         /// </summary>
         public static string _707_Code {
             get {
                 return ResourceManager.GetString("707_Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error 707: El modelo contiene un valor para la versión de tipo nulo..
+        /// </summary>
+        public static string _707_ModelVersionNotFound {
+            get {
+                return ResourceManager.GetString("707_ModelVersionNotFound", resourceCulture);
             }
         }
         
@@ -196,11 +196,11 @@ namespace Sensato.Translate {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error 708: El nodo es inexistente, o posee otro nombre..
+        ///   Looks up a localized string similar to Error 708: El nombre del método no debe contener caracteres especiales..
         /// </summary>
-        public static string _708_InvalidSingleNodeSelected {
+        public static string _708_StrangeCharacterInMethodName {
             get {
-                return ResourceManager.GetString("708_InvalidSingleNodeSelected", resourceCulture);
+                return ResourceManager.GetString("708_StrangeCharacterInMethodName", resourceCulture);
             }
         }
         

@@ -541,7 +541,9 @@ namespace Sensato.Translate
 
         public static void XMLStructureValidations(csXML model)
         {
-            if (!model.version.StartsWith("1"))
+            if (string.IsNullOrEmpty(model.version))
+                throw new TranslateException(ErrorAndExceptionsCatalog._707_Code, ErrorAndExceptionsCatalog._707_ModelVersionNotFound);
+            else if (!model.version.StartsWith("1"))
                 throw new TranslateException(ErrorAndExceptionsCatalog._702_Code, ErrorAndExceptionsCatalog._702_InvalidVersionModel);
             if (!model.encoding.StartsWith("U"))
                 throw new TranslateException(ErrorAndExceptionsCatalog._703_Code, ErrorAndExceptionsCatalog._703_InvalidEncoding);
@@ -553,20 +555,29 @@ namespace Sensato.Translate
 
         public static void FromXMLToCSharpValidations(XmlDocument document)
         {
+            string[] specialDots = {"!", "@", "#", "$", "%", "^","*", "(", ")", "=" ,"+", "/" };
             var mthodLine =  document.SelectSingleNode("//*[local-name()='methods']");
             var constrLine = document.SelectSingleNode("//*[local-name()='constructor']");
             var classLine = document.SelectSingleNode("//*[local-name()='class']");
 
             if (string.IsNullOrEmpty(mthodLine.Attributes.GetNamedItem("name").Value))
                 throw new TranslateException(ErrorAndExceptionsCatalog._711_Code, ErrorAndExceptionsCatalog._711_NameMethodNotFound);
+            else if (mthodLine.Attributes.GetNamedItem("dataTypeReturn").Value.ToLower() != "void" && mthodLine.Attributes.GetNamedItem("returned").Value.ToLower() == "false")
+                throw new TranslateException(ErrorAndExceptionsCatalog._715_Code, ErrorAndExceptionsCatalog._715__ValueIsNotReturnedInMethod);
+
             if (string.IsNullOrEmpty(constrLine.Attributes.GetNamedItem("class").Value))
                 throw new TranslateException(ErrorAndExceptionsCatalog._713_Code, ErrorAndExceptionsCatalog._713_NameClassNotFound);
-            else if (!classLine.Attributes.GetNamedItem("class").Value.Contains("!@#$%^&*()_+-=,.;"))
-                throw new TranslateException(ErrorAndExceptionsCatalog._714_Code, ErrorAndExceptionsCatalog._714_StrangeCharacterInClassName);
+            
             if (string.IsNullOrEmpty(classLine.Attributes.GetNamedItem("name").Value))
                 throw new TranslateException(ErrorAndExceptionsCatalog._709_Code, ErrorAndExceptionsCatalog._709_MainClassNameNotFound);
-            else if (!classLine.Attributes.GetNamedItem("name").Value.Contains("!@#$%^&*()_+-=,.;"))
-                throw new TranslateException(ErrorAndExceptionsCatalog._710_Code, ErrorAndExceptionsCatalog._710_MainClassInvalidName);
+
+            foreach (var item in specialDots)
+                if (mthodLine.Attributes.GetNamedItem("name").Value.Contains(item))
+                    throw new TranslateException(ErrorAndExceptionsCatalog._708_Code, ErrorAndExceptionsCatalog._708_StrangeCharacterInMethodName);
+                else if (constrLine.Attributes.GetNamedItem("class").Value.Contains(item))
+                    throw new TranslateException(ErrorAndExceptionsCatalog._714_Code, ErrorAndExceptionsCatalog._714_StrangeCharacterInClassName);
+                else if (classLine.Attributes.GetNamedItem("name").Value.Contains(item))
+                    throw new TranslateException(ErrorAndExceptionsCatalog._710_Code, ErrorAndExceptionsCatalog._710_MainClassInvalidName);
         }
     }
 }
