@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Sensato.GenerateCSharp.Models.Tb_Contexts>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Indice de Contextos</h2>
+
+<p>
+    @Html.ActionLink("Crear Nuevo", "Create", null, new { @class = "btn btn-warning"})
+</p>
+<table class="table table-bordered table-condensed">
+    <tr class="bg-info">
+        <th>
+            @Html.DisplayName("Nombre del Contexto")
+        </th>
+        <th>
+            @Html.DisplayName("Proyecto Raíz")
+        </th>
+        <th>
+            @Html.DisplayName("Fecha de Creación")
+        </th>
+        <th>
+            Acciones
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContextName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreationDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tb_Projects.ProjectName)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.ID_Context }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.ID_Context })
+        </td>
+    </tr>
+}
+
+</table>

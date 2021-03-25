@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Sensato.GenerateCSharp.Models.Tb_Projects>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Indice de Proyectos</h2>
+
+<p>
+
+    @Html.ActionLink("Crear Nuevo", "Create", null ,new  { @class= "btn btn-warning"})
+</p>
+<table class="table table-bordered table-condensed" align="center" border="1">
+    <tr class="bg-primary">
+        <th>
+            @Html.DisplayName("Nombre Proyecto")
+        </th>
+        <th>
+            @Html.DisplayName("Ubicación")
+        </th>
+        <th>
+            @Html.DisplayName("Servidor")
+        </th>
+        <th>
+            @Html.DisplayName("Usuario")
+        </th>
+        <th>
+            Acciones
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProjectName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileDirectory)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Server)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProjectUser)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProjectDatabase)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Password)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreationDate)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.ID_Project }) |
+            @Html.ActionLink("Borrar", "Delete", new { id=item.ID_Project }) |
+            @Html.ActionLink("Ver Contextos","Context", new {id=item.ID_Project })
+        </td>
+    </tr>
+}
+
+</table>

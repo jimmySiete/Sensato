@@ -1,0 +1,80 @@
+﻿@model Sensato.GenerateCSharp.Models.Tb_Projects
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Eliminar</h2>
+
+<h3>¿Está seguro que desea eliminar el Proyecto?</h3>
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Nombre del Proyecto")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProjectName)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Dirección del Archivo")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FileDirectory)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Servidor")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Server)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Usuario")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProjectUser)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Base de Datos")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProjectDatabase)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Contraseña")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Fecha de Creación")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+            @Html.ActionLink("Volver a Inicio", "Index")
+        </div>
+    }
+</div>
