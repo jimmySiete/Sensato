@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Windows;
 using Sensato.GenerateCSharp.Models;
 
 namespace Sensato.GenerateCSharp.Controllers
@@ -24,7 +25,7 @@ namespace Sensato.GenerateCSharp.Controllers
         // GET: Context/Create
         public ActionResult Create()
         {
-            ViewBag.ID_Project = new SelectList(db.Tb_Projects, "ID_Project", "ProjectName");
+            ViewBag.ID_Project = new SelectList(db.Tb_Projects,"ID_Project","ProjectName");
             return View();
         }
 
@@ -37,7 +38,25 @@ namespace Sensato.GenerateCSharp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Tb_Contexts.Add(tb_Contexts);
+                using (DbContextTransaction transaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        db.Tb_Contexts.Add(tb_Contexts);
+                        tb_Contexts.ID_Project = ViewBag.ID_Project;
+                        tb_Contexts.CreationDate = DateTime.Now.Date;
+                        db.SaveChanges();
+                        transaction.Commit();
+                        return RedirectToAction("Index");
+                    }
+                    catch(Exception ex)
+                    {
+                        transaction.Rollback();
+                        MessageBox.Show("Error: " + ex);
+                    }
+                }
+                    db.Tb_Contexts.Add(tb_Contexts);
+                tb_Contexts.CreationDate = DateTime.Now.Date;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -71,9 +90,22 @@ namespace Sensato.GenerateCSharp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tb_Contexts).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                using (DbContextTransaction transaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        db.Entry(tb_Contexts).State = EntityState.Modified;
+                        tb_Contexts.CreationDate = DateTime.Now.Date;
+                        db.SaveChanges();
+                        transaction.Commit();
+                        return RedirectToAction("Index");
+                    }
+                    catch (Exception ex) 
+                    {
+                        transaction.Rollback();
+                        MessageBox.Show("Error: " + ex);
+                    }
+                }
             }
             ViewBag.ID_Project = new SelectList(db.Tb_Projects, "ID_Project", "ProjectName", tb_Contexts.ID_Project);
             return View(tb_Contexts);

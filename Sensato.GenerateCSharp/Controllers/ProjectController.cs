@@ -6,6 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
+using System.Windows;
 using Sensato.GenerateCSharp.Models;
 
 namespace Sensato.GenerateCSharp.Controllers
@@ -27,19 +29,29 @@ namespace Sensato.GenerateCSharp.Controllers
         }
 
         // POST: Project/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID_Project,ProjectName,FileDirectory,Server,ProjectUser,ProjectDatabase,Password,CreationDate")] Tb_Projects tb_Projects)
         {
             if (ModelState.IsValid)
             {
-                db.Tb_Projects.Add(tb_Projects);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                using (DbContextTransaction transaction = db.Database.BeginTransaction())
+                {
+                    try 
+                    {
+                        tb_Projects.CreationDate = DateTime.Now.Date;
+                        db.Tb_Projects.Add(tb_Projects);
+                        db.SaveChanges();
+                        transaction.Commit();
+                        return RedirectToAction("Index");
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        MessageBox.Show("Ha ocurrido un error: " + ex);
+                    }
+                }
             }
-
             return View(tb_Projects);
         }
 
@@ -59,17 +71,28 @@ namespace Sensato.GenerateCSharp.Controllers
         }
 
         // POST: Project/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID_Project,ProjectName,FileDirectory,Server,ProjectUser,ProjectDatabase,Password,CreationDate")] Tb_Projects tb_Projects)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tb_Projects).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                using (DbContextTransaction transaction = db.Database.BeginTransaction())
+                {
+                    try 
+                    {
+                        db.Entry(tb_Projects).State = EntityState.Modified;
+                        tb_Projects.CreationDate = DateTime.Now.Date;
+                        db.SaveChanges();
+                        transaction.Commit();
+                        return RedirectToAction("Index");
+                    }
+                    catch(Exception ex)
+                    {
+                        transaction.Rollback();
+                        MessageBox.Show("Error: " + ex);
+                    }
+                }
             }
             return View(tb_Projects);
         }

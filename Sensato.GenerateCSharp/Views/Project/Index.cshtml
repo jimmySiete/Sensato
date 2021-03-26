@@ -7,7 +7,6 @@
 <h2>Indice de Proyectos</h2>
 
 <p>
-
     @Html.ActionLink("Crear Nuevo", "Create", null ,new  { @class= "btn btn-warning"})
 </p>
 <table class="table table-bordered table-condensed" align="center" border="1">
@@ -25,7 +24,10 @@
             @Html.DisplayName("Usuario")
         </th>
         <th>
-            Acciones
+            @Html.DisplayName("Fecha de Creación")
+        </th>
+        <th>
+            @Html.DisplayName("Acciones")
         </th>
     </tr>
 
@@ -44,20 +46,14 @@
             @Html.DisplayFor(modelItem => item.ProjectUser)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ProjectDatabase)
+            @String.Format("{0:dd/MM/yy}", item.CreationDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreationDate)
-        </td>
-        <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.ID_Project }) |
-            @Html.ActionLink("Borrar", "Delete", new { id=item.ID_Project }) |
-            @Html.ActionLink("Ver Contextos","Context", new {id=item.ID_Project })
+            @Html.ActionLink("Editar", "Edit", new { id = item.ID_Project }) |
+            @Html.ActionLink("Borrar", "Delete", new { id = item.ID_Project }) |
+            <a href="@Url.Action("Index","Context", new { id = item.ID_Project })">Ver Contextos</a>
         </td>
     </tr>
 }
-
 </table>
+

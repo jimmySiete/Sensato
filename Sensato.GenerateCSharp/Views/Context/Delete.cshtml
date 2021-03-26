@@ -4,15 +4,14 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<h2>Eliminar</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>¿Está seguro que desea eliminar el Contexto?</h3>
 <div>
-    <h4>Tb_Contexts</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ContextName)
+            @Html.DisplayName("Nombre del Contexto")
         </dt>
 
         <dd>
@@ -20,7 +19,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CreationDate)
+            @Html.DisplayName("Fecha de Creación")
         </dt>
 
         <dd>
@@ -28,7 +27,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Tb_Projects.ProjectName)
+            @Html.DisplayName("Proyecto Raíz")
         </dt>
 
         <dd>
@@ -41,8 +40,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+            @Html.ActionLink("Volver a Inicio", "Index")
         </div>
     }
 </div>
