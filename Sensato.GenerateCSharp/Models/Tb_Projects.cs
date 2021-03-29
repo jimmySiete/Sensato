@@ -28,6 +28,7 @@ namespace Sensato.GenerateCSharp.Models
         public string ProjectDatabase { get; set; }
         public string Password { get; set; }
         public System.DateTime CreationDate { get; set; }
+        public Nullable<bool> LocalConnection { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tb_Contexts> Tb_Contexts { get; set; }

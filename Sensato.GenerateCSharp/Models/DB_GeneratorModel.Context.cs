@@ -29,8 +29,8 @@ namespace Sensato.GenerateCSharp.Models
         public virtual DbSet<Tb_Contexts> Tb_Contexts { get; set; }
         public virtual DbSet<Tb_Objects> Tb_Objects { get; set; }
         public virtual DbSet<Tb_Parameters> Tb_Parameters { get; set; }
-        public virtual DbSet<Tb_Projects> Tb_Projects { get; set; }
         public virtual DbSet<Tb_ResultSetColumns> Tb_ResultSetColumns { get; set; }
         public virtual DbSet<Tb_ResultSets> Tb_ResultSets { get; set; }
+        public virtual DbSet<Tb_Projects> Tb_Projects { get; set; }
     }
 }

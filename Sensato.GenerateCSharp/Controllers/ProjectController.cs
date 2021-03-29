@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -31,7 +32,7 @@ namespace Sensato.GenerateCSharp.Controllers
         // POST: Project/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID_Project,ProjectName,FileDirectory,Server,ProjectUser,ProjectDatabase,Password,CreationDate")] Tb_Projects tb_Projects)
+        public ActionResult Create([Bind(Include = "ID_Project,ProjectName,FileDirectory,LocalConnection,Server,ProjectUser,ProjectDatabase,Password,CreationDate")] Tb_Projects tb_Projects)
         {
             if (ModelState.IsValid)
             {
@@ -39,6 +40,19 @@ namespace Sensato.GenerateCSharp.Controllers
                 {
                     try 
                     {
+                        string ConnStrFormat = "";
+                        if (tb_Projects.LocalConnection.Value)
+                            ConnStrFormat = string.Format("data source=./;initial catalog={0};integrated security=True;MultipleActiveResultSets=True;App=EntityFramework", tb_Projects.ProjectDatabase);
+                        else
+                            ConnStrFormat = string.Format("data source={0};initial catalog={1};persist security info=True;user id={2};password={3};multipleactiveresultsets=True;application name=EntityFramework", tb_Projects.Server, tb_Projects.ProjectDatabase, tb_Projects.ProjectUser, tb_Projects.Password);
+                        
+                        using (SqlConnection connection =new SqlConnection(ConnStrFormat))
+                        {
+                            connection.Open();
+                            if (connection.State.ToString() == "Closed")
+                                throw new Exception("Los datos proporcionados son incorrectos.");
+                        }
+
                         tb_Projects.CreationDate = DateTime.Now.Date;
                         db.Tb_Projects.Add(tb_Projects);
                         db.SaveChanges();

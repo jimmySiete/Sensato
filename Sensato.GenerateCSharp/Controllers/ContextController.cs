@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Windows;
 using Sensato.GenerateCSharp.Models;
+using Sensato.GenerateCSharp.GlobalCode;
 
 namespace Sensato.GenerateCSharp.Controllers
 {
@@ -16,16 +17,18 @@ namespace Sensato.GenerateCSharp.Controllers
         private DB_GeneratorEntities db = new DB_GeneratorEntities();
 
         // GET: Context
-        public ActionResult Index()
+        public ActionResult Index(int ID_Project)
         {
+            ViewBag.CurrentProject = ID_Project;
             var tb_Contexts = db.Tb_Contexts.Include(t => t.Tb_Projects);
-            return View(tb_Contexts.ToList());
+            return View(tb_Contexts.Where(x=>x.ID_Project == ID_Project).ToList());
         }
 
         // GET: Context/Create
-        public ActionResult Create()
+        public ActionResult Create(int ID_Project)
         {
-            ViewBag.ID_Project = new SelectList(db.Tb_Projects,"ID_Project","ProjectName");
+            ViewBag.idProject = ID_Project;
+            //ViewBag.ID_Project = new SelectList(db.Tb_Projects,"ID_Project","ProjectName");
             return View();
         }
 
@@ -34,7 +37,7 @@ namespace Sensato.GenerateCSharp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID_Context,ID_Project,ContextName,CreationDate")] Tb_Contexts tb_Contexts)
+        public ActionResult Create([Bind(Include = "ID_Context,ID_Project,ContextName,CreationDate")] Tb_Contexts tb_Contexts, int ID_Project)
         {
             if (ModelState.IsValid)
             {
@@ -43,11 +46,11 @@ namespace Sensato.GenerateCSharp.Controllers
                     try
                     {
                         db.Tb_Contexts.Add(tb_Contexts);
-                        tb_Contexts.ID_Project = ViewBag.ID_Project;
+                        tb_Contexts.ID_Project = ID_Project;
                         tb_Contexts.CreationDate = DateTime.Now.Date;
                         db.SaveChanges();
                         transaction.Commit();
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index",new { ID_Project = ID_Project });
                     }
                     catch(Exception ex)
                     {
@@ -86,7 +89,7 @@ namespace Sensato.GenerateCSharp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_Context,ID_Project,ContextName,CreationDate")] Tb_Contexts tb_Contexts)
+        public ActionResult Edit([Bind(Include = "ID_Context,ID_Project,ContextName,CreationDate")] Tb_Contexts tb_Contexts, int ID_Project)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +101,7 @@ namespace Sensato.GenerateCSharp.Controllers
                         tb_Contexts.CreationDate = DateTime.Now.Date;
                         db.SaveChanges();
                         transaction.Commit();
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", new { ID_Project = ID_Project });
                     }
                     catch (Exception ex) 
                     {
@@ -132,9 +135,25 @@ namespace Sensato.GenerateCSharp.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Tb_Contexts tb_Contexts = db.Tb_Contexts.Find(id);
-            db.Tb_Contexts.Remove(tb_Contexts);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                using (DbContextTransaction transaction = db.Database.BeginTransaction())
+                {
+                    try 
+                    {
+                        db.Tb_Contexts.Remove(tb_Contexts);
+                        db.SaveChanges();
+                        transaction.Commit();
+                        return RedirectToAction("Index", new { ID_Project = tb_Contexts.ID_Project });
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        MessageBox.Show("Error: " + ex);
+                    }
+                }
+            }
+            return View(tb_Contexts);
         }
 
         protected override void Dispose(bool disposing)

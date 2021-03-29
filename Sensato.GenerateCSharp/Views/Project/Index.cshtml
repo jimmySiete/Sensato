@@ -7,24 +7,24 @@
 <h2>Indice de Proyectos</h2>
 
 <p>
-    @Html.ActionLink("Crear Nuevo", "Create", null ,new  { @class= "btn btn-warning"})
+    @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.CreateNew, "Create",null, new  { @class= "btn btn-warning"})
 </p>
 <table class="table table-bordered table-condensed" align="center" border="1">
     <tr class="bg-primary">
         <th>
-            @Html.DisplayName("Nombre Proyecto")
+            @Html.DisplayName(Sensato.GenerateCSharp.GlobalCode.Resources.ProjectName)
         </th>
         <th>
-            @Html.DisplayName("Ubicación")
+            @Html.DisplayName(Sensato.GenerateCSharp.GlobalCode.Resources.FileDirectory)
         </th>
         <th>
-            @Html.DisplayName("Servidor")
+            @Html.DisplayName(Sensato.GenerateCSharp.GlobalCode.Resources.Server)
         </th>
         <th>
-            @Html.DisplayName("Usuario")
+            @Html.DisplayName(Sensato.GenerateCSharp.GlobalCode.Resources.ProjectUser)
         </th>
         <th>
-            @Html.DisplayName("Fecha de Creación")
+            @Html.DisplayName(Sensato.GenerateCSharp.GlobalCode.Resources.CreationDate)
         </th>
         <th>
             @Html.DisplayName("Acciones")
@@ -46,14 +46,27 @@
             @Html.DisplayFor(modelItem => item.ProjectUser)
         </td>
         <td>
-            @String.Format("{0:dd/MM/yy}", item.CreationDate)
+            @String.Format("{0:dd/MM/yyyy}", item.CreationDate)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id = item.ID_Project }) |
-            @Html.ActionLink("Borrar", "Delete", new { id = item.ID_Project }) |
-            <a href="@Url.Action("Index","Context", new { id = item.ID_Project })">Ver Contextos</a>
+            @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Edit, "Edit", new { id = item.ID_Project }) |
+            @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Delete, "Delete", new { id = item.ID_Project }) |
+            <button type="button" class="btn-link" onclick="AddContexts(@item.ID_Project)">Ver Contextos</button>
         </td>
     </tr>
 }
 </table>
+
+@section scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+
+        function AddContexts(ID_Project) {
+            window.location.href = "@Url.Action("Index", "Context")?ID_Project=" + ID_Project;
+        }
+    </script>
+    }
 
