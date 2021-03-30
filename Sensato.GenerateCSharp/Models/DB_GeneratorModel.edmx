@@ -31,6 +31,9 @@
           <Property Name="ID_Object" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_Context" Type="int" Nullable="false" />
           <Property Name="ObjectName" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ID_SysObject" Type="bigint" Nullable="false" />
+          <Property Name="ObjDescription" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Entity" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="Tb_Parameters">
           <Key>
@@ -191,19 +194,8 @@
           <Property Name="ID_Project" Type="Int32" Nullable="false" />
           <Property Name="ContextName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Tb_Objects" Relationship="Self.FK__Tb_Object__ID_Co__30F848ED" FromRole="Tb_Contexts" ToRole="Tb_Objects" />
           <NavigationProperty Name="Tb_Projects" Relationship="DB_GeneratorModel.FK__Tb_Contex__ID_Pr__300424B4" FromRole="Tb_Contexts" ToRole="Tb_Projects" />
-        </EntityType>
-        <EntityType Name="Tb_Objects">
-          <Key>
-            <PropertyRef Name="ID_Object" />
-          </Key>
-          <Property Name="ID_Object" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ID_Context" Type="Int32" Nullable="false" />
-          <Property Name="ObjectName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Tb_Contexts" Relationship="Self.FK__Tb_Object__ID_Co__30F848ED" FromRole="Tb_Objects" ToRole="Tb_Contexts" />
-          <NavigationProperty Name="Tb_Parameters" Relationship="Self.FK__Tb_Parame__ID_Ob__31EC6D26" FromRole="Tb_Objects" ToRole="Tb_Parameters" />
-          <NavigationProperty Name="Tb_ResultSets" Relationship="Self.FK__Tb_Result__ID_Ob__32E0915F" FromRole="Tb_Objects" ToRole="Tb_ResultSets" />
+          <NavigationProperty Name="Tb_Objects" Relationship="DB_GeneratorModel.FK__Tb_Object__ID_Co__30F848ED" FromRole="Tb_Contexts" ToRole="Tb_Objects" />
         </EntityType>
         <EntityType Name="Tb_Parameters">
           <Key>
@@ -217,7 +209,7 @@
           <Property Name="Presition" Type="Int32" />
           <Property Name="Nullable" Nullable="false" Type="Boolean" />
           <Property Name="IsOut" Nullable="false" Type="Boolean" />
-          <NavigationProperty Name="Tb_Objects" Relationship="Self.FK__Tb_Parame__ID_Ob__31EC6D26" FromRole="Tb_Parameters" ToRole="Tb_Objects" />
+          <NavigationProperty Name="Tb_Objects" Relationship="DB_GeneratorModel.FK__Tb_Parame__ID_Ob__31EC6D26" FromRole="Tb_Parameters" ToRole="Tb_Objects" />
         </EntityType>
         <EntityType Name="Tb_ResultSetColumns">
           <Key>
@@ -240,45 +232,9 @@
           <Property Name="ID_ResultSet" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_Object" Type="Int32" Nullable="false" />
           <Property Name="ResultSetName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Tb_Objects" Relationship="Self.FK__Tb_Result__ID_Ob__32E0915F" FromRole="Tb_ResultSets" ToRole="Tb_Objects" />
           <NavigationProperty Name="Tb_ResultSetColumns" Relationship="Self.FK__Tb_Result__ID_Re__33D4B598" FromRole="Tb_ResultSets" ToRole="Tb_ResultSetColumns" />
+          <NavigationProperty Name="Tb_Objects" Relationship="DB_GeneratorModel.FK__Tb_Result__ID_Ob__32E0915F" FromRole="Tb_ResultSets" ToRole="Tb_Objects" />
         </EntityType>
-        <Association Name="FK__Tb_Object__ID_Co__30F848ED">
-          <End Role="Tb_Contexts" Type="Self.Tb_Contexts" Multiplicity="1" />
-          <End Role="Tb_Objects" Type="Self.Tb_Objects" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tb_Contexts">
-              <PropertyRef Name="ID_Context" />
-            </Principal>
-            <Dependent Role="Tb_Objects">
-              <PropertyRef Name="ID_Context" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Tb_Parame__ID_Ob__31EC6D26">
-          <End Type="Self.Tb_Objects" Multiplicity="1" Role="Tb_Objects" />
-          <End Type="Self.Tb_Parameters" Multiplicity="*" Role="Tb_Parameters" />
-          <ReferentialConstraint>
-            <Principal Role="Tb_Objects">
-              <PropertyRef Name="ID_Object" />
-            </Principal>
-            <Dependent Role="Tb_Parameters">
-              <PropertyRef Name="ID_Object" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Tb_Result__ID_Ob__32E0915F">
-          <End Role="Tb_Objects" Type="Self.Tb_Objects" Multiplicity="1" />
-          <End Role="Tb_ResultSets" Type="Self.Tb_ResultSets" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tb_Objects">
-              <PropertyRef Name="ID_Object" />
-            </Principal>
-            <Dependent Role="Tb_ResultSets">
-              <PropertyRef Name="ID_Object" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Tb_Result__ID_Re__33D4B598">
           <End Role="Tb_ResultSets" Type="Self.Tb_ResultSets" Multiplicity="1" />
           <End Role="Tb_ResultSetColumns" Type="Self.Tb_ResultSetColumns" Multiplicity="*" />
@@ -294,22 +250,9 @@
         <EntityContainer Name="DB_GeneratorEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Tb_Contexts" EntityType="Self.Tb_Contexts" />
-          <EntitySet Name="Tb_Objects" EntityType="Self.Tb_Objects" />
           <EntitySet Name="Tb_Parameters" EntityType="Self.Tb_Parameters" />
           <EntitySet Name="Tb_ResultSetColumns" EntityType="Self.Tb_ResultSetColumns" />
           <EntitySet Name="Tb_ResultSets" EntityType="Self.Tb_ResultSets" />
-          <AssociationSet Name="FK__Tb_Object__ID_Co__30F848ED" Association="Self.FK__Tb_Object__ID_Co__30F848ED">
-            <End Role="Tb_Contexts" EntitySet="Tb_Contexts" />
-            <End Role="Tb_Objects" EntitySet="Tb_Objects" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Tb_Parame__ID_Ob__31EC6D26" Association="Self.FK__Tb_Parame__ID_Ob__31EC6D26">
-            <End EntitySet="Tb_Objects" Role="Tb_Objects" />
-            <End EntitySet="Tb_Parameters" Role="Tb_Parameters" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Tb_Result__ID_Ob__32E0915F" Association="Self.FK__Tb_Result__ID_Ob__32E0915F">
-            <End Role="Tb_Objects" EntitySet="Tb_Objects" />
-            <End Role="Tb_ResultSets" EntitySet="Tb_ResultSets" />
-          </AssociationSet>
           <AssociationSet Name="FK__Tb_Result__ID_Re__33D4B598" Association="Self.FK__Tb_Result__ID_Re__33D4B598">
             <End Role="Tb_ResultSets" EntitySet="Tb_ResultSets" />
             <End Role="Tb_ResultSetColumns" EntitySet="Tb_ResultSetColumns" />
@@ -318,6 +261,19 @@
           <AssociationSet Name="FK__Tb_Contex__ID_Pr__300424B4" Association="DB_GeneratorModel.FK__Tb_Contex__ID_Pr__300424B4">
             <End Role="Tb_Projects" EntitySet="Tb_Projects" />
             <End Role="Tb_Contexts" EntitySet="Tb_Contexts" />
+          </AssociationSet>
+          <EntitySet Name="Tb_Objects" EntityType="DB_GeneratorModel.Tb_Objects" />
+          <AssociationSet Name="FK__Tb_Object__ID_Co__30F848ED" Association="DB_GeneratorModel.FK__Tb_Object__ID_Co__30F848ED">
+            <End Role="Tb_Contexts" EntitySet="Tb_Contexts" />
+            <End Role="Tb_Objects" EntitySet="Tb_Objects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tb_Parame__ID_Ob__31EC6D26" Association="DB_GeneratorModel.FK__Tb_Parame__ID_Ob__31EC6D26">
+            <End Role="Tb_Objects" EntitySet="Tb_Objects" />
+            <End Role="Tb_Parameters" EntitySet="Tb_Parameters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tb_Result__ID_Ob__32E0915F" Association="DB_GeneratorModel.FK__Tb_Result__ID_Ob__32E0915F">
+            <End Role="Tb_Objects" EntitySet="Tb_Objects" />
+            <End Role="Tb_ResultSets" EntitySet="Tb_ResultSets" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Tb_Projects">
@@ -347,6 +303,56 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Tb_Objects">
+          <Key>
+            <PropertyRef Name="ID_Object" />
+          </Key>
+          <Property Name="ID_Object" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Context" Type="Int32" Nullable="false" />
+          <Property Name="ObjectName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ID_SysObject" Type="Int64" Nullable="false" />
+          <Property Name="ObjDescription" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Entity" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tb_Contexts" Relationship="DB_GeneratorModel.FK__Tb_Object__ID_Co__30F848ED" FromRole="Tb_Objects" ToRole="Tb_Contexts" />
+          <NavigationProperty Name="Tb_Parameters" Relationship="DB_GeneratorModel.FK__Tb_Parame__ID_Ob__31EC6D26" FromRole="Tb_Objects" ToRole="Tb_Parameters" />
+          <NavigationProperty Name="Tb_ResultSets" Relationship="DB_GeneratorModel.FK__Tb_Result__ID_Ob__32E0915F" FromRole="Tb_Objects" ToRole="Tb_ResultSets" />
+        </EntityType>
+        <Association Name="FK__Tb_Object__ID_Co__30F848ED">
+          <End Type="DB_GeneratorModel.Tb_Contexts" Role="Tb_Contexts" Multiplicity="1" />
+          <End Type="DB_GeneratorModel.Tb_Objects" Role="Tb_Objects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tb_Contexts">
+              <PropertyRef Name="ID_Context" />
+            </Principal>
+            <Dependent Role="Tb_Objects">
+              <PropertyRef Name="ID_Context" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tb_Parame__ID_Ob__31EC6D26">
+          <End Type="DB_GeneratorModel.Tb_Objects" Role="Tb_Objects" Multiplicity="1" />
+          <End Type="DB_GeneratorModel.Tb_Parameters" Role="Tb_Parameters" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tb_Objects">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="Tb_Parameters">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tb_Result__ID_Ob__32E0915F">
+          <End Type="DB_GeneratorModel.Tb_Objects" Role="Tb_Objects" Multiplicity="1" />
+          <End Type="DB_GeneratorModel.Tb_ResultSets" Role="Tb_ResultSets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tb_Objects">
+              <PropertyRef Name="ID_Object" />
+            </Principal>
+            <Dependent Role="Tb_ResultSets">
+              <PropertyRef Name="ID_Object" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -371,15 +377,6 @@
                 <ScalarProperty Name="ID_Project" ColumnName="ID_Project" />
                 <ScalarProperty Name="ContextName" ColumnName="ContextName" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tb_Objects">
-            <EntityTypeMapping TypeName="DB_GeneratorModel.Tb_Objects">
-              <MappingFragment StoreEntitySet="Tb_Objects">
-                <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
-                <ScalarProperty Name="ID_Context" ColumnName="ID_Context" />
-                <ScalarProperty Name="ObjectName" ColumnName="ObjectName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -432,6 +429,18 @@
                 <ScalarProperty Name="FileDirectory" ColumnName="FileDirectory" />
                 <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
                 <ScalarProperty Name="ID_Project" ColumnName="ID_Project" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tb_Objects">
+            <EntityTypeMapping TypeName="DB_GeneratorModel.Tb_Objects">
+              <MappingFragment StoreEntitySet="Tb_Objects">
+                <ScalarProperty Name="Entity" ColumnName="Entity" />
+                <ScalarProperty Name="ObjDescription" ColumnName="ObjDescription" />
+                <ScalarProperty Name="ID_SysObject" ColumnName="ID_SysObject" />
+                <ScalarProperty Name="ObjectName" ColumnName="ObjectName" />
+                <ScalarProperty Name="ID_Context" ColumnName="ID_Context" />
+                <ScalarProperty Name="ID_Object" ColumnName="ID_Object" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

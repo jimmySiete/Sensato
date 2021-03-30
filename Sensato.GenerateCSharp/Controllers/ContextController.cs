@@ -20,6 +20,8 @@ namespace Sensato.GenerateCSharp.Controllers
         public ActionResult Index(int ID_Project)
         {
             ViewBag.CurrentProject = ID_Project;
+            Tb_Projects proj = db.Tb_Projects.Find(ID_Project);
+            ViewBag.CurrentName = proj.ProjectName;
             var tb_Contexts = db.Tb_Contexts.Include(t => t.Tb_Projects);
             return View(tb_Contexts.Where(x=>x.ID_Project == ID_Project).ToList());
         }
@@ -28,6 +30,8 @@ namespace Sensato.GenerateCSharp.Controllers
         public ActionResult Create(int ID_Project)
         {
             ViewBag.idProject = ID_Project;
+            Tb_Projects tb = db.Tb_Projects.Find(ID_Project);
+            ViewBag.CurrentName = tb.ProjectName;
             //ViewBag.ID_Project = new SelectList(db.Tb_Projects,"ID_Project","ProjectName");
             return View();
         }
@@ -80,7 +84,8 @@ namespace Sensato.GenerateCSharp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ID_Project = new SelectList(db.Tb_Projects, "ID_Project", "ProjectName", tb_Contexts.ID_Project);
+            ViewBag.id_Project = tb_Contexts.Tb_Projects.ID_Project;
+            ViewBag.CurrentName = tb_Contexts.Tb_Projects.ProjectName;
             return View(tb_Contexts);
         }
 
@@ -122,6 +127,8 @@ namespace Sensato.GenerateCSharp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Tb_Contexts tb_Contexts = db.Tb_Contexts.Find(id);
+            ViewBag.CurrentName = tb_Contexts.Tb_Projects.ProjectName;
+            ViewBag.id_Project = tb_Contexts.Tb_Projects.ID_Project;
             if (tb_Contexts == null)
             {
                 return HttpNotFound();

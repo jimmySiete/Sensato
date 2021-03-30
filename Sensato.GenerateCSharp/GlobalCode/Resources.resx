@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BackToList" xml:space="preserve">
-    <value>Volver a Inicio</value>
+  <data name="BackToListC" xml:space="preserve">
+    <value>Volver a CONTEXTOS</value>
+  </data>
+  <data name="BackToListO" xml:space="preserve">
+    <value>Volver a OBJETOS</value>
+  </data>
+  <data name="BackToListP" xml:space="preserve">
+    <value>Volver a PROYECTOS</value>
   </data>
   <data name="ContextName" xml:space="preserve">
     <value>Nombre Contexto</value>
@@ -135,17 +141,29 @@
   <data name="Edit" xml:space="preserve">
     <value>Editar</value>
   </data>
+  <data name="Entity" xml:space="preserve">
+    <value>Entidad</value>
+  </data>
   <data name="FileDirectory" xml:space="preserve">
     <value>Ubicación del Archivo</value>
   </data>
   <data name="ID_Context" xml:space="preserve">
     <value>ID Contexto</value>
   </data>
+  <data name="ID_Object" xml:space="preserve">
+    <value>ID Objeto</value>
+  </data>
   <data name="ID_Project" xml:space="preserve">
     <value>ID Proyecto</value>
   </data>
   <data name="LocalConnection" xml:space="preserve">
     <value>Conexión Local (?)</value>
+  </data>
+  <data name="ObjDescription" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="ObjectName" xml:space="preserve">
+    <value>Nombre Objeto</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Contraseña</value>
@@ -161,5 +179,8 @@
   </data>
   <data name="Server" xml:space="preserve">
     <value>Servidor</value>
+  </data>
+  <data name="SYS_ID_Object" xml:space="preserve">
+    <value>ID Objeto</value>
   </data>
 </root>

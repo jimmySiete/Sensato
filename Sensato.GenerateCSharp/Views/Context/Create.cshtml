@@ -4,8 +4,9 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Crear Contexto</h2>
 
+<h2 style="font-size:35px; color: darkred;">"@ViewBag.CurrentName"</h2>
+<h3>Crear Contexto</h3>
 
 @using (Html.BeginForm()) 
 {
@@ -33,9 +34,23 @@
 }
 
 <div>
-    @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.BackToList, "Index")
+    @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.BackToListC, "Index", new { ID_Project = ViewBag.idProject })
+    <hr />
+    <button type="button" class="btn-link" onclick="GoToIndex()">@Sensato.GenerateCSharp.GlobalCode.Resources.BackToListP</button>
 </div>
+
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+<script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+
+        function GoToIndex() {
+            window.location.href = "@Url.Action("Index", "Project")";
+        }
+</script>
 }

@@ -61,11 +61,29 @@ namespace Sensato.GenerateCSharp.GlobalCode {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Volver a Inicio.
+        ///   Looks up a localized string similar to Volver a CONTEXTOS.
         /// </summary>
-        public static string BackToList {
+        public static string BackToListC {
             get {
-                return ResourceManager.GetString("BackToList", resourceCulture);
+                return ResourceManager.GetString("BackToListC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Volver a OBJETOS.
+        /// </summary>
+        public static string BackToListO {
+            get {
+                return ResourceManager.GetString("BackToListO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Volver a PROYECTOS.
+        /// </summary>
+        public static string BackToListP {
+            get {
+                return ResourceManager.GetString("BackToListP", resourceCulture);
             }
         }
         
@@ -115,6 +133,15 @@ namespace Sensato.GenerateCSharp.GlobalCode {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Entidad.
+        /// </summary>
+        public static string Entity {
+            get {
+                return ResourceManager.GetString("Entity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ubicación del Archivo.
         /// </summary>
         public static string FileDirectory {
@@ -133,6 +160,15 @@ namespace Sensato.GenerateCSharp.GlobalCode {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ID Objeto.
+        /// </summary>
+        public static string ID_Object {
+            get {
+                return ResourceManager.GetString("ID_Object", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ID Proyecto.
         /// </summary>
         public static string ID_Project {
@@ -147,6 +183,24 @@ namespace Sensato.GenerateCSharp.GlobalCode {
         public static string LocalConnection {
             get {
                 return ResourceManager.GetString("LocalConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descripción.
+        /// </summary>
+        public static string ObjDescription {
+            get {
+                return ResourceManager.GetString("ObjDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nombre Objeto.
+        /// </summary>
+        public static string ObjectName {
+            get {
+                return ResourceManager.GetString("ObjectName", resourceCulture);
             }
         }
         
@@ -192,6 +246,15 @@ namespace Sensato.GenerateCSharp.GlobalCode {
         public static string Server {
             get {
                 return ResourceManager.GetString("Server", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID Objeto.
+        /// </summary>
+        public static string SYS_ID_Object {
+            get {
+                return ResourceManager.GetString("SYS_ID_Object", resourceCulture);
             }
         }
     }

@@ -87,7 +87,7 @@ namespace Sensato.GenerateCSharp.Controllers
         // POST: Project/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_Project,ProjectName,FileDirectory,Server,ProjectUser,ProjectDatabase,Password,CreationDate")] Tb_Projects tb_Projects)
+        public ActionResult Edit([Bind(Include = "ID_Project,ProjectName,FileDirectory,LocalConnection,Server,ProjectUser,ProjectDatabase,Password,CreationDate")] Tb_Projects tb_Projects)
         {
             if (ModelState.IsValid)
             {
@@ -96,6 +96,18 @@ namespace Sensato.GenerateCSharp.Controllers
                     try 
                     {
                         db.Entry(tb_Projects).State = EntityState.Modified;
+                        string ConnStrFormat = "";
+                        if (tb_Projects.LocalConnection.Value)
+                            ConnStrFormat = string.Format("data source=./;initial catalog={0};integrated security=True;MultipleActiveResultSets=True;App=EntityFramework", tb_Projects.ProjectDatabase);
+                        else
+                            ConnStrFormat = string.Format("data source={0};initial catalog={1};persist security info=True;user id={2};password={3};multipleactiveresultsets=True;application name=EntityFramework", tb_Projects.Server, tb_Projects.ProjectDatabase, tb_Projects.ProjectUser, tb_Projects.Password);
+
+                        using (SqlConnection connection = new SqlConnection(ConnStrFormat))
+                        {
+                            connection.Open();
+                            if (connection.State.ToString() == "Closed")
+                                throw new Exception("Los datos proporcionados son incorrectos.");
+                        }
                         tb_Projects.CreationDate = DateTime.Now.Date;
                         db.SaveChanges();
                         transaction.Commit();
@@ -131,9 +143,33 @@ namespace Sensato.GenerateCSharp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Tb_Projects tb_Projects = db.Tb_Projects.Find(id);
-            db.Tb_Projects.Remove(tb_Projects);
-            db.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                using (DbContextTransaction transaction = db.Database.BeginTransaction())
+                {
+                    try 
+                    {
+                        List<Tb_Contexts> contexts = new List<Tb_Contexts>();
+                        if (contexts.Where(x => x.ID_Project == id).Any())
+                        {
+                            contexts = db.Tb_Contexts.Where(x => x.ID_Project == id).ToList();
+                            db.Tb_Contexts.RemoveRange(contexts);
+                            db.SaveChanges();
+                        }
+
+                        Tb_Projects tb_Projects = db.Tb_Projects.Find(id);
+                        db.Tb_Projects.Remove(tb_Projects);
+                        db.SaveChanges();
+                        transaction.Commit();
+                        return RedirectToAction("Index");
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        MessageBox.Show("Error: "+ ex);
+                    }
+                }
+            }
             return RedirectToAction("Index");
         }
 

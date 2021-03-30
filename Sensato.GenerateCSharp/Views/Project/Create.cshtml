@@ -80,7 +80,7 @@
 }
 
 <div>
-    @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.BackToList, "Index")
+    @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.BackToListP, "Index")
 </div>
 
 @section Scripts {
@@ -92,7 +92,6 @@
     });
 
     function ChangeStatus(item) {
-        debugger;
         if ($(item).is(':checked')) {
             $(item).attr('value', "true");
             HideUserAndPass();
@@ -103,11 +102,9 @@
     }
 
     function HideUserAndPass() {
-        debugger;
         $(".disabled").hide();
     }
     function ShowUserAndPass() {
-        debugger;
         $(".disabled").show();
     }
 </script>

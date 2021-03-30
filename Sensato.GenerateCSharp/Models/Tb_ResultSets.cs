@@ -24,8 +24,8 @@ namespace Sensato.GenerateCSharp.Models
         public int ID_Object { get; set; }
         public string ResultSetName { get; set; }
     
-        public virtual Tb_Objects Tb_Objects { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tb_ResultSetColumns> Tb_ResultSetColumns { get; set; }
+        public virtual Tb_Objects Tb_Objects { get; set; }
     }
 }

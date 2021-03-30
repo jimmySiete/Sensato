@@ -24,6 +24,9 @@ namespace Sensato.GenerateCSharp.Models
         public int ID_Object { get; set; }
         public int ID_Context { get; set; }
         public string ObjectName { get; set; }
+        public long ID_SysObject { get; set; }
+        public string ObjDescription { get; set; }
+        public string Entity { get; set; }
     
         public virtual Tb_Contexts Tb_Contexts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
