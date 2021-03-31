@@ -4,45 +4,115 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
-
+<h2 style="color:darkslateblue;">"@ViewBag.CxtName"</h2>
+<h3>Crear Objeto</h3>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <h4>Tb_Objects</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.ID_Context, "ID_Context", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ID_Context", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ID_Context, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ID_Context, new { Value = ViewBag.idContext })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ObjectName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ObjectName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ObjectName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+    <div class="form-group">
+        @Html.Label("Buscar Stored Procedure", htmlAttributes: new { @class = "control-label col-md-4", @style="align: center;" })
+        <div id="the-basics" class="col-md-10">
+            <input class="form-control typeahead" type="text" >
         </div>
     </div>
+    
+    <div class="form-group">
+        @Html.Label(Sensato.GenerateCSharp.GlobalCode.Resources.ObjectName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ObjectName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ObjectName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label(Sensato.GenerateCSharp.GlobalCode.Resources.ObjDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.ObjDescription, new { htmlAttributes = new { @class = "form-control form-group-lg" } })
+            @Html.ValidationMessageFor(model => model.ObjDescription, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label(Sensato.GenerateCSharp.GlobalCode.Resources.Entity, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Entity, new { htmlAttributes = new { @class = "form-control form-group-lg" } })
+            @Html.ValidationMessageFor(model => model.Entity, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Crear" class="btn btn-success" />
+        </div>
+    </div>
+</div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.BackToListO, "Index", new { ViewBag.idContext})
+    <hr />
+    <button type="button" class="btn-link" onclick="GoToContexts(@ViewBag.id_project)">@Sensato.GenerateCSharp.GlobalCode.Resources.BackToListC</button>
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+
+        function GoToContexts(idProject) {
+            window.location.href = "@Url.Action("Index", "Context")?ID_Project=" + idProject;
+        }
+
+        var substringMatcher = function (strs) {
+            return function findMatches(q, cb) {
+                var matches, substringRegex;
+
+                // an array that will be populated with substring matches
+                matches = [];
+
+                // regex used to determine if a string contains the substring `q`
+                substrRegex = new RegExp(q, 'i');
+
+                // iterate through the pool of strings and for any string that
+                // contains the substring `q`, add it to the `matches` array
+                $.each(strs, function (i, str) {
+                    if (substrRegex.test(str)) {
+                        matches.push(str);
+                    }
+                });
+
+                cb(matches);
+            };
+        };
+
+        var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
+            'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
+            'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
+            'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
+            'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
+            'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+            'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
+            'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+            'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+        ];
+
+        $('#the-basics .typeahead').typeahead({
+            hint: true,
+            highlight: true,
+            minLength: 1
+        },
+            {
+                name: 'states',
+                source: substringMatcher(states)
+            });
+    </script>
 }

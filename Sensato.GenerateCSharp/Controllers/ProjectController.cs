@@ -62,7 +62,7 @@ namespace Sensato.GenerateCSharp.Controllers
                     catch (Exception ex)
                     {
                         transaction.Rollback();
-                        MessageBox.Show("Ha ocurrido un error: " + ex);
+                        MessageBox.Show("Ha ocurrido un error: " + ex.Message);
                     }
                 }
             }
@@ -116,7 +116,7 @@ namespace Sensato.GenerateCSharp.Controllers
                     catch(Exception ex)
                     {
                         transaction.Rollback();
-                        MessageBox.Show("Error: " + ex);
+                        MessageBox.Show("Error: " + ex.Message);
                     }
                 }
             }
@@ -166,7 +166,7 @@ namespace Sensato.GenerateCSharp.Controllers
                     catch (Exception ex)
                     {
                         transaction.Rollback();
-                        MessageBox.Show("Error: "+ ex);
+                        MessageBox.Show("Error: "+ ex.Message);
                     }
                 }
             }

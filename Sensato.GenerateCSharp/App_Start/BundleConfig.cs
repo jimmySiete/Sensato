@@ -25,6 +25,9 @@ namespace Sensato.GenerateCSharp
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/typeahead").Include(
+                "~/Scripts/typeahead.js"));
         }
     }
 }

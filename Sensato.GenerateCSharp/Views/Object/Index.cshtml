@@ -4,36 +4,60 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
 
+    <h2 style="color:darkslateblue">"@ViewBag.CxtName"</h2>
+<h3>Listado de Objetos</h3>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.CreateNew, "Create", new {idContext = ViewBag.idContext }, new { @class = "btn btn-danger" })
 </p>
-<table class="table">
-    <tr>
+<table class="table table-bordered">
+    <tr class="bg-danger">
         <th>
-            @Html.DisplayNameFor(model => model.ObjectName)
+            @Html.DisplayName(Sensato.GenerateCSharp.GlobalCode.Resources.SYS_ID_Object)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Tb_Contexts.ContextName)
+            @Html.DisplayName(Sensato.GenerateCSharp.GlobalCode.Resources.ObjectName)
         </th>
-        <th></th>
+        <th>Acciones</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ObjectName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tb_Contexts.ContextName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID_Object }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID_Object }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID_Object })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ObjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID_SysObject)
+            </td>
+            <td>
+                @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Edit, "Edit", new { id = item.ID_Object }) |
+                @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Delete, "Delete", new { id = item.ID_Object })
+            </td>
+        </tr>
+    }
 
 </table>
+
+<div>
+    <button type="button" class="btn-link" onclick="GoToIndex(@ViewBag.idProject)">@Sensato.GenerateCSharp.GlobalCode.Resources.BackToListC</button>
+    <hr />
+    <button type="button" class="btn-link" onclick="GoToProjects()">@Sensato.GenerateCSharp.GlobalCode.Resources.BackToListP</button>
+</div>
+
+@section scripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+
+        function GoToProjects() {
+            window.location.href = "@Url.Action("Index", "Project")";
+        }
+
+        function GoToIndex(idProject) {
+            window.location.href = "@Url.Action("Index", "Context")?ID_Project=" + idProject;
+        }
+
+    </script>
+}

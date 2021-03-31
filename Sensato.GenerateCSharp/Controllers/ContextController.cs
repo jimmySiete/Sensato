@@ -32,13 +32,10 @@ namespace Sensato.GenerateCSharp.Controllers
             ViewBag.idProject = ID_Project;
             Tb_Projects tb = db.Tb_Projects.Find(ID_Project);
             ViewBag.CurrentName = tb.ProjectName;
-            //ViewBag.ID_Project = new SelectList(db.Tb_Projects,"ID_Project","ProjectName");
             return View();
         }
 
         // POST: Context/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID_Context,ID_Project,ContextName,CreationDate")] Tb_Contexts tb_Contexts, int ID_Project)
@@ -59,7 +56,7 @@ namespace Sensato.GenerateCSharp.Controllers
                     catch(Exception ex)
                     {
                         transaction.Rollback();
-                        MessageBox.Show("Error: " + ex);
+                        MessageBox.Show("Error: " + ex.Message);
                     }
                 }
                     db.Tb_Contexts.Add(tb_Contexts);
@@ -90,8 +87,6 @@ namespace Sensato.GenerateCSharp.Controllers
         }
 
         // POST: Context/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID_Context,ID_Project,ContextName,CreationDate")] Tb_Contexts tb_Contexts, int ID_Project)
@@ -111,7 +106,7 @@ namespace Sensato.GenerateCSharp.Controllers
                     catch (Exception ex) 
                     {
                         transaction.Rollback();
-                        MessageBox.Show("Error: " + ex);
+                        MessageBox.Show("Error: " + ex.Message);
                     }
                 }
             }
@@ -156,7 +151,7 @@ namespace Sensato.GenerateCSharp.Controllers
                     catch (Exception ex)
                     {
                         transaction.Rollback();
-                        MessageBox.Show("Error: " + ex);
+                        MessageBox.Show("Error: " + ex.Message);
                     }
                 }
             }
