@@ -150,7 +150,7 @@ namespace Sensato.GenerateCSharp.Controllers
             string query = "GetStoredProcedures";
             
             List<SelectListItem> list = new List<SelectListItem>();
-            DataTable dt = DataAccessADO.GetDataTable(query,null,WebConfigurationManager.AppSettings["connectionString"],null);
+            DataTable dt = DataAccessADO.GetDataTable(query,CommandType.StoredProcedure,null,WebConfigurationManager.AppSettings["connectionString"],null);
 
             foreach(var item in dt.Rows)
             {
