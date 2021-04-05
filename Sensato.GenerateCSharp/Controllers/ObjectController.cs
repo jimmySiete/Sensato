@@ -10,7 +10,7 @@ using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Windows;
 using Sensato.GenerateCSharp.Models;
-using SENSATO;
+using Sensato.DataAccess;
 
 namespace Sensato.GenerateCSharp.Controllers
 {
@@ -150,7 +150,7 @@ namespace Sensato.GenerateCSharp.Controllers
             string query = "GetStoredProcedures";
             
             List<SelectListItem> list = new List<SelectListItem>();
-            DataTable dt = DataAccessADO.GetDataTable(query,null,WebConfigurationManager.AppSettings["connectionString"],null);
+            DataTable dt = DataAccessADO.GetDataTable(query,CommandType.StoredProcedure,null,WebConfigurationManager.AppSettings["connectionString"],null);
 
             foreach(var item in dt.Rows)
             {
