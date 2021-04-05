@@ -19,23 +19,23 @@ namespace Sensato.GenerateCSharp.Controllers
         private DB_GeneratorEntities db = new DB_GeneratorEntities();
 
         // GET: Object
-        public ActionResult Index(int idContext)
+        public ActionResult Index(int idContext, int idProject)
         {
             ViewBag.idContext = idContext;
             Tb_Contexts tbC = db.Tb_Contexts.Find(idContext);
             ViewBag.CxtName = tbC.ContextName;
-            ViewBag.idProject = tbC.Tb_Projects.ID_Project;
+            ViewBag.idProject = idProject;
             var tb_Objects = db.Tb_Objects.Include(t => t.Tb_Contexts);
             return View(tb_Objects.Where(x => x.ID_Context == idContext).ToList());
         }
 
         // GET: Object/Create
-        public ActionResult Create(int idContext)
+        public ActionResult Create(int idContext, int idProject)
         {
             ViewBag.idContext = idContext;
             Tb_Contexts tb = db.Tb_Contexts.Find(idContext);
             ViewBag.CxtName = tb.ContextName;
-            ViewBag.idProject = tb.ID_Project;
+            ViewBag.idProject = idProject;
             //ViewBag.ID_Context = new SelectList(db.Tb_Contexts, "ID_Context", "ContextName");
             return View();
         }
@@ -134,7 +134,7 @@ namespace Sensato.GenerateCSharp.Controllers
 
         // Metodo para obtener los ID's de la tabla sysobjects
         [HttpPost]
-        public JsonResult GetStoredProceduresFromSysObjects(string txt)
+        public JsonResult GetStoredProceduresFromSysObjects(string txt, int idProject)
         {
             //string query = @"CREATE PROCEDURE GetStoredProcedures
             //                AS
@@ -148,15 +148,23 @@ namespace Sensato.GenerateCSharp.Controllers
             //                "EXECUTE GetStoredProcedure;";
 
             string query = "GetStoredProcedures";
+            Tb_Projects tb = db.Tb_Projects.Find(idProject);
+            string ConnStr;
+            if (tb.LocalConnection.Value)
+                ConnStr = string.Format("data source=./;initial catalog={0};integrated security=True;MultipleActiveResultSets=True;App=EntityFramework", tb.ProjectDatabase);
+            else
+                ConnStr = string.Format("data source={0};initial catalog={1};persist security info=True;user id={2};password={3};multipleactiveresultsets=True;application name=EntityFramework", tb.Server, tb.ProjectDatabase, tb.ProjectUser, tb.Password); ;
             
             List<SelectListItem> list = new List<SelectListItem>();
-            DataTable dt = DataAccessADO.GetDataTable(query,CommandType.StoredProcedure,null,WebConfigurationManager.AppSettings["connectionString"],null);
 
-            foreach(var item in dt.Rows)
-            {
-                list.Add(new SelectListItem() { Text = item.GetType().Name, Value = item.GetType().Attributes.ToString()});
-            }
-            //List<SelectListItem> list = db.Tb_TrainingHistoryMex.Where(x => x.IsCertification.HasValue && !x.IsCertification.Value && (x.COURSE.ToUpper().Contains(txt.ToUpper()) || x.COURSE_TITLE.ToUpper().Contains(txt.ToUpper()))).Select(x => new SelectListItem() { Text = x.COURSE + " " + x.COURSE_TITLE, Value = x.COURSE }).OrderBy(x => x.Text).Take(20).ToList();
+            DataTable dt = DataAccessADO.GetDataTable(query,CommandType.StoredProcedure,null,ConnStr,null);
+
+            //foreach(var item in dt.Rows)
+            //{
+            //    list.Add(new SelectListItem() { Text = item.GetType().Name, Value = item.GetType().Attributes.ToString()});
+            //}
+
+            list = dt.AsEnumerable().Select(x => new SelectListItem() { Text = x.Field<string>("name"), Value = x.Field<string>("id") }).ToList();
 
             return Json(list, JsonRequestBehavior.DenyGet);
         }

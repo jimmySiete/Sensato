@@ -41,7 +41,7 @@
             <td>
                 @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Edit, "Edit", new { id = item.ID_Context }) |
                 @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Delete, "Delete", new { id = item.ID_Context }) |
-                <button type="button" class="btn btn-link" onclick="AddObjects(@item.ID_Context)">Ver Objetos</button>
+                <button type="button" class="btn btn-link" onclick="AddObjects(@item.ID_Context, @item.ID_Project)">Ver Objetos</button>
             </td>
         </tr>
     }
@@ -60,8 +60,8 @@
             window.location.href = "@Url.Action("Index", "Project")";
         }
 
-        function AddObjects(idContext) {
-            window.location.href = "@Url.Action("Index", "Object")?idContext=" + idContext;
+        function AddObjects(idContext, idProject) {
+            window.location.href = "@Url.Action("Index", "Object")?idContext=" + idContext + '&idProject=' + idProject;
         }
 
     </script>

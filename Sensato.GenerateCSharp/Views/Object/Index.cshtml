@@ -8,7 +8,7 @@
     <h2 style="color:darkslateblue">"@ViewBag.CxtName"</h2>
 <h3>Listado de Objetos</h3>
 <p>
-    @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.CreateNew, "Create", new {idContext = ViewBag.idContext }, new { @class = "btn btn-danger" })
+    @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.CreateNew, "Create", new {idContext = ViewBag.idContext, idProject = ViewBag.idProject }, new { @class = "btn btn-danger" })
 </p>
 <table class="table table-bordered">
     <tr class="bg-danger">
