@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Windows;
 using Sensato.GenerateCSharp.Models;
+using SENSATO;
 
 namespace Sensato.GenerateCSharp.Controllers
 {
@@ -129,6 +132,34 @@ namespace Sensato.GenerateCSharp.Controllers
             return RedirectToAction("Index");
         }
 
+        // Metodo para obtener los ID's de la tabla sysobjects
+        [HttpPost]
+        public JsonResult GetStoredProceduresFromSysObjects(string txt)
+        {
+            //string query = @"CREATE PROCEDURE GetStoredProcedures
+            //                AS
+            //                BEGIN
+            //             SET NOCOUNT ON;
+            //             SELECT top 15 name, id
+            //             from sysobjects
+            //             where name like '%'"+ txt +"'%'" +
+            //                "END" + 
+            //                "GO" + 
+            //                "EXECUTE GetStoredProcedure;";
+
+            string query = "GetStoredProcedures";
+            
+            List<SelectListItem> list = new List<SelectListItem>();
+            DataTable dt = DataAccessADO.GetDataTable(query,null,WebConfigurationManager.AppSettings["connectionString"],null);
+
+            foreach(var item in dt.Rows)
+            {
+                list.Add(new SelectListItem() { Text = item.GetType().Name, Value = item.GetType().Attributes.ToString()});
+            }
+            //List<SelectListItem> list = db.Tb_TrainingHistoryMex.Where(x => x.IsCertification.HasValue && !x.IsCertification.Value && (x.COURSE.ToUpper().Contains(txt.ToUpper()) || x.COURSE_TITLE.ToUpper().Contains(txt.ToUpper()))).Select(x => new SelectListItem() { Text = x.COURSE + " " + x.COURSE_TITLE, Value = x.COURSE }).OrderBy(x => x.Text).Take(20).ToList();
+
+            return Json(list, JsonRequestBehavior.DenyGet);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -26,8 +26,12 @@ namespace Sensato.GenerateCSharp
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
-            bundles.Add(new ScriptBundle("~/bundles/typeahead").Include(
-                "~/Scripts/typeahead.js"));
+            bundles.Add(new ScriptBundle("~/bundles/selectizeJs").Include(
+               "~/Content/Selectize/Selectize/js/standalone/selectize.min.js"));
+
+            bundles.Add(new StyleBundle("~/Content/selectizeCss").Include(
+                "~/Content/Selectize/Selectize/css/selectize.bootstrap3.css",
+                "~/Content/css/selectize.css"));
         }
     }
 }
