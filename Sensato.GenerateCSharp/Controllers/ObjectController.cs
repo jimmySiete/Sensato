@@ -10,7 +10,7 @@ using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Windows;
 using Sensato.GenerateCSharp.Models;
-using SENSATO;
+using Sensato.DataAccess;
 
 namespace Sensato.GenerateCSharp.Controllers
 {
