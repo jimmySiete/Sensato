@@ -154,10 +154,14 @@ namespace Sensato.GenerateCSharp.Controllers
                 ConnStr = string.Format("data source=./;initial catalog={0};integrated security=True;MultipleActiveResultSets=True;App=EntityFramework", tb.ProjectDatabase);
             else
                 ConnStr = string.Format("data source={0};initial catalog={1};persist security info=True;user id={2};password={3};multipleactiveresultsets=True;application name=EntityFramework", tb.Server, tb.ProjectDatabase, tb.ProjectUser, tb.Password); ;
-            
+
+            //Parameters
+            List<SqlParameter> listparams = new List<SqlParameter>();
+            listparams.Add(new SqlParameter() { ParameterName = "Connection Test" });
+
             List<SelectListItem> list = new List<SelectListItem>();
 
-            DataTable dt = DataAccessADO.GetDataTable(query,CommandType.StoredProcedure,null,ConnStr,null);
+            DataTable dt = DataAccessADO.GetDataTable(query,CommandType.StoredProcedure,listparams,ConnStr,null);
 
             //foreach(var item in dt.Rows)
             //{

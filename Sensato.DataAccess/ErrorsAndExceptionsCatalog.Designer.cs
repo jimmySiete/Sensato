@@ -70,7 +70,7 @@ namespace Sensato.DataAccess {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error 601:  El procedimiento alamacenado está mal estructurado..
+        ///   Looks up a localized string similar to Error 601:  El procedimiento almacenado está mal estructurado..
         /// </summary>
         public static string _601_InvalidStoredProcedure {
             get {

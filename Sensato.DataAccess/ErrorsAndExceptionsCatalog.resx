@@ -121,7 +121,7 @@
     <value>601</value>
   </data>
   <data name="601_InvalidStoredProcedure" xml:space="preserve">
-    <value>Error 601:  El procedimiento alamacenado está mal estructurado.</value>
+    <value>Error 601:  El procedimiento almacenado está mal estructurado.</value>
   </data>
   <data name="602_Code" xml:space="preserve">
     <value>602</value>

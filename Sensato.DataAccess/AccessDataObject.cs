@@ -121,7 +121,7 @@ namespace Sensato.DataAccess
         {
             if (string.IsNullOrEmpty(storedProcedureOrQuery) && type.ToString() == "StoredProcedure")
                throw new DataAccessException(ErrorsAndExceptionsCatalog._602_Code, ErrorsAndExceptionsCatalog._602_StoredProdecureNotFound);
-            else if (!storedProcedureOrQuery.StartsWith("U") && type.ToString() == "StoredProcedure")// que no contenga una sentencia
+            else if (!storedProcedureOrQuery.StartsWith("G") && type.ToString() == "StoredProcedure")// que no contenga una sentencia
                 throw new DataAccessException(ErrorsAndExceptionsCatalog._601_Code, ErrorsAndExceptionsCatalog._601_InvalidStoredProcedure);
             if (string.IsNullOrEmpty(storedProcedureOrQuery) && type.ToString() == "Text")
                 throw new DataAccessException(ErrorsAndExceptionsCatalog._604_Code, ErrorsAndExceptionsCatalog._604_QueryNotFound);
