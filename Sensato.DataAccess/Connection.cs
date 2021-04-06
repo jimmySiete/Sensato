@@ -59,7 +59,7 @@ namespace Sensato.DataAccess
             catch (Exception ex)
             {
                 if (dt.Columns.Count == 0)
-                    throw new DataAccessException(ErrorsAndExceptionsCatalog._609_Code,ErrorsAndExceptionsCatalog._609_InvalidDataTable);
+                    throw new DataAccessException(ErrorsAndExceptionsCatalog._609_Code,ErrorsAndExceptionsCatalog._609_InvalidDataTable, ex);
                 else
                     throw ex;
             }

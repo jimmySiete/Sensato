@@ -7,7 +7,7 @@
       <Diagram DiagramId="6fbc1f1bbb944e08be312a43864037d9" Name="Diagram1">
         <EntityTypeShape EntityType="DB_GeneratorModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_GeneratorModel.Tb_Contexts" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DB_GeneratorModel.Tb_Parameters" PointX="7.5" PointY="0.875" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_GeneratorModel.Tb_Parameters" PointX="7.5" PointY="0.875" Width="1.5" IsExpanded="true" FillColor="SteelBlue" />
         <EntityTypeShape EntityType="DB_GeneratorModel.Tb_ResultSetColumns" Width="1.5" PointX="9.75" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DB_GeneratorModel.Tb_ResultSets" Width="1.5" PointX="7.5" PointY="5" IsExpanded="true" />
         <AssociationConnector Association="DB_GeneratorModel.FK__Tb_Result__ID_Re__33D4B598" ManuallyRouted="false" />

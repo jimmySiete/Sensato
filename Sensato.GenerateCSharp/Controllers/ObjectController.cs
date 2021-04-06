@@ -36,14 +36,13 @@ namespace Sensato.GenerateCSharp.Controllers
             Tb_Contexts tb = db.Tb_Contexts.Find(idContext);
             ViewBag.CxtName = tb.ContextName;
             ViewBag.idProject = idProject;
-            //ViewBag.ID_Context = new SelectList(db.Tb_Contexts, "ID_Context", "ContextName");
             return View();
         }
 
         // POST: Object/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID_Object,ID_Context,ObjectName")] Tb_Objects tb_Objects, int idContext)
+        public ActionResult Create([Bind(Include = "ID_Object,ID_Context,ObjectName")] Tb_Objects tb_Objects, int idContext, int idProject)
         {
             if (ModelState.IsValid)
             {
@@ -52,8 +51,15 @@ namespace Sensato.GenerateCSharp.Controllers
                     try
                     {
                         db.Tb_Objects.Add(tb_Objects);
-
+                        //agregar fecha 
                         db.SaveChanges();
+
+                        List<Tb_Parameters> listparams = new List<Tb_Parameters>();
+                        // data accesss
+                        //convierto la dt a lista
+                        // a la lista le agrego el id del object
+                        // agregar a la base de datos
+
                         transaction.Commit();
                         return RedirectToAction("Index");
                     }
@@ -136,17 +142,6 @@ namespace Sensato.GenerateCSharp.Controllers
         [HttpPost]
         public JsonResult GetStoredProceduresFromSysObjects(string txt, int idProject)
         {
-            //string query = @"CREATE PROCEDURE GetStoredProcedures
-            //                AS
-            //                BEGIN
-            //             SET NOCOUNT ON;
-            //             SELECT top 15 name, id
-            //             from sysobjects
-            //             where name like '%'"+ txt +"'%'" +
-            //                "END" + 
-            //                "GO" + 
-            //                "EXECUTE GetStoredProcedure;";
-
             string query = "GetStoredProcedures";
             Tb_Projects tb = db.Tb_Projects.Find(idProject);
             string ConnStr;
@@ -157,16 +152,11 @@ namespace Sensato.GenerateCSharp.Controllers
 
             //Parameters
             List<SqlParameter> listparams = new List<SqlParameter>();
-            listparams.Add(new SqlParameter() { ParameterName = "Connection Test" });
+            listparams.Add(new SqlParameter("txt",txt));
 
             List<SelectListItem> list = new List<SelectListItem>();
 
             DataTable dt = DataAccessADO.GetDataTable(query,CommandType.StoredProcedure,listparams,ConnStr,null);
-
-            //foreach(var item in dt.Rows)
-            //{
-            //    list.Add(new SelectListItem() { Text = item.GetType().Name, Value = item.GetType().Attributes.ToString()});
-            //}
 
             list = dt.AsEnumerable().Select(x => new SelectListItem() { Text = x.Field<string>("name"), Value = x.Field<string>("id") }).ToList();
 

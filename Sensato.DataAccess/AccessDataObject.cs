@@ -30,6 +30,10 @@ namespace Sensato.DataAccess
 
                 return Connection.GetDataTable(cmd);
             }
+            catch(DataAccessException dtEx)
+            {
+                throw new DataAccessException(dtEx.code, dtEx.messageCode, dtEx);
+            }
             catch(Exception ex)
             {
                 DataAccessADO.ParamsAreValid(storedProcedureOrQuery, type, parameters, connStr, transaction);
@@ -129,8 +133,8 @@ namespace Sensato.DataAccess
                 throw new DataAccessException(ErrorsAndExceptionsCatalog._603_Code, ErrorsAndExceptionsCatalog._603_InvalidQuery);
             if (type.ToString().ToLower() != "text" && type.ToString().ToLower() != "storedprocedure")
                 throw new DataAccessException(ErrorsAndExceptionsCatalog._605_Code, ErrorsAndExceptionsCatalog._605_InvalidCommandType);
-            if (parameters.Count == 0)
-                throw new DataAccessException(ErrorsAndExceptionsCatalog._614_Code, ErrorsAndExceptionsCatalog._614_ParametersNotFound);
+            //if (parameters.Count == 0)
+            //    throw new DataAccessException(ErrorsAndExceptionsCatalog._614_Code, ErrorsAndExceptionsCatalog._614_ParametersNotFound);
             if (string.IsNullOrEmpty(connStr))
                 throw new DataAccessException(ErrorsAndExceptionsCatalog._607_Code, ErrorsAndExceptionsCatalog._607_ConnectionStringNotFound);
             else if (!connStr.StartsWith("d")) // deberia ser que empiece con otra que no sea 'd'

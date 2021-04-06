@@ -81,7 +81,6 @@
         highlight: true,
         load: function (query, callback) {
             if (!query.length) return callback();
-            debugger;
             $.ajax({
                 url: '@Url.Action("GetStoredProceduresFromSysObjects", "Object")' ,
                 type: 'POST',
