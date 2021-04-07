@@ -164,6 +164,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DB_GeneratorModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ExtendModel.cs" />
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>DB_GeneratorModel.tt</DependentUpon>
     </Compile>

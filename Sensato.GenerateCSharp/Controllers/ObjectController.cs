@@ -42,32 +42,42 @@ namespace Sensato.GenerateCSharp.Controllers
         // POST: Object/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID_Object,ID_Context,ObjectName")] Tb_Objects tb_Objects, int idContext, int idProject)
+        public ActionResult Create([Bind(Include = "ID_Object,ID_Context,ObjectName, Entity, ObjDescription, ID_AuxObject")] Tb_Objects tb_Objects, int idContext, int idProject)
         {
             if (ModelState.IsValid)
             {
-                using (DbContextTransaction transaction = db.Database.BeginTransaction())
+                try
                 {
-                    try
-                    {
-                        db.Tb_Objects.Add(tb_Objects);
-                        //agregar fecha 
-                        db.SaveChanges();
+                    db.Tb_Objects.Add(tb_Objects);
+                    db.SaveChanges();
 
-                        List<Tb_Parameters> listparams = new List<Tb_Parameters>();
-                        // data accesss
-                        //convierto la dt a lista
-                        // a la lista le agrego el id del object
-                        // agregar a la base de datos
+                    //Connection String:
+                    string ConnStr;
+                    Tb_Projects tb = db.Tb_Projects.Find(idProject);
+                    if (tb.LocalConnection.Value)
+                        ConnStr = string.Format("data source=./;initial catalog={0};integrated security=True;MultipleActiveResultSets=True;App=EntityFramework", tb.ProjectDatabase);
+                    else
+                        ConnStr = string.Format("data source={0};initial catalog={1};persist security info=True;user id={2};password={3};multipleactiveresultsets=True;application name=EntityFramework", tb.Server, tb.ProjectDatabase, tb.ProjectUser, tb.Password); ;
 
-                        transaction.Commit();
-                        return RedirectToAction("Index");
-                    }
-                    catch(Exception ex) 
+                    List<SqlParameter> queryParams = new List<SqlParameter>();
+                    queryParams.Add(new SqlParameter("idObject", tb_Objects.ID_AuxObject));
+
+                    List<Tb_Parameters> listparams = new List<Tb_Parameters>();
+                    DataTable dt = DataAccessADO.GetDataTable("GetParametersFromSP",CommandType.StoredProcedure, queryParams, ConnStr, null);
+
+                    listparams = dt.AsEnumerable().Select(x => new Tb_Parameters() {ParameterName = x.Field<string>("name"), DataType = x.Field<string>("name"), Length = x.Field<int>("max_length"), Presition=x.Field<int>("precision"), Nullable = x.Field<bool>("is_nullable"), IsOut = x.Field<bool>("is_output") }).ToList();
+
+                    for(var i=0; i<listparams.Count; i++) 
                     {
-                        transaction.Rollback();
-                        MessageBox.Show("Error: " + ex.Message);
+                        listparams[i].ID_Object = tb_Objects.ID_Object;
                     }
+                    db.Tb_Parameters.AddRange(listparams);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", new {idContext = idContext, idProject = idProject});
+                }
+                catch(Exception ex) 
+                {
+                    MessageBox.Show("Error: " + ex.Message);
                 }
             }
             ViewBag.ID_Context = new SelectList(db.Tb_Contexts, "ID_Context", "ContextName", tb_Objects.ID_Context);
@@ -94,15 +104,44 @@ namespace Sensato.GenerateCSharp.Controllers
         // POST: Object/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_Object,ID_Context,ObjectName")] Tb_Objects tb_Objects, int idContext)
+        public ActionResult Edit([Bind(Include = "ID_Object,ID_Context,ObjectName,Entity, ObjDescription, ID_AuxObject")] Tb_Objects tb_Objects, int idContext, int idProject)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tb_Objects).State = EntityState.Modified;
-                tb_Objects.ID_Context = idContext;
-                //guardar el ID DE LA CONSULTA A LA TABLA
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.Entry(tb_Objects).State = EntityState.Modified;
+                    tb_Objects.ID_Context = idContext;
+                    db.SaveChanges();
+
+                    string ConnStr;
+                    Tb_Projects tb = db.Tb_Projects.Find(idProject);
+                    if (tb.LocalConnection.Value)
+                        ConnStr = string.Format("data source=./;initial catalog={0};integrated security=True;MultipleActiveResultSets=True;App=EntityFramework", tb.ProjectDatabase);
+                    else
+                        ConnStr = string.Format("data source={0};initial catalog={1};persist security info=True;user id={2};password={3};multipleactiveresultsets=True;application name=EntityFramework", tb.Server, tb.ProjectDatabase, tb.ProjectUser, tb.Password); ;
+
+                    List<SqlParameter> queryParams = new List<SqlParameter>();
+                    queryParams.Add(new SqlParameter("idObject", tb_Objects.ID_AuxObject));
+
+                    List<Tb_Parameters> listparams = new List<Tb_Parameters>();
+                    DataTable dt = DataAccessADO.GetDataTable("GetParametersFromSP", CommandType.StoredProcedure, queryParams, ConnStr, null);
+
+                    listparams = dt.AsEnumerable().Select(x => new Tb_Parameters() { ParameterName = x.Field<string>("name"), DataType = x.Field<string>("name"), Length = x.Field<int>("max_length"), Presition = x.Field<int>("precision"), Nullable = x.Field<bool>("is_nullable"), IsOut = x.Field<bool>("is_output") }).ToList();
+
+                    for (var i = 0; i < listparams.Count; i++)
+                    {
+                        listparams[i].ID_Object = tb_Objects.ID_Object;
+                    }
+                    db.Tb_Parameters.AddRange(listparams);
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
             }
             ViewBag.ID_Context = new SelectList(db.Tb_Contexts, "ID_Context", "ContextName", tb_Objects.ID_Context);
             return View(tb_Objects);
@@ -148,7 +187,7 @@ namespace Sensato.GenerateCSharp.Controllers
             if (tb.LocalConnection.Value)
                 ConnStr = string.Format("data source=./;initial catalog={0};integrated security=True;MultipleActiveResultSets=True;App=EntityFramework", tb.ProjectDatabase);
             else
-                ConnStr = string.Format("data source={0};initial catalog={1};persist security info=True;user id={2};password={3};multipleactiveresultsets=True;application name=EntityFramework", tb.Server, tb.ProjectDatabase, tb.ProjectUser, tb.Password); ;
+                ConnStr = string.Format("data source={0};initial catalog={1};persist security info=True;user id={2};password={3};multipleactiveresultsets=True;application name=EntityFramework", tb.Server, tb.ProjectDatabase, tb.ProjectUser, tb.Password);
 
             //Parameters
             List<SqlParameter> listparams = new List<SqlParameter>();

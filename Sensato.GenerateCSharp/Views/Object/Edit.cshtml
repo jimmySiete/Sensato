@@ -16,14 +16,14 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.ID_Object)
     @Html.HiddenFor(model => model.ID_Context, new { Value = ViewBag.idContext })
+    <input type="hidden" id="ID_AuxObject" name="ID_AuxObject">
 
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.ID_Context, "ID_Context", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ID_Context", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ID_Context, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+    <div class="form-group">
+        @Html.Label("Buscar Procedimiento Almacenado", htmlAttributes: new { @class = "control-label col-md-4", @style = "align: center;" })
+        <div id="the-basics" class="col-md-10">
+            <input id="ddObject" class="form-control selector" type="text">
+        </div>
+    </div>
 
     <div class="form-group">
         @Html.Label(Sensato.GenerateCSharp.GlobalCode.Resources.ObjectName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -36,7 +36,7 @@
     <div class="form-group">
         @Html.Label(Sensato.GenerateCSharp.GlobalCode.Resources.ObjDescription, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.ObjDescription, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.ObjDescription, "ObjDescription", new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.ObjDescription, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -44,7 +44,7 @@
     <div class="form-group">
         @Html.Label(Sensato.GenerateCSharp.GlobalCode.Resources.Entity, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Entity, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Entity, "Entity", new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Entity, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -65,13 +65,45 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript">
+<script type="text/javascript">
         $(document).ready(function () {
-
+            $('#ddObject').change(function () {
+                debugger;
+                $('#ID_AuxObject').val($(this).val());
+            });
         });
 
         function GoToContexts(idProject) {
             window.location.href = "@Url.Action("Index", "Context")?ID_Project=" + idProject;
         }
-    </script>
+
+        IDStoredProcedure = $('.selector').selectize({
+            maxItems: 1,
+            valueField: 'Value',
+            labelField: 'Text',
+            searchField: 'Text',
+            //options: [],
+            create: false,
+            highlight: true,
+            load: function (query, callback) {
+            if (!query.length) return callback();
+            $.ajax({
+                url: '@Url.Action("GetStoredProceduresFromSysObjects", "Object")' ,
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    txt: query,
+                    idProject: '@ViewBag.idProject'
+                },
+                error: function (e) {
+                    callback();
+                },
+                success: function (res) {
+                    callback(res);
+                    }
+                });
+            }
+        });
+
+</script>
 }

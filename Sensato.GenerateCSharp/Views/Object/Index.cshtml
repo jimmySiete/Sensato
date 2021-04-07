@@ -25,13 +25,13 @@
     {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.ID_Object)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.ObjectName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ID_SysObject)
-            </td>
-            <td>
-                @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Edit, "Edit", new { id = item.ID_Object }) |
+                @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Edit, "Edit", new { id = item.ID_Object, item.Tb_Contexts.ID_Project }) |
                 @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Delete, "Delete", new { id = item.ID_Object })
             </td>
         </tr>
