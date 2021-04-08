@@ -4,13 +4,13 @@
     ViewBag.Title = "Index";
 }
 
-<h2 style="color:darkgreen;">Listado de Parámetros</h2>
-
+<h2 style="color:indigo;">@ViewBag.ObjName</h2>
+<h3>Listado de Parámetros</h3>
 <p>
-    @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.CreateNew, "Create", null, new { @class = "btn btn-warning" }))
+    @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.CreateNew, "Create", null, new { @class = "btn btn-warning" })
 </p>
 <table class="table table-bordered table-condensed">
-    <tr style="background-color:gold">
+    <tr style="background-color:mediumorchid; color:white;">
         <th>
             @Html.DisplayName(Sensato.GenerateCSharp.GlobalCode.Resources.ParameterName)
         </th>
@@ -29,36 +29,53 @@
         <th>
             @Html.DisplayName(Sensato.GenerateCSharp.GlobalCode.Resources.IsOut)
         </th>
-        <th>
-            Acciones
-        </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ParameterName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Length)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Presition)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nullable)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsOut)
-        </td>
-        <td>
-            @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Edit, "Edit", new { id=item.ID_Parameter }) |
-            @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Edit, "Delete", new { id=item.ID_Parameter })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ParameterName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Length)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Presition)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nullable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsOut)
+            </td>
+        </tr>
+    }
 
 </table>
+
+<div>
+    <button type="button" class="btn-link" onclick="GoToObjects(@ViewBag.idObject)">@Sensato.GenerateCSharp.GlobalCode.Resources.BackToListO</button>
+    <hr />
+    <button type="button" class="btn-link" onclick="GoToContext(@ViewBag.idContext)">@Sensato.GenerateCSharp.GlobalCode.Resources.BackToListC</button>
+</div>
+
+@section scripts
+    {
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+
+        function GoToObjects(idObject) {
+            window.location.href = "@Url.Action("Index", "Object")?idObject=" + idObject;
+        }
+
+        function GoToContext(idContext) {
+            window.location.href = "@Url.Action("Index", "Context")?idContext=" + idContext;
+        }
+
+    </script>
+}
