@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpgradedGrid\JsonParams.cs" />
     <Compile Include="UpgradedGrid\TestController.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -4,33 +4,30 @@
     ViewBag.Title = "Index";
 }
 
-<h2 style="color: darkcyan;">Listado de Parámetros</h2>
+<h2 style="color:darkgreen;">Listado de Parámetros</h2>
 
 <p>
-    @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.CreateNew, "Create")
+    @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.CreateNew, "Create", null, new { @class = "btn btn-warning" }))
 </p>
-<table class="table">
-    <tr>
+<table class="table table-bordered table-condensed">
+    <tr style="background-color:gold">
         <th>
-            @Html.DisplayName("Nombre del Parámetro")
+            @Html.DisplayName(Sensato.GenerateCSharp.GlobalCode.Resources.ParameterName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DataType)
+            @Html.DisplayName(Sensato.GenerateCSharp.GlobalCode.Resources.DataType)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Length)
+            @Html.DisplayName(Sensato.GenerateCSharp.GlobalCode.Resources.Length)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Presition)
+            @Html.DisplayName(Sensato.GenerateCSharp.GlobalCode.Resources.Presition)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Nullable)
+            @Html.DisplayName(Sensato.GenerateCSharp.GlobalCode.Resources.Nullable)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IsOut)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Tb_Objects.ObjectName)
+            @Html.DisplayName(Sensato.GenerateCSharp.GlobalCode.Resources.IsOut)
         </th>
         <th>
             Acciones
@@ -56,9 +53,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IsOut)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Tb_Objects.ObjectName)
         </td>
         <td>
             @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Edit, "Edit", new { id=item.ID_Parameter }) |

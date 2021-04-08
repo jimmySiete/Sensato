@@ -135,6 +135,9 @@
   <data name="CreationDate" xml:space="preserve">
     <value>Fecha de Creación</value>
   </data>
+  <data name="DataType" xml:space="preserve">
+    <value>Tipo de Dato</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Eliminar</value>
   </data>
@@ -153,11 +156,23 @@
   <data name="ID_Object" xml:space="preserve">
     <value>ID Objeto</value>
   </data>
+  <data name="ID_Parameter" xml:space="preserve">
+    <value>ID Parámetro</value>
+  </data>
   <data name="ID_Project" xml:space="preserve">
     <value>ID Proyecto</value>
   </data>
+  <data name="IsOut" xml:space="preserve">
+    <value>De Salida</value>
+  </data>
+  <data name="Length" xml:space="preserve">
+    <value>Longitud</value>
+  </data>
   <data name="LocalConnection" xml:space="preserve">
     <value>Conexión Local (?)</value>
+  </data>
+  <data name="Nullable" xml:space="preserve">
+    <value>Campo Nuleable</value>
   </data>
   <data name="ObjDescription" xml:space="preserve">
     <value>Descripción</value>
@@ -165,8 +180,14 @@
   <data name="ObjectName" xml:space="preserve">
     <value>Nombre Objeto</value>
   </data>
+  <data name="ParameterName" xml:space="preserve">
+    <value>Nombre Parámetro</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Contraseña</value>
+  </data>
+  <data name="Presition" xml:space="preserve">
+    <value>Precisión</value>
   </data>
   <data name="ProjectDatabase" xml:space="preserve">
     <value>Base de Datos</value>

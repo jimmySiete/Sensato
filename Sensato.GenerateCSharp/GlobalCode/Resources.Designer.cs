@@ -115,6 +115,15 @@ namespace Sensato.GenerateCSharp.GlobalCode {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tipo de Dato.
+        /// </summary>
+        public static string DataType {
+            get {
+                return ResourceManager.GetString("DataType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Eliminar.
         /// </summary>
         public static string Delete {
@@ -169,6 +178,15 @@ namespace Sensato.GenerateCSharp.GlobalCode {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ID Parámetro.
+        /// </summary>
+        public static string ID_Parameter {
+            get {
+                return ResourceManager.GetString("ID_Parameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ID Proyecto.
         /// </summary>
         public static string ID_Project {
@@ -178,11 +196,38 @@ namespace Sensato.GenerateCSharp.GlobalCode {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to De Salida.
+        /// </summary>
+        public static string IsOut {
+            get {
+                return ResourceManager.GetString("IsOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitud.
+        /// </summary>
+        public static string Length {
+            get {
+                return ResourceManager.GetString("Length", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Conexión Local (?).
         /// </summary>
         public static string LocalConnection {
             get {
                 return ResourceManager.GetString("LocalConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Campo Nuleable.
+        /// </summary>
+        public static string Nullable {
+            get {
+                return ResourceManager.GetString("Nullable", resourceCulture);
             }
         }
         
@@ -205,11 +250,29 @@ namespace Sensato.GenerateCSharp.GlobalCode {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nombre Parámetro.
+        /// </summary>
+        public static string ParameterName {
+            get {
+                return ResourceManager.GetString("ParameterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contraseña.
         /// </summary>
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Precisión.
+        /// </summary>
+        public static string Presition {
+            get {
+                return ResourceManager.GetString("Presition", resourceCulture);
             }
         }
         
