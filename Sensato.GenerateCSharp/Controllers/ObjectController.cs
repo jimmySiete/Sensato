@@ -157,7 +157,7 @@ namespace Sensato.GenerateCSharp.Controllers
         }
 
         // GET: Object/Delete/5
-        public ActionResult Delete(int? id, int idContext)
+        public ActionResult Delete(int? id, int idContext, int idProject)
         {
             if (id == null)
             {
@@ -170,7 +170,7 @@ namespace Sensato.GenerateCSharp.Controllers
             }
             Tb_Contexts tb = db.Tb_Contexts.Find(idContext);
             ViewBag.CxtName = tb.ContextName;
-            ViewBag.idProject = tb.Tb_Projects.ID_Project;
+            ViewBag.idProject = idProject;
             ViewBag.idContext = idContext;
             return View(tb_Objects);
         }
@@ -178,7 +178,7 @@ namespace Sensato.GenerateCSharp.Controllers
         // POST: Object/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, int idContext, int idProject)
         {
             //List<Tb_Parameters> tbParameters = db.Tb_Parameters.Where(x => x.ID_Object == id).ToList();
             List<Tb_Parameters> tb_Parameters = new List<Tb_Parameters>();
@@ -193,7 +193,7 @@ namespace Sensato.GenerateCSharp.Controllers
 
             db.Tb_Objects.Remove(tb_Objects);
             db.SaveChanges();
-            return RedirectToAction("Index", new { idContext = tb_Objects.ID_Context, idProject = tb_Objects.Tb_Contexts.ID_Project });
+            return RedirectToAction("Index", new { idContext = idContext, idProject = idProject });
         }
 
         // Metodo para obtener los ID's de la tabla sysobjects

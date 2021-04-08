@@ -31,8 +31,9 @@
                 @Html.DisplayFor(modelItem => item.ObjectName)
             </td>
             <td>
-                @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Edit, "Edit", new { id = item.ID_Object,ViewBag.idContext,ViewBag.idProject }) |
-                @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Delete, "Delete", new { id = item.ID_Object, ViewBag.idContext })
+                @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Edit, "Edit", new { id = item.ID_Object, ViewBag.idContext, ViewBag.idProject }) |
+                @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Delete, "Delete", new { id = item.ID_Object, ViewBag.idContext, ViewBag.idProject }) |
+                <button type="button" class="btn-link" onclick="ShowParameters(@item.ID_Object)">Ver Parámetros</button>
             </td>
         </tr>
     }
@@ -57,6 +58,11 @@
 
         function GoToIndex(idProject) {
             window.location.href = "@Url.Action("Index", "Context")?ID_Project=" + idProject;
+        }
+
+        function ShowParameters(idObject) {
+            debugger;
+            window.location.href = "@Url.Action("Index", "Parameters")?idObject=" + idObject;
         }
 
     </script>

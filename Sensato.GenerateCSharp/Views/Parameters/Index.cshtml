@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Sensato.GenerateCSharp.Models.Tb_Parameters>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 style="color: darkcyan;">Listado de Parámetros</h2>
+
+<p>
+    @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.CreateNew, "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Nombre del Parámetro")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Length)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Presition)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nullable)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsOut)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tb_Objects.ObjectName)
+        </th>
+        <th>
+            Acciones
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ParameterName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Length)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Presition)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nullable)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsOut)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tb_Objects.ObjectName)
+        </td>
+        <td>
+            @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Edit, "Edit", new { id=item.ID_Parameter }) |
+            @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Edit, "Delete", new { id=item.ID_Parameter })
+        </td>
+    </tr>
+}
+
+</table>

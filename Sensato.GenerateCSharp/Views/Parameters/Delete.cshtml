@@ -1,0 +1,80 @@
+﻿@model Sensato.GenerateCSharp.Models.Tb_Parameters
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Tb_Parameters</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ParameterName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ParameterName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Length)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Length)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Presition)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Presition)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nullable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nullable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsOut)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsOut)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tb_Objects.ObjectName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tb_Objects.ObjectName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
