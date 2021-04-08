@@ -85,7 +85,7 @@ namespace Sensato.GenerateCSharp.Controllers
         }
 
         // GET: Object/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id,int idContext, int idProject)
         {
             if (id == null)
             {
@@ -96,7 +96,8 @@ namespace Sensato.GenerateCSharp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ID_Context = new SelectList(db.Tb_Contexts, "ID_Context", "ContextName", tb_Objects.ID_Context);
+            ViewBag.idProject = idProject;
+            ViewBag.idContext = idContext;
             ViewBag.CxtName = tb_Objects.Tb_Contexts.ContextName;
             return View(tb_Objects);
         }
@@ -104,15 +105,23 @@ namespace Sensato.GenerateCSharp.Controllers
         // POST: Object/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_Object,ID_Context,ObjectName,Entity, ObjDescription, ID_AuxObject")] Tb_Objects tb_Objects, int idContext, int idProject)
+        public ActionResult Edit([Bind(Include = "ID_Object,ID_Context,ObjectName,Entity,ObjDescription,ID_AuxObject")] Tb_Objects tb_Objects, int idProject)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
                     db.Entry(tb_Objects).State = EntityState.Modified;
-                    tb_Objects.ID_Context = idContext;
                     db.SaveChanges();
+
+
+                    //Eliminamos de la base de datos los parametros agregados con anterioridad
+                    List<Tb_Parameters> tbParameters = db.Tb_Parameters.Where(x => x.ID_Object == tb_Objects.ID_Object).ToList();
+                    if (tbParameters.Count>0)
+                    {
+                        db.Tb_Parameters.RemoveRange(tbParameters);
+                        db.SaveChanges();
+                    }
 
                     string ConnStr;
                     Tb_Projects tb = db.Tb_Projects.Find(idProject);
@@ -136,7 +145,7 @@ namespace Sensato.GenerateCSharp.Controllers
                     db.Tb_Parameters.AddRange(listparams);
                     db.SaveChanges();
 
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { idContext = tb_Objects.ID_Context, idProject = idProject });
                 }
                 catch (Exception ex)
                 {
@@ -148,7 +157,7 @@ namespace Sensato.GenerateCSharp.Controllers
         }
 
         // GET: Object/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, int idContext)
         {
             if (id == null)
             {
@@ -159,10 +168,10 @@ namespace Sensato.GenerateCSharp.Controllers
             {
                 return HttpNotFound();
             }
-            Tb_Contexts tb = db.Tb_Contexts.Find(id);
+            Tb_Contexts tb = db.Tb_Contexts.Find(idContext);
             ViewBag.CxtName = tb.ContextName;
             ViewBag.idProject = tb.Tb_Projects.ID_Project;
-            ViewBag.idContext = tb.ID_Context;
+            ViewBag.idContext = idContext;
             return View(tb_Objects);
         }
 
@@ -171,10 +180,20 @@ namespace Sensato.GenerateCSharp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            //List<Tb_Parameters> tbParameters = db.Tb_Parameters.Where(x => x.ID_Object == id).ToList();
+            List<Tb_Parameters> tb_Parameters = new List<Tb_Parameters>();
+            
             Tb_Objects tb_Objects = db.Tb_Objects.Find(id);
+            if (tb_Objects.Tb_Parameters.Any())
+            {
+                tb_Parameters = db.Tb_Parameters.Where(x => x.ID_Object == id).ToList();
+                db.Tb_Parameters.RemoveRange(tb_Parameters);
+                db.SaveChanges();
+            }
+
             db.Tb_Objects.Remove(tb_Objects);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { idContext = tb_Objects.ID_Context, idProject = tb_Objects.Tb_Contexts.ID_Project });
         }
 
         // Metodo para obtener los ID's de la tabla sysobjects

@@ -58,7 +58,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Eliminar" class="btn btn-danger" /> |
-            @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.BackToListO, "Index", new { ViewBag.idContext })
+            @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.BackToListO, "Index", new { ViewBag.idContext, ViewBag.idProject })
             <hr />
             <button type="button" class="btn-link" onclick="GoToIndex(@ViewBag.idProject)">@Sensato.GenerateCSharp.GlobalCode.Resources.BackToListC</button>
         </div>

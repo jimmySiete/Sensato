@@ -58,9 +58,9 @@
 }
 
 <div>
-    @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.BackToListO, "Index", new { ViewBag.idContext })
+    @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.BackToListO, "Index", new { ViewBag.idContext, ViewBag.idProject })
     <hr />
-    <button type="button" class="btn-link" onclick="GoToContexts(@ViewBag.id_project)">@Sensato.GenerateCSharp.GlobalCode.Resources.BackToListC</button>
+    <button type="button" class="btn-link" onclick="GoToContexts(@ViewBag.idProject)">@Sensato.GenerateCSharp.GlobalCode.Resources.BackToListC</button>
 </div>
 
 @section Scripts {
@@ -86,8 +86,8 @@
             create: false,
             highlight: true,
             load: function (query, callback) {
-            if (!query.length) return callback();
-            $.ajax({
+                if (!query.length) return callback();
+                $.ajax({
                 url: '@Url.Action("GetStoredProceduresFromSysObjects", "Object")' ,
                 type: 'POST',
                 dataType: 'json',
