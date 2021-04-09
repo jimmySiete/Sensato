@@ -142,6 +142,7 @@
     <Compile Include="Controllers\ObjectController.cs" />
     <Compile Include="Controllers\ParametersController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\ResultSetsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -267,18 +268,16 @@
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Context\Create.cshtml" />
     <Content Include="Views\Context\Delete.cshtml" />
-    <Content Include="Views\Context\Details.cshtml" />
     <Content Include="Views\Context\Edit.cshtml" />
     <Content Include="Views\Context\Index.cshtml" />
     <Content Include="Views\Object\Create.cshtml" />
     <Content Include="Views\Object\Delete.cshtml" />
     <Content Include="Views\Object\Edit.cshtml" />
     <Content Include="Views\Object\Index.cshtml" />
-    <Content Include="Views\Parameters\Create.cshtml" />
-    <Content Include="Views\Parameters\Delete.cshtml" />
-    <Content Include="Views\Parameters\Details.cshtml" />
-    <Content Include="Views\Parameters\Edit.cshtml" />
     <Content Include="Views\Parameters\Index.cshtml" />
+    <Content Include="Views\ResultSets\Details.cshtml" />
+    <Content Include="Views\ResultSets\Edit.cshtml" />
+    <Content Include="Views\ResultSets\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

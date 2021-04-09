@@ -1,0 +1,34 @@
+﻿@model Sensato.GenerateCSharp.Models.Tb_ResultSets
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tb_ResultSets</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ResultSetName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResultSetName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tb_Objects.ObjectName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tb_Objects.ObjectName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_ResultSet }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -17,7 +17,7 @@ namespace Sensato.GenerateCSharp.Controllers
         //recibir el nombre del objeto
         //con dataAccess ejecuto el SP que seleccioné en la vista
         // se almacena en un DS, se itera cada DT, y dentro de este se itera con data column
-        // resultName usar un consecutivo p/e: SET1, SET2, etc.
+        // resultName usar un consecutivo p/e: SET1, SET2, etc. PUEDE SER MODIFICABLE EL NOMBRE (COLOCAR LA FUNCIONALIDAD)
         // alamaceno el RS, dentro de data column usar parameter name y con ese lleno en la BD
     }
 }

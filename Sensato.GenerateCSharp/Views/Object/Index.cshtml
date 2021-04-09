@@ -33,7 +33,8 @@
             <td>
                 @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Edit, "Edit", new { id = item.ID_Object, ViewBag.idContext, ViewBag.idProject }) |
                 @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Delete, "Delete", new { id = item.ID_Object, ViewBag.idContext, ViewBag.idProject }) |
-                <button type="button" class="btn-link" onclick="ShowParameters(@item.ID_Object)">Ver Parámetros</button>
+                <button type="button" class="btn-link" onclick="ShowParameters(@item.ID_Object, @ViewBag.idContext, @ViewBag.idProject)">Ver Parámetros</button> |
+                <button type="button" class="btn-link" onclick="ShowResultSets(@item.ID_Object,@ViewBag.idContext, @ViewBag.idProject)">Ver Colección de Resultados</button>
             </td>
         </tr>
     }
@@ -60,8 +61,12 @@
             window.location.href = "@Url.Action("Index", "Context")?ID_Project=" + idProject;
         }
 
-        function ShowParameters(idObject) {
-            window.location.href = "@Url.Action("Index", "Parameters")?idObject=" + idObject;
+        function ShowParameters(idObject, idContext, idProject) {
+            window.location.href = "@Url.Action("Index", "Parameters")?idObject=" + idObject + "&idContext=" + idContext + "&idProject=" + idProject;
+        }
+
+        function ShowDataResultSets(idObject, idContext, idProject) {
+            window.location.href = "@Url.Action("Index","ResultSets")?idObject=" + idObject + "&idContext=" + idContext + "&idProject=" + idProject;
         }
 
     </script>

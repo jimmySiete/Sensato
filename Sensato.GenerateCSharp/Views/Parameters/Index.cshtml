@@ -6,9 +6,7 @@
 
 <h2 style="color:indigo;">@ViewBag.ObjName</h2>
 <h3>Listado de Parámetros</h3>
-<p>
-    @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.CreateNew, "Create", null, new { @class = "btn btn-warning" })
-</p>
+
 <table class="table table-bordered table-condensed">
     <tr style="background-color:mediumorchid; color:white;">
         <th>
@@ -58,9 +56,9 @@
 </table>
 
 <div>
-    <button type="button" class="btn-link" onclick="GoToObjects(@ViewBag.idObject)">@Sensato.GenerateCSharp.GlobalCode.Resources.BackToListO</button>
+    <button type="button" class="btn-link" onclick="GoToObjects(@ViewBag.idContext, @ViewBag.idProject)">@Sensato.GenerateCSharp.GlobalCode.Resources.BackToListO</button>
     <hr />
-    <button type="button" class="btn-link" onclick="GoToContext(@ViewBag.idContext)">@Sensato.GenerateCSharp.GlobalCode.Resources.BackToListC</button>
+    <button type="button" class="btn-link" onclick="GoToContext(@ViewBag.idProject)">@Sensato.GenerateCSharp.GlobalCode.Resources.BackToListC</button>
 </div>
 
 @section scripts
@@ -69,12 +67,12 @@
         $(document).ready(function () {
         });
 
-        function GoToObjects(idObject) {
-            window.location.href = "@Url.Action("Index", "Object")?idObject=" + idObject;
+        function GoToObjects(idContext, idProject) {
+            window.location.href = "@Url.Action("Index", "Object")?idContext=" + idContext + "&idProject=" + idProject;
         }
 
-        function GoToContext(idContext) {
-            window.location.href = "@Url.Action("Index", "Context")?idContext=" + idContext;
+        function GoToContext(idProject) {
+            window.location.href = "@Url.Action("Index", "Context")?ID_Project=" + idProject;
         }
 
     </script>

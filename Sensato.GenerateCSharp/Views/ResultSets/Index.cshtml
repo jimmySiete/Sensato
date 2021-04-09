@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Sensato.GenerateCSharp.Models.Tb_ResultSets>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ResultSetName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tb_Objects.ObjectName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ResultSetName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tb_Objects.ObjectName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID_ResultSet }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID_ResultSet }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID_ResultSet })
+        </td>
+    </tr>
+}
+
+</table>
