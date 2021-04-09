@@ -12,10 +12,8 @@ using Sensato.GenerateCSharp.GlobalCode;
 
 namespace Sensato.GenerateCSharp.Controllers
 {
-    public class ContextController : Controller
+    public class ContextController : BaseController
     {
-        private DB_GeneratorEntities db = new DB_GeneratorEntities();
-
         // GET: Context
         public ActionResult Index(int ID_Project)
         {

@@ -162,6 +162,12 @@
   <data name="ID_Project" xml:space="preserve">
     <value>ID Proyecto</value>
   </data>
+  <data name="ID_ResultSet" xml:space="preserve">
+    <value>ID Result Set</value>
+  </data>
+  <data name="ID_ResultSetColumn" xml:space="preserve">
+    <value>ID Columna RS</value>
+  </data>
   <data name="IsOut" xml:space="preserve">
     <value>De Salida</value>
   </data>
@@ -197,6 +203,9 @@
   </data>
   <data name="ProjectUser" xml:space="preserve">
     <value>Usuario</value>
+  </data>
+  <data name="ResultSetName" xml:space="preserve">
+    <value>Nombre Result Set</value>
   </data>
   <data name="Server" xml:space="preserve">
     <value>Servidor</value>

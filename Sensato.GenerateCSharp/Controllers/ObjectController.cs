@@ -14,10 +14,8 @@ using Sensato.DataAccess;
 
 namespace Sensato.GenerateCSharp.Controllers
 {
-    public class ObjectController : Controller
+    public class ObjectController : BaseController
     {
-        private DB_GeneratorEntities db = new DB_GeneratorEntities();
-
         // GET: Object
         public ActionResult Index(int idContext, int idProject)
         {
@@ -42,12 +40,14 @@ namespace Sensato.GenerateCSharp.Controllers
         // POST: Object/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID_Object,ID_Context,ObjectName, Entity, ObjDescription, ID_AuxObject")] Tb_Objects tb_Objects, int idContext, int idProject)
+        public ActionResult Create([Bind(Include = "ID_Object,ID_Context,ObjectName, Entity, ObjDescription, ID_AuxObject, AuxNameObject")] Tb_Objects tb_Objects, int idContext, int idProject)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
+                    tb_Objects.ID_SysObject = tb_Objects.ID_AuxObject;
+                    tb_Objects.Sys_ObjectName = tb_Objects.AuxNameObject;
                     db.Tb_Objects.Add(tb_Objects);
                     db.SaveChanges();
 
@@ -73,6 +73,9 @@ namespace Sensato.GenerateCSharp.Controllers
                     }
                     db.Tb_Parameters.AddRange(listparams);
                     db.SaveChanges();
+
+                    //Llamamos al metodo para almacenar los RS y las RSC
+                    GetResultSet(tb_Objects.AuxNameObject, ConnStr);
                     return RedirectToAction("Index", new {idContext = idContext, idProject = idProject});
                 }
                 catch(Exception ex) 

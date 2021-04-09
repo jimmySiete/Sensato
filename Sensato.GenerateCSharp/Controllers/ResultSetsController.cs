@@ -19,14 +19,15 @@ namespace Sensato.GenerateCSharp.Controllers
         {
             Tb_Objects tbO = db.Tb_Objects.Find(idObject);
             ViewBag.ObjName = tbO.ObjectName;
+            ViewBag.idObject = idObject;
             ViewBag.idContext = idContext;
             ViewBag.idProject = idProject;
             var tb_ResultSets = db.Tb_ResultSets.Include(t => t.Tb_Objects);
-            return View(tb_ResultSets.ToList());
+            return View(tb_ResultSets.Where(x=>x.ID_Object == idObject).ToList());
         }
 
         // GET: ResultSets/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, int idObject, int idContext)
         {
             if (id == null)
             {
@@ -37,6 +38,9 @@ namespace Sensato.GenerateCSharp.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.idObject = idObject;
+            ViewBag.idContext = idContext;
+            ViewBag.objName = db.Tb_Objects.Where(x => x.ID_Object == idObject).Select(x => x.ObjectName);
             ViewBag.ID_Object = new SelectList(db.Tb_Objects, "ID_Object", "ObjectName", tb_ResultSets.ID_Object);
             return View(tb_ResultSets);
         }

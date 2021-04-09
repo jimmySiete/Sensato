@@ -13,7 +13,7 @@
         <AssociationConnector Association="DB_GeneratorModel.FK__Tb_Result__ID_Re__33D4B598" ManuallyRouted="false" />
         <EntityTypeShape EntityType="DB_GeneratorModel.Tb_Projects" Width="1.5" PointX="0.75" PointY="2.75" />
         <AssociationConnector Association="DB_GeneratorModel.FK__Tb_Contex__ID_Pr__300424B4" />
-        <EntityTypeShape EntityType="DB_GeneratorModel.Tb_Objects" Width="1.5" PointX="5.25" PointY="2.875" />
+        <EntityTypeShape EntityType="DB_GeneratorModel.Tb_Objects" Width="1.5" PointX="5.25" PointY="2.75" />
         <AssociationConnector Association="DB_GeneratorModel.FK__Tb_Object__ID_Co__30F848ED" />
         <AssociationConnector Association="DB_GeneratorModel.FK__Tb_Parame__ID_Ob__31EC6D26" />
         <AssociationConnector Association="DB_GeneratorModel.FK__Tb_Result__ID_Ob__32E0915F" />

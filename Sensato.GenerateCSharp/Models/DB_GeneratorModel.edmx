@@ -34,6 +34,7 @@
           <Property Name="ID_SysObject" Type="bigint" Nullable="false" />
           <Property Name="ObjDescription" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Entity" Type="varchar" MaxLength="200" />
+          <Property Name="Sys_ObjectName" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="Tb_Parameters">
           <Key>
@@ -275,7 +276,7 @@
             <End Role="Tb_Objects" EntitySet="Tb_Objects" />
             <End Role="Tb_ResultSets" EntitySet="Tb_ResultSets" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Tb_Projects">
           <Key>
             <PropertyRef Name="ID_Project" />
@@ -313,6 +314,7 @@
           <Property Name="ID_SysObject" Type="Int64" Nullable="false" />
           <Property Name="ObjDescription" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Entity" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Sys_ObjectName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Tb_Contexts" Relationship="DB_GeneratorModel.FK__Tb_Object__ID_Co__30F848ED" FromRole="Tb_Objects" ToRole="Tb_Contexts" />
           <NavigationProperty Name="Tb_Parameters" Relationship="DB_GeneratorModel.FK__Tb_Parame__ID_Ob__31EC6D26" FromRole="Tb_Objects" ToRole="Tb_Parameters" />
           <NavigationProperty Name="Tb_ResultSets" Relationship="DB_GeneratorModel.FK__Tb_Result__ID_Ob__32E0915F" FromRole="Tb_Objects" ToRole="Tb_ResultSets" />
@@ -353,7 +355,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -435,6 +437,7 @@
           <EntitySetMapping Name="Tb_Objects">
             <EntityTypeMapping TypeName="DB_GeneratorModel.Tb_Objects">
               <MappingFragment StoreEntitySet="Tb_Objects">
+                <ScalarProperty Name="Sys_ObjectName" ColumnName="Sys_ObjectName" />
                 <ScalarProperty Name="Entity" ColumnName="Entity" />
                 <ScalarProperty Name="ObjDescription" ColumnName="ObjDescription" />
                 <ScalarProperty Name="ID_SysObject" ColumnName="ID_SysObject" />

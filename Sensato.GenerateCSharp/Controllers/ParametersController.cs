@@ -10,10 +10,8 @@ using Sensato.GenerateCSharp.Models;
 
 namespace Sensato.GenerateCSharp.Controllers
 {
-    public class ParametersController : Controller
+    public class ParametersController : BaseController
     {
-        private DB_GeneratorEntities db = new DB_GeneratorEntities();
-
         // GET: Parameters
         public ActionResult Index(int idObject, int idContext, int idProject)
         {

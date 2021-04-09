@@ -196,6 +196,24 @@ namespace Sensato.GenerateCSharp.GlobalCode {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ID Result Set.
+        /// </summary>
+        public static string ID_ResultSet {
+            get {
+                return ResourceManager.GetString("ID_ResultSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID Columna RS.
+        /// </summary>
+        public static string ID_ResultSetColumn {
+            get {
+                return ResourceManager.GetString("ID_ResultSetColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to De Salida.
         /// </summary>
         public static string IsOut {
@@ -300,6 +318,15 @@ namespace Sensato.GenerateCSharp.GlobalCode {
         public static string ProjectUser {
             get {
                 return ResourceManager.GetString("ProjectUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nombre Result Set.
+        /// </summary>
+        public static string ResultSetName {
+            get {
+                return ResourceManager.GetString("ResultSetName", resourceCulture);
             }
         }
         

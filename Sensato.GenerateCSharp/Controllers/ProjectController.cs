@@ -13,10 +13,8 @@ using Sensato.GenerateCSharp.Models;
 
 namespace Sensato.GenerateCSharp.Controllers
 {
-    public class ProjectController : Controller
+    public class ProjectController : BaseController
     {
-        private DB_GeneratorEntities db = new DB_GeneratorEntities();
-
         // GET: Project
         public ActionResult Index()
         {

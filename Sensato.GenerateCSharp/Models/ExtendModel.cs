@@ -12,5 +12,6 @@ namespace Sensato.GenerateCSharp.Models
     public partial class Tb_Objects 
     { 
         public Int32 ID_AuxObject { get; set; }
+        public string AuxNameObject { get; set; }
     }
 }

@@ -16,11 +16,12 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.ID_Context, new { Value = ViewBag.idContext })
     <input type="hidden" id="ID_AuxObject" name="ID_AuxObject">
+    <input type="hidden" id="AuxNameObject" name="AuxNameObject">
 
     <div class="form-group">
         @Html.Label("Buscar Stored Procedure", htmlAttributes: new { @class = "control-label col-md-4", @style="align: center;" })
         <div id="the-basics" class="col-md-10">
-            <input id="ddObject" class="form-control selector" type="text" >
+            <select id="ddObject" class="form-control selector" type="text" ></select>
         </div>
     </div>
     
@@ -69,6 +70,7 @@
             $('#ddObject').change(function () {
                 debugger;
                 $('#ID_AuxObject').val($(this).val());
+                $('#AuxNameObject').val($('#ddObject option:selected').text());
             });
         });
 
