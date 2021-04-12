@@ -65,7 +65,7 @@ namespace Sensato.GenerateCSharp.Controllers
                     List<Tb_Parameters> listparams = new List<Tb_Parameters>();
                     DataTable dt = DataAccessADO.GetDataTable("GetParametersFromSP",CommandType.StoredProcedure, queryParams, ConnStr, null);
 
-                    listparams = dt.AsEnumerable().Select(x => new Tb_Parameters() {ParameterName = x.Field<string>("name"), DataType = x.Field<string>("name"), Length = x.Field<int>("max_length"), Presition=x.Field<int>("precision"), Nullable = x.Field<bool>("is_nullable"), IsOut = x.Field<bool>("is_output") }).ToList();
+                    listparams = dt.AsEnumerable().Select(x => new Tb_Parameters() {ParameterName = x.Field<string>("name"), DataType = x.Field<string>("dataT"), Length = x.Field<int>("max_length"), Presition=x.Field<int>("precision"), Nullable = x.Field<bool>("is_nullable"), IsOut = x.Field<bool>("is_output") }).ToList();
 
                     for(var i=0; i<listparams.Count; i++) 
                     {
@@ -75,12 +75,12 @@ namespace Sensato.GenerateCSharp.Controllers
                     db.SaveChanges();
 
                     //Llamamos al metodo para almacenar los RS y las RSC
-                    GetResultSet(tb_Objects.AuxNameObject, ConnStr);
+                    GetResultSet(tb_Objects.AuxNameObject, ConnStr, tb_Objects.ID_Object, queryParams);
                     return RedirectToAction("Index", new {idContext = idContext, idProject = idProject});
                 }
                 catch(Exception ex) 
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    MessageBox.Show("Error: " + ex);
                 }
             }
             ViewBag.ID_Context = new SelectList(db.Tb_Contexts, "ID_Context", "ContextName", tb_Objects.ID_Context);
