@@ -75,7 +75,7 @@ namespace Sensato.GenerateCSharp.Controllers
                     db.SaveChanges();
 
                     //Llamamos al metodo para almacenar los RS y las RSC
-                    GetResultSet(tb_Objects.AuxNameObject, ConnStr, tb_Objects.ID_Object, queryParams);
+                    GetResultSet(tb_Objects.AuxNameObject, ConnStr, tb_Objects.ID_Object);
                     return RedirectToAction("Index", new {idContext = idContext, idProject = idProject});
                 }
                 catch(Exception ex) 

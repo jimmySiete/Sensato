@@ -94,7 +94,7 @@ namespace Sensato.DataAccess
             try
             {
                 DataAccessADO.ParamsAreValid(storedProcedureOrQuery, type, parameters, connStr, transaction);
-                if (parameters != null)
+                if (parameters.Count > 0)
                     foreach (SqlParameter sqlParam in parameters)
                         cmd.Parameters.Add(sqlParam);
 
@@ -125,8 +125,8 @@ namespace Sensato.DataAccess
         {
             if (string.IsNullOrEmpty(storedProcedureOrQuery) && type.ToString() == "StoredProcedure")
                throw new DataAccessException(ErrorsAndExceptionsCatalog._602_Code, ErrorsAndExceptionsCatalog._602_StoredProdecureNotFound);
-            else if (!storedProcedureOrQuery.StartsWith("G") && type.ToString() == "StoredProcedure")// que no contenga una sentencia
-                throw new DataAccessException(ErrorsAndExceptionsCatalog._601_Code, ErrorsAndExceptionsCatalog._601_InvalidStoredProcedure);
+            //else if (!storedProcedureOrQuery.StartsWith("G") && type.ToString() == "StoredProcedure")// que no contenga una sentencia
+            //    throw new DataAccessException(ErrorsAndExceptionsCatalog._601_Code, ErrorsAndExceptionsCatalog._601_InvalidStoredProcedure);
             if (string.IsNullOrEmpty(storedProcedureOrQuery) && type.ToString() == "Text")
                 throw new DataAccessException(ErrorsAndExceptionsCatalog._604_Code, ErrorsAndExceptionsCatalog._604_QueryNotFound);
             else if (!storedProcedureOrQuery.Contains("S") && type.ToString() == "Text")

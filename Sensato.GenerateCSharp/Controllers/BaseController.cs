@@ -3,6 +3,7 @@ using Sensato.GenerateCSharp.Models;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Sensato.GenerateCSharp.Controllers
@@ -13,13 +14,24 @@ namespace Sensato.GenerateCSharp.Controllers
 
         public DB_GeneratorEntities db = new DB_GeneratorEntities();
 
-        public void GetResultSet(string SP_name, string ConnStr, int idObject, List<SqlParameter> parameters = null)
+        public void GetResultSet(string SP_name, string ConnStr, int idObject)
         {
-            
+            // obtener mediante idObj la lista de parametros
+            //convertir a sql parameters: valores dummies (decimal p/e: 0.0)
+
+            List<Tb_Parameters> parameters;
+            List<SqlParameter> queryParams = new List<SqlParameter>();
+            parameters = db.Tb_Parameters.Where(x => x.ID_Object == idObject).ToList();
+            foreach (var item in parameters)
+            {
+                queryParams.Add(new SqlParameter(item.ParameterName, item.DataType));
+            }
+
             int consecutiveNumbr = 1;
-            DataSet DS = DataAccessADO.GetDataSet(SP_name, CommandType.StoredProcedure, null, ConnStr, null);
+            DataSet DS = DataAccessADO.GetDataSet(SP_name, CommandType.StoredProcedure, queryParams, ConnStr, null); // tercer paso
             List<Tb_ResultSets> RS = new List<Tb_ResultSets>();
             List<Tb_ResultSetColumns> RSC = new List<Tb_ResultSetColumns>();
+
 
             foreach (DataTable resultSet in DS.Tables)  // itero de DS casa DT
             {
@@ -41,12 +53,12 @@ namespace Sensato.GenerateCSharp.Controllers
                     RSC.Add(tbColumn);
                 }
                 consecutiveNumbr++;
-                db.Tb_ResultSets.AddRange(RS); // almaceno los Result Sets
-                db.SaveChanges();
-
-                db.Tb_ResultSetColumns.AddRange(RSC); // almaceno los Result Set Columns
-                db.SaveChanges();
             }
-        }
+            db.Tb_ResultSets.AddRange(RS); // almaceno los Result Sets
+            db.SaveChanges();
+
+            db.Tb_ResultSetColumns.AddRange(RSC); // almaceno los Result Set Columns
+            db.SaveChanges();
+        } 
     }
 }
