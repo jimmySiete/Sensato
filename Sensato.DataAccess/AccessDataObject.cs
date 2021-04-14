@@ -61,7 +61,7 @@ namespace Sensato.DataAccess
             try
             {
                 DataAccessADO.ParamsAreValid(storedProcedureOrQuery, type, parameters, connStr, transaction);
-                if (parameters != null)
+                if (parameters.Count > 0)
                     foreach (SqlParameter sqlParam in parameters)
                         cmd.Parameters.Add(sqlParam);
 
