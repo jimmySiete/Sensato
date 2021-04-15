@@ -27,7 +27,7 @@ namespace Sensato.GenerateCSharp.Controllers
         }
 
         // GET: ResultSets/Edit/5
-        public ActionResult Edit(int? id, int idObject, int idContext)
+        public ActionResult Edit(int? id, int idObject, int idContext, int idProject)
         {
             if (id == null)
             {
@@ -40,7 +40,7 @@ namespace Sensato.GenerateCSharp.Controllers
             }
             ViewBag.idObject = idObject;
             ViewBag.idContext = idContext;
-            ViewBag.objName = db.Tb_Objects.Where(x => x.ID_Object == idObject).Select(x => x.ObjectName);
+            ViewBag.objName = db.Tb_Objects.Where(x => x.ID_Object == idObject).Select(x => x.ObjectName).FirstOrDefault();
             ViewBag.ID_Object = new SelectList(db.Tb_Objects, "ID_Object", "ObjectName", tb_ResultSets.ID_Object);
             return View(tb_ResultSets);
         }
@@ -48,13 +48,13 @@ namespace Sensato.GenerateCSharp.Controllers
         // POST: ResultSets/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID_ResultSet,ID_Object,ResultSetName")] Tb_ResultSets tb_ResultSets)
+        public ActionResult Edit([Bind(Include = "ID_ResultSet,ID_Object,ResultSetName")] Tb_ResultSets tb_ResultSets, int idObject, int idContext, int idProject)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(tb_ResultSets).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { idContext = idContext, idObject = idObject, idProject = idProject });
             }
             ViewBag.ID_Object = new SelectList(db.Tb_Objects, "ID_Object", "ObjectName", tb_ResultSets.ID_Object);
             return View(tb_ResultSets);

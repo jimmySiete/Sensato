@@ -21,7 +21,7 @@
                 @Html.DisplayFor(modelItem => item.ResultSetName)
             </td>
             <td>
-                @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Edit, "Edit", new { id = item.ID_ResultSet })
+                @Html.ActionLink(Sensato.GenerateCSharp.GlobalCode.Resources.Edit, "Edit", new { id = item.ID_ResultSet, ViewBag.idObject, ViewBag.idContext, ViewBag.idProject })
             </td>
         </tr>
     }

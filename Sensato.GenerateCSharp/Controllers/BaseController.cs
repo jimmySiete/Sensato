@@ -29,7 +29,7 @@ namespace Sensato.GenerateCSharp.Controllers
 
             int consecutiveNumbr = 1;
             DataSet DS = DataAccessADO.GetDataSet(SP_name, CommandType.StoredProcedure, queryParams, ConnStr, null); // tercer paso
-            List<Tb_ResultSets> RS = new List<Tb_ResultSets>();
+            //List<Tb_ResultSets> RS = new List<Tb_ResultSets>();
             List<Tb_ResultSetColumns> RSC = new List<Tb_ResultSetColumns>();
 
 
@@ -37,8 +37,11 @@ namespace Sensato.GenerateCSharp.Controllers
             {
                 Tb_ResultSets tbResult = new Tb_ResultSets();
                 tbResult.ID_Object = idObject;
-                tbResult.ResultSetName = "SET" + consecutiveNumbr;
-                RS.Add(tbResult);
+                tbResult.ResultSetName = "SET " + consecutiveNumbr;
+                //RS.Add(tbResult);
+                db.Tb_ResultSets.Add(tbResult);
+                db.SaveChanges();
+
                 foreach (DataColumn column in resultSet.Columns) // decada DT, itero cada DC
                 {
                     Tb_ResultSetColumns tbColumn = new Tb_ResultSetColumns();
@@ -54,8 +57,8 @@ namespace Sensato.GenerateCSharp.Controllers
                 }
                 consecutiveNumbr++;
             }
-            db.Tb_ResultSets.AddRange(RS); // almaceno los Result Sets
-            db.SaveChanges();
+            //db.Tb_ResultSets.AddRange(RS); // almaceno los Result Sets
+            //db.SaveChanges();
 
             db.Tb_ResultSetColumns.AddRange(RSC); // almaceno los Result Set Columns
             db.SaveChanges();
